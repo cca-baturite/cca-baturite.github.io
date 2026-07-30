@@ -154,14 +154,14 @@
     "k": "esqueci esqueceu senha recuperar recuperacao redefinir resetar trocar alterar mudar gerar nova sei acesso bloqueado bloqueada invalida incorreta errada nao consigo entrar login logar email link codigo temporaria provisoria expirou chegou nao chega spam lixo eletronico caixa mensagem generica unico"
   },
   {
-    "t": "Abrir solicitação no SEI pelo celular",
+    "t": "Abrir processo no SEI pelo celular",
     "u": "sei-abrir-solicitacao-celular.html",
     "s": "SEI",
     "d": "Guia detalhado, tela a tela, para peticionar pelo celular.",
     "k": "abrir abertura processo novo solicitacao peticionar peticionamento peticione protocolar protocolo requerimento geral discente celular smartphone telefone passo enviar mandar pedido assinar assinatura eletronica anexar anexo anexos pdf documento formulario preencher nivel acesso restrito salvar janela concluir gerar numero tipo solicitar pedir requerer fazer"
   },
   {
-    "t": "Abrir solicitação no SEI pelo computador",
+    "t": "Abrir processo no SEI pelo computador",
     "u": "sei-abrir-solicitacao-computador.html",
     "s": "SEI",
     "d": "Guia detalhado, tela a tela, para peticionar pelo computador.",
@@ -246,9 +246,9 @@
   },
   {
     "t": "Problemas para entrar ou usar o SEI",
-    "u": "sei.html",
+    "u": "sei.html#problemas-de-acesso",
     "s": "SEI",
-    "d": "Comece por aqui: cadastro, liberação de acesso, senha e caminhos de cada guia.",
+    "d": "Escolha a solução para cadastro pendente, duplicidade, liberação, senha temporária ou dificuldade de acesso.",
     "k": "problema problemas erro erros travou deu errado nao consigo funciona entrar acesso acessar ajuda socorro duvida duvidas sei comecar inicio"
   },
   {
