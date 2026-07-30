@@ -108,22 +108,12 @@ button, input { font: inherit; }
   margin: 1rem 0 1.7rem;
   padding: clamp(1.5rem, 3vw, 2.4rem);
   border-radius: 22px;
-  background: var(--surface);
+  background:
+    radial-gradient(circle 125px at calc(100% + 35px) -35px, #edf6f0 0 124px, transparent 125px),
+    var(--surface);
   box-shadow: var(--shadow);
   border: 1px solid var(--line);
   position: relative;
-  overflow: hidden;
-}
-.hero::after {
-  content: "";
-  position: absolute;
-  right: -90px;
-  top: -90px;
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  background: var(--green-100);
-  opacity: .75;
 }
 .hero > * { position: relative; z-index: 1; }
 .eyebrow {
@@ -156,7 +146,7 @@ h3 { font-size: 1.2rem; margin: 0 0 .55rem; }
 .button-secondary { color: var(--green-900); background: #fff; border-color: var(--green-700); }
 
 
-.busca { margin-top: 1.3rem; max-width: 640px; }
+.busca { margin-top: 1.3rem; max-width: 640px; position: relative; z-index: 120; }
 .busca-label { display:block; font-weight:800; color:var(--green-900); margin-bottom:.45rem; }
 .busca-wrap { position:relative; }
 #campo-busca {
@@ -166,7 +156,7 @@ h3 { font-size: 1.2rem; margin: 0 0 .55rem; }
 #campo-busca::placeholder { color:#8a9790; }
 #busca-resultados {
   list-style:none; margin:.4rem 0 0; padding:.35rem;
-  position:absolute; left:0; right:0; z-index:50;
+  position:absolute; left:0; right:0; z-index:120;
   background:#fff; border:1px solid var(--line); border-radius:12px;
   box-shadow:var(--shadow); max-height:22rem; overflow:auto; display:none;
 }
@@ -184,6 +174,16 @@ h3 { font-size: 1.2rem; margin: 0 0 .55rem; }
   color:var(--green-900); background:var(--green-100); border-radius:999px; padding:.15rem .5rem;
 }
 #busca-resultados .sem-resultado { padding:.7rem; color:var(--muted); }
+
+.busca-chips { display:flex; flex-wrap:wrap; gap:.45rem; align-items:center; margin-top:.7rem; }
+.busca-chips-rotulo { font-size:.85rem; font-weight:700; color:var(--green-900); margin-right:.15rem; }
+.chip {
+  border:1.5px solid var(--green-700); background:#fff; color:var(--green-900);
+  font:inherit; font-size:.88rem; font-weight:650; padding:.34rem .75rem;
+  border-radius:999px; cursor:pointer;
+}
+.chip:hover, .chip:focus-visible { background:var(--green-100); }
+
 .busca-dica { margin:.5rem 0 0; color:var(--muted); font-size:.9rem; }
 
 .quick-grid {
@@ -451,7 +451,7 @@ body{font-weight:400;font-optical-sizing:auto;text-rendering:optimizeLegibility}
 <header class="site-header"><div class="header-inner">
 <a aria-label="Página inicial dos Guias da CCA" class="brand" href="index.html"><img alt="" class="brand-mark" height="44" src="assets/brand/favicon-192.png" width="44"/><span><strong>Guias da CCA</strong><span>IFCE Campus Baturité</span></span></a>
 <nav aria-label="Navegação principal" class="site-nav"><a aria-current="page" href="index.html">Início</a><a href="q-academico.html">Q-Acadêmico</a><a href="sei.html">SEI</a><a href="suapedu.html">SuapEdu</a></nav></div></header><main class="page-shell" id="conteudo">
-<section class="hero"><p class="eyebrow">IFCE Campus Baturité</p><h1>Guias da CCA</h1><p class="lead">Orientações passo a passo para acesso a sistemas, abertura de processos e serviços acadêmicos.</p><div class="busca" role="search"><label class="busca-label" for="campo-busca">O que você precisa fazer?</label><div class="busca-wrap"><input aria-autocomplete="list" aria-controls="busca-resultados" aria-describedby="busca-dica busca-status" aria-expanded="false" autocomplete="off" id="campo-busca" placeholder="Ex.: trancar matrícula, esqueci a senha, diploma…" role="combobox" spellcheck="false" type="search"/><ul aria-label="Resultados da busca" id="busca-resultados" role="listbox"></ul></div><p aria-live="polite" class="sr-only" id="busca-status"></p><p class="busca-dica" id="busca-dica">Digite em suas palavras: “perdi a prova”, “atestado”, “desistir do curso”…</p></div><div class="quick-grid"><div class="quick-item"><strong>Conteúdo organizado</strong><span>Encontre a orientação pelo sistema ou pela tarefa.</span></div><div class="quick-item"><strong>Leitura no celular</strong><span>Páginas responsivas, com imagens próximas de cada etapa.</span></div><div class="quick-item"><strong>Conteúdo em expansão</strong><span>Novos guias serão adicionados gradualmente.</span></div></div></section><section aria-labelledby="destaque-reajuste" class="temporary-reajuste-highlight" data-temporary-period-link="reajuste-2026-2"><div class="temporary-reajuste-copy"><p class="eyebrow">Em destaque · Rematrícula 2026.2</p><h2 id="destaque-reajuste">Reajuste de Matrícula pelo SEI</h2><p>Período de solicitação: 10 e 11 de agosto de 2026. Consulte o guia específico antes de protocolar.</p></div><a class="button button-primary temporary-reajuste-action" href="sei-reajuste-matricula.html">Abrir guia de Reajuste</a></section>
+<section class="hero"><p class="eyebrow">IFCE Campus Baturité</p><h1>Guias da CCA</h1><p class="lead">Orientações passo a passo para acesso a sistemas, abertura de processos e serviços acadêmicos.</p><div class="busca" role="search"><label class="busca-label" for="campo-busca">O que você precisa fazer?</label><div class="busca-wrap"><input aria-autocomplete="list" aria-controls="busca-resultados" aria-describedby="busca-dica busca-status" aria-expanded="false" autocomplete="off" id="campo-busca" placeholder="Ex.: trancar matrícula, esqueci a senha, diploma…" role="combobox" spellcheck="false" type="search"/><ul aria-label="Resultados da busca" id="busca-resultados" role="listbox"></ul></div><p aria-live="polite" class="sr-only" id="busca-status"></p><p class="busca-dica" id="busca-dica">Digite em suas palavras: “perdi a prova”, “atestado”, “desistir do curso”…</p><div aria-label="Perguntas frequentes" class="busca-chips" role="group"><span class="busca-chips-rotulo">Mais procurados:</span><button class="chip" data-q="abrir um processo no SEI" type="button">Abrir um processo no SEI</button><button class="chip" data-q="não tenho conta no SEI" type="button">Não tenho conta no SEI</button><button class="chip" data-q="esqueci minha senha" type="button">Esqueci minha senha</button><button class="chip" data-q="o que posso solicitar" type="button">O que posso solicitar?</button><button class="chip" data-q="criar e-mail institucional" type="button">Criar e-mail institucional</button><button class="chip" data-q="problemas no SEI" type="button">Problemas no SEI</button></div></div><div class="quick-grid"><div class="quick-item"><strong>Conteúdo organizado</strong><span>Encontre a orientação pelo sistema ou pela tarefa.</span></div><div class="quick-item"><strong>Leitura no celular</strong><span>Páginas responsivas, com imagens próximas de cada etapa.</span></div><div class="quick-item"><strong>Conteúdo em expansão</strong><span>Novos guias serão adicionados gradualmente.</span></div></div></section><section aria-labelledby="destaque-reajuste" class="temporary-reajuste-highlight" data-temporary-period-link="reajuste-2026-2"><div class="temporary-reajuste-copy"><p class="eyebrow">Em destaque · Rematrícula 2026.2</p><h2 id="destaque-reajuste">Reajuste de Matrícula pelo SEI</h2><p>Período de solicitação: 10 e 11 de agosto de 2026. Consulte o guia específico antes de protocolar.</p></div><a class="button button-primary temporary-reajuste-action" href="sei-reajuste-matricula.html">Abrir guia de Reajuste</a></section>
 <section aria-labelledby="sistemas"><p class="eyebrow">Sistemas</p><h2 id="sistemas">Escolha um guia</h2><div class="system-grid">
 <article class="system-card"><span class="badge">Guias disponíveis</span><h2>Q-Acadêmico</h2><p>Acesso, senha e orientações para estudantes que permanecem vinculados ao Q-Acadêmico.</p><div class="hero-actions"><a class="button button-primary" href="q-academico.html">Abrir a área do Q-Acadêmico</a><a class="button button-secondary" href="q-academico-acesso-e-senha.html">Acesso e senha</a></div></article>
 <article class="system-card"><span class="badge">Guias disponíveis</span><h2>SEI para Usuários Externos</h2><p>Cadastro, recuperação de senha e abertura de solicitações acadêmicas.</p><div class="hero-actions"><a class="button button-primary" href="sei.html">Abrir a área do SEI</a><a class="button button-secondary" href="sei-cadastro-inicial.html">Cadastro inicial</a><a class="button button-secondary" href="sei-recuperacao-de-senha.html">Recuperação de senha</a><a class="button button-secondary" href="sei-abrir-solicitacao-celular.html">Abrir solicitação pelo celular</a><a class="button button-secondary" href="sei-abrir-solicitacao-computador.html">Abrir solicitação pelo computador</a><a class="button button-secondary" href="sei-solicitacoes-disponiveis.html">Ver solicitações disponíveis</a></div></article>
@@ -556,7 +556,7 @@ function busca(){
   const vazias=new Set(['a','o','e','as','os','um','uma','de','do','da','dos','das','em','no','na','nos','nas','ao','aos','ou','que','por','para','pra','com','sem','ser','ter','sou','estou','esta','ja','me','se','eu','meu','minha','meus','minhas','vou','quero','queria','preciso','gostaria','posso','como','faco','fazer','onde','qual','quais','pelo','pela']);
   const frase=norm(q);
   const termos=frase.split(/\s+/).filter(t=>t.length>1&&!vazias.has(t));
-  if(!termos.length){render([],'');return;}
+  if(!termos.length){render([], '');return;}
   const res=dados.map(e=>[pontua(e,termos,frase),e]).filter(x=>x[0]>0)
     .sort((a,b)=>b[0]-a[0]||a[1].t.localeCompare(b[1].t,'pt-BR'))
     .slice(0,8).map(x=>x[1]);
@@ -574,8 +574,14 @@ campo.addEventListener('keydown',ev=>{
     ev.preventDefault();
     itens[sel].querySelector('a').click();
   }else if(ev.key==='Escape'){
-    render([],'');
+    render([], '');
   }
 });
-document.addEventListener('click',ev=>{if(!ev.target.closest('.busca'))render([],'');});
+document.querySelectorAll('.chip').forEach(chip=>chip.addEventListener('click',async()=>{
+  campo.value=chip.dataset.q||'';
+  campo.focus();
+  await carrega();
+  busca();
+}));
+document.addEventListener('click',ev=>{if(!ev.target.closest('.busca'))render([], '');});
 })();</script></body></html>

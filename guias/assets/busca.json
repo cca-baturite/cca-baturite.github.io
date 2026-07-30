@@ -39,7 +39,7 @@
     "u": "sei-solicitacoes-disponiveis.html#matricula-especial",
     "s": "SEI",
     "d": "Cursar disciplina isolada como aluno especial, sem vínculo regular.",
-    "k": "aluno especial disciplina isolada avulsa ouvinte externo outra instituicao sem vinculo declaracao cadeira materia uma so somente"
+    "k": "aluno especial disciplina isolada avulsa ouvinte externo outra instituicao sem vinculo cadeira materia uma so somente"
   },
   {
     "t": "Reajuste de Matrícula",
@@ -88,14 +88,14 @@
     "u": "sei-solicitacoes-disponiveis.html#colacao-de-grau-oficial",
     "s": "SEI",
     "d": "Participar da cerimônia oficial de colação de grau.",
-    "k": "colacao colar grau formatura formar formando formanda cerimonia solenidade juramento concluir conclusao terminei"
+    "k": "colacao colar grau formatura formar formando formanda cerimonia solenidade juramento concluir conclusao terminei diploma certificado receber"
   },
   {
     "t": "Colação de Grau Especial",
     "u": "sei-solicitacoes-disponiveis.html#colacao-de-grau-especial",
     "s": "SEI",
     "d": "Colar grau em gabinete, fora da cerimônia oficial — para quem tem urgência.",
-    "k": "colacao colar grau gabinete especial antecipada antecipar urgente urgencia emprego concurso posse formatura"
+    "k": "colacao colar grau gabinete especial antecipada antecipar urgente urgencia emprego concurso posse formatura diploma certificado receber"
   },
   {
     "t": "Diploma — Técnico Subsequente",
@@ -109,7 +109,7 @@
     "u": "sei-solicitacoes-disponiveis.html#certidao-de-conclusao-de-curso",
     "s": "SEI",
     "d": "Comprova a conclusão do curso enquanto o diploma não fica pronto — útil para posse e concurso.",
-    "k": "certidao declaracao conclusao concluinte concluir comprovante comprovar documento formado formada posse concurso emprego vinculo diploma demorando"
+    "k": "certidao declaracao conclusao concluinte concluir comprovante comprovar documento formado formada posse concurso emprego diploma demorando"
   },
   {
     "t": "Transferência Externa / Guia de Transferência",
@@ -137,7 +137,7 @@
     "u": "sei-solicitacoes-disponiveis.html#situacoes-atipicas-ou-nao-previstas-nesta-lista",
     "s": "SEI",
     "d": "Sua solicitação não está na lista? Veja como proceder com o Requerimento Geral.",
-    "k": "outro outra nao encontrei achei atipica atipico diferente requerimento geral duvida mudanca turno dispensa educacao fisica declaracao matricula historico escolar ementa programa disciplina recurso revisao nota"
+    "k": "outro outra nao encontrei achei atipica atipico diferente requerimento geral duvida mudanca turno dispensa educacao fisica historico escolar ementa programa disciplina recurso revisao nota"
   },
   {
     "t": "Cadastro inicial no SEI",
@@ -158,14 +158,14 @@
     "u": "sei-abrir-solicitacao-celular.html",
     "s": "SEI",
     "d": "Guia detalhado, tela a tela, para peticionar pelo celular.",
-    "k": "abrir abertura processo novo solicitacao peticionar peticionamento peticione protocolar protocolo requerimento geral discente celular smartphone telefone passo enviar mandar pedido assinar assinatura eletronica anexar anexo anexos pdf documento formulario preencher nivel acesso restrito salvar janela concluir gerar numero tipo"
+    "k": "abrir abertura processo novo solicitacao peticionar peticionamento peticione protocolar protocolo requerimento geral discente celular smartphone telefone passo enviar mandar pedido assinar assinatura eletronica anexar anexo anexos pdf documento formulario preencher nivel acesso restrito salvar janela concluir gerar numero tipo solicitar pedir requerer fazer"
   },
   {
     "t": "Abrir solicitação no SEI pelo computador",
     "u": "sei-abrir-solicitacao-computador.html",
     "s": "SEI",
     "d": "Guia detalhado, tela a tela, para peticionar pelo computador.",
-    "k": "abrir abertura processo novo solicitacao peticionar peticionamento peticione protocolar protocolo requerimento geral discente computador pc notebook desktop passo enviar mandar pedido assinar assinatura eletronica anexar anexo anexos pdf documento formulario preencher nivel acesso restrito salvar janela concluir gerar numero tipo"
+    "k": "abrir abertura processo novo solicitacao peticionar peticionamento peticione protocolar protocolo requerimento geral discente computador pc notebook desktop passo enviar mandar pedido assinar assinatura eletronica anexar anexo anexos pdf documento formulario preencher nivel acesso restrito salvar janela concluir gerar numero tipo solicitar pedir requerer fazer"
   },
   {
     "t": "Resumo visual — SEI no celular",
@@ -186,7 +186,7 @@
     "u": "sei-solicitacoes-disponiveis.html",
     "s": "SEI",
     "d": "Lista completa das solicitações acadêmicas disponíveis, com documentos exigidos.",
-    "k": "lista solicitacoes servicos pedidos requerimentos disponiveis documentos tipos quais"
+    "k": "lista solicitacoes servicos pedidos requerimentos disponiveis documentos tipos quais incluir anexar juntar exigidos necessarios precisa cada"
   },
   {
     "t": "Acompanhar um processo no SEI",
@@ -245,6 +245,20 @@
     "k": "esqueci esqueceu senha email institucional academico recuperar redefinir resetar trocar alterar suap nao consigo entrar google gmail"
   },
   {
+    "t": "Problemas para entrar ou usar o SEI",
+    "u": "sei.html",
+    "s": "SEI",
+    "d": "Comece por aqui: cadastro, liberação de acesso, senha e caminhos de cada guia.",
+    "k": "problema problemas erro erros travou deu errado nao consigo funciona entrar acesso acessar ajuda socorro duvida duvidas sei comecar inicio"
+  },
+  {
+    "t": "Emitir documentos acadêmicos no SuapEdu",
+    "u": "suapedu-principais-funcoes.html#documentos",
+    "s": "SuapEdu",
+    "d": "Emitir documentos com autenticação eletrônica diretamente no sistema.",
+    "k": "documento documentos emitir emissao baixar download pdf autenticacao declaracao comprovante matricula vinculo historico atestado suap suapedu"
+  },
+  {
     "t": "Q-Acadêmico ou SuapEdu? Qual sistema usar",
     "u": "q-academico.html#coexistencia",
     "s": "Sistemas",
@@ -285,13 +299,6 @@
     "s": "SuapEdu",
     "d": "Acessar o percurso acadêmico registrado no sistema.",
     "k": "historico escolar disciplinas cursadas aprovadas reprovadas carga horaria integralizacao percurso suap suapedu"
-  },
-  {
-    "t": "Emitir documentos acadêmicos no SuapEdu",
-    "u": "suapedu-principais-funcoes.html#documentos",
-    "s": "SuapEdu",
-    "d": "Emitir documentos com autenticação eletrônica diretamente no sistema.",
-    "k": "documento documentos emitir emissao baixar download pdf autenticacao declaracao comprovante matricula vinculo historico atestado suap suapedu"
   },
   {
     "t": "Consultar dados do aluno no SuapEdu",
