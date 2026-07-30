@@ -1,0 +1,80 @@
+name: Corrigir rodapés das páginas do SEI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/fix-sei-footers.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: corrigir-rodapes-sei
+  cancel-in-progress: false
+
+jobs:
+  corrigir:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar a árvore atual
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Auditar e corrigir os nove rodapés
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          pages = sorted(Path('guias').glob('sei*.html'))
+          assert len(pages) == 9, f'Esperadas 9 páginas do SEI; encontradas {len(pages)}'
+
+          old = '.sei-page .site-footer{background:var(--sei-blue-950)}'
+          new = '''.sei-page .site-footer{background:var(--sei-blue-950);color:#eef8fb}
+          .sei-page .site-footer strong{color:#fff}
+          .sei-page .site-footer .small{color:#d6e9ef}'''
+
+          expected_footer = (
+              '<footer class="site-footer"><div class="footer-inner"><div class="footer-note">'
+              '<strong>Coordenadoria de Controle Acadêmico — CCA</strong><br/>'
+              'IFCE Campus Baturité · <a href="mailto:cca.baturite@ifce.edu.br">'
+              'cca.baturite@ifce.edu.br</a></div><div>Desenvolvido e mantido pela CCA.'
+              '<br/><span class="small">Estatísticas de acesso são utilizadas para aprimorar o conteúdo.'</n              'span></div></div></footer>'
+          )
+
+          changed = []
+          for page in pages:
+              text = page.read_text(encoding='utf-8')
+              assert text.count('<body class="sei-page">') == 1, f'Classe sei-page ausente: {page}'
+              assert text.count('<footer class="site-footer">') == 1, f'Rodapé ausente ou duplicado: {page}'
+              assert expected_footer in text, f'Marcação de rodapé divergente: {page}'
+              assert text.count(old) == 1, f'Regra de fundo ausente ou duplicada: {page}'
+              assert '.sei-page .site-footer{background:var(--sei-blue-950);color:' not in text
+              text = text.replace(old, new, 1)
+              assert text.count('.sei-page .site-footer strong{color:#fff}') == 1
+              assert text.count('.sei-page .site-footer .small{color:#d6e9ef}') == 1
+              page.write_text(text, encoding='utf-8')
+              changed.append(str(page))
+
+          print('OK: rodapés auditados e corrigidos em:')
+          for item in changed:
+              print('-', item)
+          PY
+
+      - name: Publicar correção limpa
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/fix-sei-footers.yml
+          git add -A
+          changed="$(git diff --cached --name-only)"
+          echo "$changed"
+          test "$(echo "$changed" | grep -c '^guias/sei.*\.html$')" = "9"
+          test -z "$(echo "$changed" | grep -Ev '^(guias/sei.*\.html|\.github/workflows/fix-sei-footers.yml)$')"
+          git commit -m "Corrige contraste dos rodapés das páginas do SEI"
+          git push origin HEAD:main
