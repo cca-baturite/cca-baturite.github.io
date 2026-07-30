@@ -1,692 +1,114 @@
 <!DOCTYPE html>
 
-<html lang="pt-BR"><head><meta charset="utf-8"/><meta name="color-scheme" content="only light"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="Passo a passo para cadastro inicial e liberação do acesso externo ao SEI do IFCE Campus Baturité." name="description"/><title>Cadastro inicial no SEI | Guias da CCA</title><link as="font" crossorigin="" href="assets/fonts/InterVariable.woff2" rel="preload" type="font/woff2"/><link href="assets/brand/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/brand/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/brand/apple-touch-icon.png" rel="apple-touch-icon"/><meta content="website" property="og:type"/><meta content="pt_BR" property="og:locale"/><meta content="Guias da CCA | IFCE Campus Baturité" property="og:site_name"/><meta content="Cadastro inicial no SEI | Guias da CCA" property="og:title"/><meta content="Passo a passo para cadastro inicial e liberação do acesso externo ao SEI do IFCE Campus Baturité." property="og:description"/><meta content="https://cca-baturite.github.io/guias/sei-cadastro-inicial.html" property="og:url"/><meta content="https://cca-baturite.github.io/guias/assets/brand/og-image.png" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="summary_large_image" name="twitter:card"/><style>@font-face{font-family:"Inter";src:url("assets/fonts/InterVariable.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap;}:root {
-  --green-950: #0b3424;
-  --green-900: #12452f;
-  --green-700: #1f6b45;
-  --green-600: #2b7a52;
-  --green-100: #e8f3ec;
-  --green-050: #f3f8f5;
-  --blue-700: #0878a8;
-  --blue-050: #eaf7fb;
-  --ink: #202a25;
-  --muted: #5b6861;
-  --line: #d8e0db;
-  --surface: #ffffff;
-  --page: #f7f8f6;
-  --warning: #fff3d6;
-  --warning-line: #c48722;
-  --danger: #b42318;
-  --danger-bg: #fff1f0;
-  --shadow: 0 12px 30px rgba(0, 90, 120, 0.10);
-  --radius: 16px;
-}
-
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  color: var(--ink);
-  background: var(--page);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: 17px;
-  line-height: 1.62;
-}
-img { max-width: 100%; height: auto; }
-a { color: var(--blue-700); text-underline-offset: 0.18em; }
-a:hover { text-decoration-thickness: 2px; }
-button, input { font: inherit; }
-
-.skip-link {
-  position: absolute;
-  left: 1rem;
-  top: -5rem;
-  z-index: 999;
-  background: var(--surface);
-  color: var(--green-900);
-  padding: .7rem 1rem;
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-}
-.skip-link:focus { top: 1rem; }
-
-.site-header {
-  background: linear-gradient(135deg, var(--green-950), var(--green-700));
-  color: #fff;
-  border-bottom: 5px solid #7dbb32;
-}
-.header-inner,
-.page-shell,
-.footer-inner {
-  width: min(1160px, calc(100% - 2rem));
-  margin-inline: auto;
-}
-.header-inner {
-  min-height: 84px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-}
-.brand {
-  display: flex;
-  gap: .9rem;
-  align-items: center;
-  color: #fff;
-  text-decoration: none;
-}
-.brand-mark {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: #fff;
-  padding: 6px;
-  box-sizing: border-box;
-  display: block;
-}
-.brand strong { display: block; font-size: 1.05rem; line-height: 1.15; }
-.brand span { display: block; font-size: .8rem; opacity: .86; }
-.site-nav { display: flex; gap: .4rem; flex-wrap: wrap; }
-.site-nav a {
-  color: #fff;
-  text-decoration: none;
-  padding: .45rem .7rem;
-  border-radius: 8px;
-}
-.site-nav a:hover,
-.site-nav a[aria-current] { background: rgba(255,255,255,.14); }
-
-.breadcrumb {
-  margin: 1.1rem 0 .5rem;
-  color: var(--muted);
-  font-size: .92rem;
-}
-.breadcrumb ol { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
-.breadcrumb li + li::before { content: "/"; margin-right: .4rem; color: #8a9790; }
-
-.hero {
-  margin: 1rem 0 1.7rem;
-  padding: clamp(1.5rem, 3vw, 2.4rem);
-  border-radius: 22px;
-  background: var(--surface);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--line);
-  position: relative;
-  overflow: hidden;
-}
-.hero::before { content:""; position:absolute; right:70px; bottom:-70px; width:160px; height:160px; border-radius:50%; background:#dff0c9; opacity:.62; }
-.hero::after {
-  content: "";
-  position: absolute;
-  right: -90px;
-  top: -90px;
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  background: var(--green-100);
-  opacity: .82;
-}
-.hero > * { position: relative; z-index: 1; }
-.eyebrow {
-  margin: 0 0 .35rem;
-  color: var(--green-700);
-  font-size: .84rem;
-  font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-h1, h2, h3 { line-height: 1.18; color: var(--green-900); }
-.article-section > h2::after { content:""; display:block; width:3.3rem; height:4px; margin-top:.55rem; border-radius:999px; background:#78b82a; }
-h1 { font-size: clamp(2rem, 5vw, 3.45rem); margin: 0 0 .75rem; max-width: 900px; }
-h2 { font-size: clamp(1.45rem, 3vw, 2.1rem); margin: 0 0 .8rem; }
-h3 { font-size: 1.2rem; margin: 0 0 .55rem; }
-.lead { font-size: 1.12rem; max-width: 820px; color: #33443b; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.25rem; }
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .45rem;
-  padding: .78rem 1rem;
-  border-radius: 10px;
-  font-weight: 750;
-  text-decoration: none;
-  border: 2px solid transparent;
-}
-.button-primary { color: #fff; background: var(--green-700); }
-.button-primary:hover { background: var(--green-900); }
-.button-secondary { color: var(--green-900); background: #fff; border-color: #78b82a; }
-
-.quick-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: .8rem;
-  margin-top: 1.35rem;
-}
-.quick-item {
-  padding: .9rem 1rem;
-  background: var(--green-050);
-  border: 1px solid #d7e8dd;
-  border-radius: 12px;
-}
-.quick-item strong { display: block; color: var(--green-900); }
-.quick-item span { color: var(--muted); font-size: .94rem; }
-
-.content-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 280px;
-  gap: 2rem;
-  align-items: start;
-  padding-bottom: 4rem;
-}
-.article { min-width: 0; }
-.article-section {
-  scroll-margin-top: 1rem;
-  margin-bottom: 1.2rem;
-  padding: clamp(1.2rem, 2.5vw, 1.8rem);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: 0 6px 18px rgba(0, 90, 120, .055);
-}
-.step-number {
-  width: 2.2rem;
-  height: 2.2rem;
-  display: inline-grid;
-  place-items: center;
-  margin-right: .55rem;
-  border-radius: 50%;
-  background: #78b82a;
-  color: #fff;
-  font-weight: 800;
-  font-size: 1rem;
-  vertical-align: .2rem;
-}
-figure {
-  margin: 1.15rem 0 .3rem;
-  padding: .85rem;
-  background: #fbfcfb;
-  border: 1px solid var(--line);
-  border-radius: 13px;
-}
-figure a { display: block; }
-figure img {
-  display: block;
-  margin: auto;
-  border-radius: 8px;
-  box-shadow: 0 5px 16px rgba(32,42,37,.12);
-}
-figcaption{margin-top:.8rem;padding:.55rem .8rem;color:#2c3a33;font-size:.98rem;line-height:1.5;text-align:left;font-weight:600;background:var(--green-050);border-left:4px solid var(--green-700);border-radius:0 10px 10px 0}
-
-.callout {
-  margin: 1rem 0;
-  padding: 1rem 1.05rem;
-  border-radius: 12px;
-  border-left: 5px solid #78b82a;
-  background: #eef8e5;
-}
-.callout > :first-child { margin-top: 0; }
-.callout > :last-child { margin-bottom: 0; }
-.callout.warning { background: var(--warning); border-left-color: var(--warning-line); }
-.callout.danger { background: var(--danger-bg); border-left-color: var(--danger); }
-.callout.info { background: var(--blue-050); border-left-color: var(--blue-700); }
-.callout-title { font-weight: 850; color: var(--green-900); margin-bottom: .25rem; }
-.warning .callout-title { color: #805412; }
-.danger .callout-title { color: var(--danger); }
-
-.check-list,
-.compact-list { padding-left: 1.15rem; }
-.check-list li,
-.compact-list li { margin: .36rem 0; }
-.security-list li::marker { color: #78b82a; }
-
-.toc {
-  position: sticky;
-  top: 1rem;
-  padding: 1rem;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  box-shadow: 0 6px 18px rgba(0, 90, 120, .055);
-}
-.toc h2 { font-size: 1rem; margin-bottom: .6rem; }
-.toc ol { margin: 0; padding-left: 1.15rem; }
-.toc li { margin: .35rem 0; font-size: .92rem; }
-.toc a { color: #34483d; text-decoration: none; }
-.toc a:hover { color: #69a523; text-decoration: underline; }
-
-.faq details {
-  border-top: 1px solid var(--line);
-  padding: .85rem 0;
-}
-.faq details:first-of-type { border-top: 0; }
-.faq summary { cursor: pointer; font-weight: 800; color: var(--green-900); }
-.faq details p:last-child { margin-bottom: 0; }
-
-.notice-link {
-  display: inline-block;
-  font-weight: 750;
-  overflow-wrap: anywhere;
-}
-.meta { color: var(--muted); font-size: .92rem; }
-.small { font-size: .9rem; }
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-  padding-bottom: 4rem;
-}
-.guide-card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 1.3rem;
-  box-shadow: 0 6px 18px rgba(18,69,47,.045);
-}
-.guide-card h2 { font-size: 1.35rem; }
-.guide-card p { color: var(--muted); }
-.card-link { font-weight: 800; }
-.badge {
-  display: inline-flex;
-  padding: .25rem .55rem;
-  border-radius: 999px;
-  color: var(--green-900);
-  background: var(--green-100);
-  font-size: .78rem;
-  font-weight: 800;
-}
-
-.site-footer {
-  background: #0b3424;
-  color: #eaf7fb;
-  padding: 2rem 0;
-}
-.footer-inner { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
-.site-footer a { color: #fff; }
-.footer-note { max-width: 740px; }
-.footer-credit { text-align: right; }
-.footer-updated { opacity: .8; font-size: .9rem; }
-@media (max-width: 680px) { .footer-credit { text-align: left; } }
-
-@media (max-width: 900px) {
-  .content-layout { grid-template-columns: 1fr; }
-  .toc { position: static; order: -1; }
-  .quick-grid { grid-template-columns: 1fr; }
-  .cards { grid-template-columns: 1fr; }
-}
-@media (max-width: 680px) {
-  body { font-size: 16px; }
-  .header-inner { align-items: flex-start; flex-direction: column; padding: 1rem 0; }
-  .site-nav { width: 100%; }
-  .hero { border-radius: 16px; }
-  .hero-actions .button { width: 100%; }
-  figure { margin-inline: -.25rem; padding: .55rem; }
-}
-
-@media print {
-  body { background: #fff; font-size: 11pt; }
-  .site-header, .toc, .hero-actions, .site-footer, .skip-link { display: none !important; }
-  .page-shell { width: 100%; }
-  .content-layout { display: block; }
-  .hero, .article-section { box-shadow: none; break-inside: avoid; }
-  a { color: #000; text-decoration: none; }
-  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 8pt; }
-}
-
-.status-strip { background:#fff3d6; border-bottom:1px solid #e7c77f; color:#67480d; text-align:center; padding:.45rem 1rem; font-size:.9rem; font-weight:750; }
-.system-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin:1.4rem 0 4rem; }
-.system-card { background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:1.4rem; box-shadow:0 6px 18px rgba(18,69,47,.045); display:flex; flex-direction:column; gap:.55rem; }
-.system-card h2 { font-size:1.5rem; margin:0; }
-.system-card p { color:var(--muted); margin:.2rem 0 .8rem; }
-.system-card .button { align-self:flex-start; }
-.copy-box { background:#f8faf8; border:1px solid var(--line); border-radius:12px; padding:1rem; margin:1rem 0; }
-.copy-box pre { white-space:pre-wrap; font-family:inherit; margin:0; line-height:1.55; }
-.copy-actions { display:flex; flex-wrap:wrap; gap:.65rem; margin-top:.8rem; }
-.copy-button { cursor:pointer; color:var(--green-900); background:#fff; border:2px solid var(--green-700); padding:.62rem .85rem; border-radius:9px; font-weight:800; }
-.flow-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.75rem; margin:1rem 0; }
-.flow-card { padding:.9rem; background:var(--green-050); border:1px solid #c9e7ef; border-top:4px solid #78b82a; border-radius:12px; }
-.flow-card strong { display:block; color:var(--green-900); }
-.inline-note { color:var(--muted); font-size:.92rem; }
-@media (max-width:760px){ .system-grid,.flow-grid{grid-template-columns:1fr;} }
-
-/* Visualizador de imagens */
-figure a.image-zoom-trigger{
-  position:relative;
-  display:block;
-  cursor:zoom-in;
-}
-figure a.image-zoom-trigger::after{
-  content:"⌕ Ampliar";
-  position:absolute;
-  right:10px;
-  bottom:10px;
-  padding:6px 10px;
-  border-radius:999px;
-  background:rgba(8,48,73,.88);
-  color:#fff;
-  font-size:.82rem;
-  font-weight:700;
-  box-shadow:0 3px 12px rgba(0,0,0,.2);
-  pointer-events:none;
-}
-.image-lightbox{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:28px;
-  background:rgba(0,18,28,.88);
-}
-.image-lightbox.is-open{display:flex}
-.image-lightbox-dialog{
-  position:relative;
-  width:min(96vw,1500px);
-  max-height:94vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.image-lightbox img{
-  max-width:100%;
-  max-height:90vh;
-  width:auto;
-  height:auto;
-  object-fit:contain;
-  border-radius:10px;
-  background:#fff;
-  box-shadow:0 18px 50px rgba(0,0,0,.45);
-}
-.image-lightbox-close{
-  position:absolute;
-  top:-18px;
-  right:-18px;
-  width:46px;
-  height:46px;
-  border:2px solid #fff;
-  border-radius:50%;
-  background:#0b6688;
-  color:#fff;
-  font-size:2rem;
-  line-height:1;
-  cursor:pointer;
-  box-shadow:0 5px 18px rgba(0,0,0,.35);
-}
-.image-lightbox-close:hover,
-.image-lightbox-close:focus{
-  background:#084b66;
-  outline:3px solid rgba(255,255,255,.55);
-  outline-offset:2px;
-}
-body.lightbox-open{overflow:hidden}
-.image-zoom-help{
-  display:flex;
-  gap:10px;
-  align-items:flex-start;
-  margin:14px 0 20px;
-  padding:12px 14px;
-  border:1px solid #b8d7e3;
-  border-radius:12px;
-  background:#eef8fb;
-  color:#173b49;
-}
-.image-zoom-help strong{display:block}
-@media (max-width:640px){
-  .image-lightbox{padding:16px}
-  .image-lightbox-close{
-    top:-10px;
-    right:-8px;
-    width:42px;
-    height:42px;
-  }
-  figure a.image-zoom-trigger::after{
-    right:7px;
-    bottom:7px;
-    font-size:.75rem;
-  }
-}
-
-figure a.image-zoom-trigger::after{display:none!important;}
-
-figure a.image-zoom-trigger::after{
-  display:none !important;
-  content:none !important;
-}
-
-
-.sr-only{
-  position:absolute!important;
-  width:1px!important;
-  height:1px!important;
-  padding:0!important;
-  margin:-1px!important;
-  overflow:hidden!important;
-  clip:rect(0,0,0,0)!important;
-  white-space:nowrap!important;
-  border:0!important;
-}
-
-
-.sr-only{
-  position:absolute!important;
-  width:1px!important;
-  height:1px!important;
-  padding:0!important;
-  margin:-1px!important;
-  overflow:hidden!important;
-  clip:rect(0,0,0,0)!important;
-  white-space:nowrap!important;
-  border:0!important;
-}
-
-
-.sei-access-page{--access:#2779c3;--access-soft:#edf5fd}.sei-access-page.access-recover{--access:#6b5bc9;--access-soft:#f3f0fe}
-.sei-access-page .access-mode-switch{display:flex;gap:10px;margin:1rem 0 .65rem}.sei-access-page .access-mode-link{display:inline-flex;align-items:center;gap:8px;padding:10px 15px;border-radius:999px;border:1px solid #cfe0e6;background:#fff;text-decoration:none;font-weight:780;color:#53676f}.sei-access-page .access-mode-link span{display:inline-grid;place-items:center}.sei-access-page .access-mode-link svg{width:22px;height:22px}.sei-access-page .access-mode-link.is-active{background:var(--access-soft);border-color:color-mix(in srgb,var(--access) 35%,#fff 65%);color:var(--access)}
-.sei-access-page .access-hero{display:grid;grid-template-columns:110px minmax(0,1fr);gap:0 20px;align-items:start;border-top:8px solid var(--access)}.sei-access-page .access-hero-symbol{grid-row:1/6;width:94px;height:94px;border-radius:24px;display:grid;place-items:center;background:var(--access-soft);color:var(--access);margin-top:4px}.sei-access-page .access-hero-symbol svg{width:52px;height:52px}.sei-access-page .access-hero .eyebrow,.sei-access-page .access-hero h1,.sei-access-page .access-hero .lead,.sei-access-page .access-hero .hero-actions,.sei-access-page .access-hero .quick-grid{grid-column:2}.sei-access-page .access-hero .button-primary{background:var(--access)}.sei-access-page .access-hero .button-secondary{border-color:color-mix(in srgb,var(--access) 50%,#fff 50%);color:var(--access)}.sei-access-page .access-hero .quick-item{border-top:4px solid var(--access)}
-.sei-access-page .article-section>h2::after{background:var(--access)}.sei-access-page .step-number{background:var(--access)}
-@media(max-width:700px){.sei-access-page .access-hero{grid-template-columns:1fr}.sei-access-page .access-hero-symbol{grid-row:auto;margin-bottom:14px}.sei-access-page .access-hero .eyebrow,.sei-access-page .access-hero h1,.sei-access-page .access-hero .lead,.sei-access-page .access-hero .hero-actions,.sei-access-page .access-hero .quick-grid{grid-column:1}.sei-access-page .access-mode-switch{flex-direction:column}.sei-access-page .access-mode-link{justify-content:center}}
-
-</style><meta content="v91" name="cca-self-contained-images"/><style id="cca-focus-visible">
-a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
-  outline: 3px solid #ffbf47 !important;
-  outline-offset: 3px !important;
-  box-shadow: 0 0 0 1px #1f2933;
-}
-</style><style data-v94-intrinsic-image-sizing>:where(img[width][height]){width:auto;height:auto}</style><style id="cca-rendering-consistency">
-:root{color-scheme:only light}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{font-weight:400;font-optical-sizing:auto;text-rendering:optimizeLegibility}
-@supports (-moz-appearance:none){
-  :root{--muted:#46545a;--line:#cbd6d0}
-  body{font-weight:425}
-}
-.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
-</style><style id="cca-sei-system-identity">
-.sei-page{--sei-blue-950:#06384a;--sei-blue-800:#075a76;--sei-blue-700:#0878a8;--sei-green:#2e7d4f;--sei-lime:#8fcf5b}
-.sei-page .site-header{background:linear-gradient(135deg,var(--sei-blue-950),var(--sei-blue-700) 72%,var(--sei-green));border-bottom-color:var(--sei-lime)}
-.sei-page .site-footer{background:var(--sei-blue-950);color:#eef8fb}
-.sei-page .site-footer strong{color:#fff}
-.sei-page .site-footer .small{color:#d6e9ef}
-.sei-page h1,.sei-page h2,.sei-page h3{color:var(--sei-blue-800)}
-.sei-page main a:not(.button){color:#086d96}
-.sei-page .site-header a,
-.sei-page .site-header a:visited,
-.sei-page .site-footer a,
-.sei-page .site-footer a:visited{color:#fff}
-.sei-page .button-primary,
-.sei-page .button-primary:visited{color:#fff;background:var(--sei-blue-700)}
-.sei-page .button-primary:hover,
-.sei-page .button-primary:focus-visible{color:#fff;background:var(--sei-blue-950)}
-.sei-page .button-secondary,
-.sei-page .button-secondary:visited{color:var(--sei-blue-800);background:#fff;border-color:var(--sei-blue-700)}
-.sei-page .button-secondary:hover,
-.sei-page .button-secondary:focus-visible{color:var(--sei-blue-950);background:#e8f4f8;border-color:var(--sei-blue-950)}
-.sei-page .eyebrow{color:var(--sei-green)}
-.sei-page .button-primary{background:var(--sei-blue-700)}
-.sei-page .button-primary:hover{background:var(--sei-blue-950)}
-.sei-page .button-secondary{color:var(--sei-blue-800);border-color:var(--sei-blue-700)}
-.sei-page .badge{color:var(--sei-blue-800);background:#e8f4f8}
-.sei-page .article-section,.sei-page .guide-card,.sei-page .toc{border-color:#cbdde5}
-.sei-page .cca-tone-1{background:#0878a8!important}
-.sei-page .cca-tone-2{background:#2e7d4f!important}
-.sei-page .cca-tone-3{background:#7556a6!important}
-.sei-page .cca-tone-4{background:#b35f2e!important}
-.sei-page figcaption{background:#eef7f9;border-left-color:var(--sei-blue-700);color:#263941}
-@supports (-moz-appearance:none){
-  .sei-page{--muted:#40545d;--line:#c3d2d8}
-}
-</style></head><body class="sei-access-page sei-page"><a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta content="only light" name="color-scheme"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Passo a passo para cadastro inicial e liberação do acesso externo ao SEI do IFCE Campus Baturité por chamado no SUAP." name="description"/>
+<title>Cadastro inicial no SEI | Guias da CCA</title>
+<link as="font" crossorigin="" href="assets/fonts/InterVariable.woff2" rel="preload" type="font/woff2"/>
+<link href="assets/brand/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="assets/brand/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="assets/brand/apple-touch-icon.png" rel="apple-touch-icon"/>
+<meta content="website" property="og:type"/>
+<meta content="pt_BR" property="og:locale"/>
+<meta content="Guias da CCA | IFCE Campus Baturité" property="og:site_name"/>
+<meta content="Cadastro inicial no SEI | Guias da CCA" property="og:title"/>
+<meta content="Passo a passo para cadastro inicial e liberação do acesso externo ao SEI do IFCE Campus Baturité por chamado no SUAP." property="og:description"/>
+<meta content="https://cca-baturite.github.io/guias/sei-cadastro-inicial.html" property="og:url"/>
+<meta content="https://cca-baturite.github.io/guias/assets/brand/og-image.png" property="og:image"/>
+<meta content="1200" property="og:image:width"/>
+<meta content="630" property="og:image:height"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<style>
+@font-face{font-family:"Inter";src:url("assets/fonts/InterVariable.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+:root{--green-950:#0b3424;--green-900:#12452f;--green-700:#1f6b45;--green-100:#e8f3ec;--green-050:#f3f8f5;--sei-blue-950:#064660;--sei-blue-800:#09668b;--sei-blue-700:#0878a8;--sei-blue-050:#eaf7fb;--sei-green:#397d24;--lime:#78b82a;--ink:#202a25;--muted:#5b6861;--line:#cbdde5;--surface:#fff;--page:#f7f8f6;--warning:#fff3d6;--warning-line:#c48722;--danger:#b42318;--danger-bg:#fff1f0;--shadow:0 12px 30px rgba(0,90,120,.10);--radius:16px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:var(--page);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:17px;line-height:1.62}img{max-width:100%;height:auto}a{color:var(--sei-blue-700);text-underline-offset:.18em}a:hover{text-decoration-thickness:2px}button,input{font:inherit}.skip-link{position:absolute;left:1rem;top:-5rem;z-index:999;background:#fff;color:var(--green-900);padding:.7rem 1rem;border-radius:8px;box-shadow:var(--shadow)}.skip-link:focus{top:1rem}
+.site-header{background:linear-gradient(135deg,var(--green-950),var(--green-700));color:#fff;border-bottom:5px solid var(--lime)}.header-inner,.page-shell,.footer-inner{width:min(1160px,calc(100% - 2rem));margin-inline:auto}.header-inner{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}.brand{display:flex;gap:.9rem;align-items:center;color:#fff;text-decoration:none}.brand-mark{width:44px;height:44px;border-radius:12px;background:#fff;padding:6px;display:block}.brand strong{display:block;font-size:1.05rem;line-height:1.15}.brand span{display:block;font-size:.8rem;opacity:.86}.site-nav{display:flex;gap:.4rem;flex-wrap:wrap}.site-nav a{color:#fff;text-decoration:none;padding:.45rem .7rem;border-radius:8px}.site-nav a:hover,.site-nav a[aria-current]{background:rgba(255,255,255,.14)}
+.breadcrumb{margin:1.1rem 0 .5rem;color:var(--muted);font-size:.92rem}.breadcrumb ol{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.4rem}.breadcrumb li+li::before{content:"/";margin-right:.4rem;color:#8a9790}.access-mode-switch{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0}.access-mode-link{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem .8rem;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--sei-blue-800);text-decoration:none;font-weight:750}.access-mode-link svg{width:22px;height:22px}.access-mode-link.is-active{color:#fff;background:var(--sei-blue-700);border-color:var(--sei-blue-700)}
+.hero{margin:1rem 0 1.7rem;padding:clamp(1.5rem,3vw,2.4rem);border-radius:22px;background:#fff;box-shadow:var(--shadow);border:1px solid var(--line);position:relative;overflow:hidden}.hero::before{content:"";position:absolute;right:70px;bottom:-70px;width:160px;height:160px;border-radius:50%;background:#dff0c9;opacity:.62}.hero::after{content:"";position:absolute;right:-90px;top:-90px;width:250px;height:250px;border-radius:50%;background:var(--green-100);opacity:.82}.hero>*{position:relative;z-index:1}.access-hero-symbol{position:absolute;right:2rem;top:2rem;width:72px;height:72px;color:var(--sei-blue-700);opacity:.16}.access-hero-symbol svg{width:100%;height:100%}.eyebrow{margin:0 0 .35rem;color:var(--sei-green);font-size:.84rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}h1,h2,h3{line-height:1.18;color:var(--green-900)}h1{font-size:clamp(2rem,5vw,3.45rem);margin:0 0 .75rem;max-width:900px}h2{font-size:clamp(1.45rem,3vw,2.1rem);margin:0 0 .8rem}h3{font-size:1.2rem;margin:1.45rem 0 .55rem}.article-section>h2::after{content:"";display:block;width:3.3rem;height:4px;margin-top:.55rem;border-radius:999px;background:var(--lime)}.lead{font-size:1.12rem;max-width:850px;color:#33443b}.hero-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.25rem}.button{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;padding:.78rem 1rem;border-radius:10px;font-weight:750;text-decoration:none;border:2px solid transparent}.button-primary,.button-primary:visited{color:#fff;background:var(--sei-blue-700)}.button-primary:hover{background:var(--sei-blue-950)}.button-secondary{color:var(--sei-blue-800);background:#fff;border-color:var(--sei-blue-700)}.button-secondary:hover{background:#e8f4f8}.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1.35rem}.quick-item{padding:.9rem 1rem;background:var(--green-050);border:1px solid #d7e8dd;border-radius:12px}.quick-item strong{display:block;color:var(--green-900)}.quick-item span{color:var(--muted);font-size:.94rem}
+.content-layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:2rem;align-items:start;padding-bottom:4rem}.article{min-width:0}.article-section{scroll-margin-top:1rem;margin-bottom:1.2rem;padding:clamp(1.2rem,2.5vw,1.8rem);background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 6px 18px rgba(0,90,120,.055)}.step-number{width:2.2rem;height:2.2rem;display:inline-grid;place-items:center;margin-right:.55rem;border-radius:50%;background:var(--sei-blue-700);color:#fff;font-weight:800;font-size:1rem;vertical-align:.2rem}.cca-tone-2{background:#2e7d4f}.cca-tone-3{background:#7556a6}.cca-tone-4{background:#b35f2e}.flow-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin:1rem 0}.flow-card{padding:.9rem;background:var(--green-050);border:1px solid #d7e8dd;border-radius:12px}.flow-card strong{display:block;color:var(--green-900)}.image-zoom-help{display:flex;gap:10px;align-items:flex-start;margin:14px 0 20px;padding:12px 14px;border:1px solid #b8d7e3;border-radius:12px;background:#eef8fb;color:#173b49}.image-zoom-help strong{display:block}
+figure{margin:1.15rem 0 .3rem;padding:.85rem;background:#fbfcfb;border:1px solid var(--line);border-radius:13px}figure a{display:block}.image-zoom-trigger{cursor:zoom-in}figure img{display:block;margin:auto;border-radius:8px;box-shadow:0 5px 16px rgba(32,42,37,.12)}figcaption{margin-top:.8rem;padding:.55rem .8rem;color:#263941;font-size:.98rem;line-height:1.5;text-align:left;font-weight:600;background:#eef7f9;border-left:4px solid var(--sei-blue-700);border-radius:0 10px 10px 0}.figure-compact img{max-width:760px;width:100%}.figure-wide img{max-width:980px;width:100%}
+.callout{margin:1rem 0;padding:1rem 1.05rem;border-radius:12px;border-left:5px solid var(--lime);background:#eef8e5}.callout>:first-child{margin-top:0}.callout>:last-child{margin-bottom:0}.callout.warning{background:var(--warning);border-left-color:var(--warning-line)}.callout.danger{background:var(--danger-bg);border-left-color:var(--danger)}.callout.info{background:var(--sei-blue-050);border-left-color:var(--sei-blue-700)}.callout-title{font-weight:850;color:var(--green-900);margin-bottom:.25rem}.warning .callout-title{color:#805412}.danger .callout-title{color:var(--danger)}.check-list,.compact-list{padding-left:1.15rem}.check-list li,.compact-list li{margin:.36rem 0}.copy-box{margin:1rem 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#f8faf9}.copy-box pre{margin:0;padding:1rem;white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.55}.copy-actions{display:flex;flex-wrap:wrap;gap:.65rem;padding:.8rem 1rem;border-top:1px solid var(--line);background:#fff}.copy-button{border:0;border-radius:9px;background:var(--green-700);color:#fff;padding:.68rem .9rem;font-weight:750;cursor:pointer}.copy-button:hover{background:var(--green-900)}
+.toc{position:sticky;top:1rem;padding:1rem;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 6px 18px rgba(0,90,120,.055)}.toc h2{font-size:1rem;margin-bottom:.6rem}.toc ol{margin:0;padding-left:1.15rem}.toc li{margin:.35rem 0;font-size:.92rem}.toc a{color:#34483d;text-decoration:none}.toc a:hover{color:var(--sei-blue-700);text-decoration:underline}.faq details{border-top:1px solid var(--line);padding:.85rem 0}.faq details:first-of-type{border-top:0}.faq summary{cursor:pointer;font-weight:800;color:var(--green-900)}.meta{color:var(--muted);font-size:.92rem}.small{font-size:.9rem}.site-footer{background:var(--green-950);color:#eaf4ee;padding:2rem 0}.footer-inner{display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}.site-footer a{color:#fff}.footer-note{max-width:740px}
+.image-lightbox{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:28px;background:rgba(0,18,28,.88)}.image-lightbox.is-open{display:flex}.image-lightbox-dialog{position:relative;width:min(96vw,1500px);max-height:94vh;display:flex;align-items:center;justify-content:center}.image-lightbox img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:10px;background:#fff;box-shadow:0 18px 50px rgba(0,0,0,.45)}.image-lightbox-close{position:absolute;top:-18px;right:-18px;width:46px;height:46px;border:2px solid #fff;border-radius:50%;background:var(--sei-blue-700);color:#fff;font-size:2rem;line-height:1;cursor:pointer}body.lightbox-open{overflow:hidden}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid #ffbf47!important;outline-offset:3px!important;box-shadow:0 0 0 1px #1f2933}:where(img[width][height]){width:auto;height:auto}
+@media(max-width:900px){.content-layout{grid-template-columns:1fr}.toc{position:static;order:-1}.quick-grid,.flow-grid{grid-template-columns:1fr}}@media(max-width:680px){body{font-size:16px}.header-inner{align-items:flex-start;flex-direction:column;padding:1rem 0}.site-nav{width:100%}.hero{border-radius:16px}.hero-actions .button{width:100%}figure{margin-inline:-.25rem;padding:.55rem}.image-lightbox{padding:16px}.image-lightbox-close{top:-10px;right:-8px;width:42px;height:42px}}@media print{body{background:#fff;font-size:11pt}.site-header,.toc,.hero-actions,.site-footer,.skip-link,.access-mode-switch{display:none!important}.page-shell{width:100%}.content-layout{display:block}.hero,.article-section{box-shadow:none;break-inside:avoid}a{color:#000;text-decoration:none}}
+</style>
+</head>
+<body class="sei-access-page sei-page">
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <header class="site-header"><div class="header-inner">
 <a aria-label="Página inicial dos Guias da CCA" class="brand" href="index.html"><img alt="" class="brand-mark" height="44" src="assets/brand/favicon-192.png" width="44"/><span><strong>Guias da CCA</strong><span>IFCE Campus Baturité</span></span></a>
-<nav aria-label="Navegação principal" class="site-nav"><a href="index.html">Início</a><a href="q-academico.html">Q-Acadêmico</a><a aria-current="location" href="sei.html">SEI</a><a href="suapedu.html">SuapEdu</a></nav></div></header><main class="page-shell" id="conteudo">
+<nav aria-label="Navegação principal" class="site-nav"><a href="index.html">Início</a><a href="q-academico.html">Q-Acadêmico</a><a aria-current="location" href="sei.html">SEI</a><a href="suapedu.html">SuapEdu</a></nav>
+</div></header>
+<main class="page-shell" id="conteudo">
 <nav aria-label="Caminho da página" class="breadcrumb"><ol><li><a href="index.html">Guias</a></li><li><a href="sei.html">SEI</a></li><li aria-current="page">Cadastro inicial</li></ol></nav>
-<nav aria-label="Escolha o tipo de ajuda para acesso ao SEI" class="access-mode-switch"><a class="access-mode-link is-active" href="sei-cadastro-inicial.html"><span aria-hidden="true"><svg aria-hidden="true" fill="none" viewbox="0 0 24 24"><circle cx="10" cy="8" r="3" stroke="currentColor" stroke-width="1.8"></circle><path d="M4.5 20c.7-4 2.6-6 5.5-6 1.2 0 2.2.3 3 .8" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><circle cx="17" cy="16" r="4" stroke="currentColor" stroke-width="1.8"></circle><path d="M17 14v4M15 16h4" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></span>Primeiro acesso</a><a class="access-mode-link" href="sei-recuperacao-de-senha.html"><span aria-hidden="true"><svg aria-hidden="true" fill="none" viewbox="0 0 24 24"><circle cx="8" cy="12" r="4" stroke="currentColor" stroke-width="1.8"></circle><path d="m12 12 8-8M16 8l2 2M18 6l2 2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg></span>Recuperar senha</a></nav><section class="hero access-hero"><div aria-hidden="true" class="access-hero-symbol"><svg aria-hidden="true" fill="none" viewbox="0 0 24 24"><circle cx="10" cy="8" r="3" stroke="currentColor" stroke-width="1.8"></circle><path d="M4.5 20c.7-4 2.6-6 5.5-6 1.2 0 2.2.3 3 .8" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><circle cx="17" cy="16" r="4" stroke="currentColor" stroke-width="1.8"></circle><path d="M17 14v4M15 16h4" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></div><p class="eyebrow">SEI para Usuários Externos</p><h1>Cadastro inicial no SEI</h1><p class="lead">Use este guia se você nunca se cadastrou no SEI como usuário externo. Depois do cadastro, será necessário solicitar ao Gabinete a liberação do acesso.</p><div class="hero-actions"><a aria-label="Abrir o cadastro do SEI — abre em nova guia" class="button button-primary" href="https://sei.ifce.edu.br/sei/controlador_externo.php?acao=usuario_externo_logar&amp;acao_origem=usuario_externo_enviar_cadastro&amp;id_orgao_acesso_externo=0" rel="noopener noreferrer" target="_blank" title="Abre em nova guia">Abrir o cadastro do SEI</a><a class="button button-secondary" href="#problemas">Resolver um problema</a></div><div class="quick-grid"><div class="quick-item"><strong>Use este guia</strong><span>Somente se você nunca se cadastrou no SEI.</span></div><div class="quick-item"><strong>Tenha em mãos</strong><span>CPF, RG, endereço completo e telefone.</span></div><div class="quick-item"><strong>E-mail obrigatório</strong><span>Pessoal, ativo e igual ao cadastrado no Q-Acadêmico.</span></div></div></section>
+<nav aria-label="Escolha o tipo de ajuda para acesso ao SEI" class="access-mode-switch"><a class="access-mode-link is-active" href="sei-cadastro-inicial.html"><span aria-hidden="true"><svg fill="none" viewbox="0 0 24 24"><circle cx="10" cy="8" r="3" stroke="currentColor" stroke-width="1.8"></circle><path d="M4.5 20c.7-4 2.6-6 5.5-6 1.2 0 2.2.3 3 .8" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><circle cx="17" cy="16" r="4" stroke="currentColor" stroke-width="1.8"></circle><path d="M17 14v4M15 16h4" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></span>Primeiro acesso</a><a class="access-mode-link" href="sei-recuperacao-de-senha.html"><span aria-hidden="true"><svg fill="none" viewbox="0 0 24 24"><circle cx="8" cy="12" r="4" stroke="currentColor" stroke-width="1.8"></circle><path d="m12 12 8-8M16 8l2 2M18 6l2 2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path></svg></span>Recuperar senha</a></nav>
+<section class="hero access-hero"><div aria-hidden="true" class="access-hero-symbol"><svg fill="none" viewbox="0 0 24 24"><circle cx="10" cy="8" r="3" stroke="currentColor" stroke-width="1.8"></circle><path d="M4.5 20c.7-4 2.6-6 5.5-6 1.2 0 2.2.3 3 .8" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><circle cx="17" cy="16" r="4" stroke="currentColor" stroke-width="1.8"></circle><path d="M17 14v4M15 16h4" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></div><p class="eyebrow">SEI para Usuários Externos</p><h1>Cadastro inicial no SEI</h1><p class="lead">Use este guia se você nunca se cadastrou no SEI como usuário externo. Depois de concluir o cadastro, abra o e-mail automático do SEI e use o link do SUAP para solicitar a liberação do acesso.</p><div class="hero-actions"><a aria-label="Abrir o cadastro do SEI — abre em nova guia" class="button button-primary" href="https://sei.ifce.edu.br/sei/controlador_externo.php?acao=usuario_externo_logar&amp;acao_origem=usuario_externo_enviar_cadastro&amp;id_orgao_acesso_externo=0" rel="noopener noreferrer" target="_blank" title="Abre em nova guia">Abrir o cadastro do SEI</a><a class="button button-secondary" href="#problemas">Resolver um problema</a></div><div class="quick-grid"><div class="quick-item"><strong>Use este guia</strong><span>Somente se você nunca se cadastrou no SEI.</span></div><div class="quick-item"><strong>Tenha em mãos</strong><span>CPF, RG, endereço completo e telefone.</span></div><div class="quick-item"><strong>Duas etapas</strong><span>Cadastro no SEI e chamado de liberação no SUAP.</span></div></div></section>
 <div class="content-layout"><article class="article">
-<section class="article-section" id="guia-certo"><h2>Este é o guia certo para você?</h2><div class="flow-grid"><div class="flow-card"><strong>Nunca se cadastrou</strong>Continue neste guia.</div><div class="flow-card"><strong>Já se cadastrou e esqueceu a senha</strong>Use o <a href="sei-recuperacao-de-senha.html">guia de recuperação de senha</a>.</div><div class="flow-card"><strong>Não sabe se já se cadastrou</strong>Tente o cadastro com o mesmo e-mail pessoal do Q-Acadêmico; as mensagens do sistema indicarão o próximo passo.</div></div><div class="callout warning"><div class="callout-title">Não use outro e-mail para testar ou contornar um erro</div><p>Se não lembrar se já fez o cadastro, use somente o mesmo e-mail pessoal cadastrado no Q-Acadêmico. Outro endereço pode gerar duplicidade e dificultar ainda mais a liberação do acesso.</p></div></section><div class="image-zoom-help"><span>🔍</span><div><strong>As imagens já estão ajustadas para leitura.</strong> Se precisar ver algum detalhe, clique ou toque na imagem para ampliá-la. Para fechar, use o X ou pressione Esc no computador.</div></div>
-<section class="article-section" id="antes"><h2>Antes de começar</h2><ul class="check-list"><li>Tenha CPF, RG, órgão expedidor, endereço completo e telefone.</li><li>Use o <strong>mesmo e-mail pessoal</strong> informado na ficha de pré-matrícula e cadastrado pela CCA no Q-Acadêmico.</li><li>Não use o e-mail institucional <code>@aluno.ifce.edu.br</code>.</li><li>Confirme que consegue acessar o e-mail escolhido.</li></ul><div class="callout info"><div class="callout-title">O e-mail deve coincidir nos dois sistemas</div><p>O mesmo endereço pessoal deverá constar no Q-Acadêmico e no SEI. Uma diferença entre os cadastros pode causar problemas de acesso e recuperação de senha.</p></div></section>
-<section class="article-section" id="passo-1"><h2><span class="step-number cca-tone-1">1</span>Abra o cadastro de usuário externo</h2><p>Acesse a página do SEI para Usuários Externos e clique em <strong>Clique aqui para se cadastrar</strong>.</p><figure><a aria-label="Ampliar imagem" class="image-zoom-trigger" data-external-href="assets/sei/media/e86fb24a2ca56fd9a2b4.webp" href="assets/sei/media/e86fb24a2ca56fd9a2b4.webp" rel="noopener noreferrer" target="_blank" title="Abre em nova guia"><img alt="Tela de acesso externo do SEI com o link de cadastro destacado." data-external-src="assets/sei/media/e86fb24a2ca56fd9a2b4.webp" decoding="async" loading="eager" src="assets/sei/media/e86fb24a2ca56fd9a2b4.webp" width="493" height="506"/></a><figcaption>Na página de login, escolha a opção de cadastro.</figcaption></figure>
-<p>Na tela seguinte, clique em <strong>Clique aqui para continuar</strong>.</p><figure><a aria-label="Ampliar imagem" class="image-zoom-trigger" data-external-href="assets/sei/media/a37d411e4c5bcde19075.webp" href="assets/sei/media/a37d411e4c5bcde19075.webp" rel="noopener noreferrer" target="_blank" title="Abre em nova guia"><img alt="Tela de cadastro de usuário externo com o link para continuar destacado." data-external-src="assets/sei/media/a37d411e4c5bcde19075.webp" decoding="async" loading="lazy" src="assets/sei/media/a37d411e4c5bcde19075.webp" width="455" height="313"/></a><figcaption>Confirme que deseja iniciar o cadastro.</figcaption></figure></section>
-<section class="article-section" id="passo-2"><h2><span class="step-number cca-tone-2">2</span>Preencha seus dados pessoais</h2><p>Informe os dados exatamente como aparecem em seus documentos. Preencha nome, CPF, RG, órgão expedidor, telefone e endereço residencial.</p><figure><a aria-label="Ampliar imagem" class="image-zoom-trigger" data-external-href="assets/sei/media/5fe555f0838aeda998a8.webp" href="assets/sei/media/5fe555f0838aeda998a8.webp" rel="noopener noreferrer" target="_blank" title="Abre em nova guia"><img alt="Formulário de dados cadastrais do usuário externo no SEI." data-external-src="assets/sei/media/5fe555f0838aeda998a8.webp" decoding="async" loading="lazy" src="assets/sei/media/5fe555f0838aeda998a8.webp" width="1189" height="732"/></a><figcaption>Preencha os dados pessoais e de endereço.</figcaption></figure></section>
-<section class="article-section" id="passo-3"><h2><span class="step-number cca-tone-3">3</span>Informe o e-mail e crie a senha</h2><p>No bloco <strong>Dados de Autenticação</strong>, informe o e-mail pessoal cadastrado no Q-Acadêmico. Crie e confirme a senha.</p><figure><a aria-label="Ampliar imagem" class="image-zoom-trigger" data-external-href="assets/sei/media/68bc8ca94dde99e912ac.webp" href="assets/sei/media/68bc8ca94dde99e912ac.webp" rel="noopener noreferrer" target="_blank" title="Abre em nova guia"><img alt="Campos de e-mail pessoal, senha e confirmação da senha no cadastro do SEI." data-external-src="assets/sei/media/68bc8ca94dde99e912ac.webp" decoding="async" loading="lazy" src="assets/sei/media/68bc8ca94dde99e912ac.webp" width="637" height="319"/></a><figcaption>O sistema exige uma senha com no mínimo 8 caracteres, contendo letras e números.</figcaption></figure>
-<div class="callout warning"><div class="callout-title">Atenção ao e-mail</div><ul class="compact-list"><li>O endereço deve ser pessoal e estar ativo.</li><li>Não pode ser o e-mail institucional.</li><li>Guarde o e-mail e a senha: serão usados para acessar o SEI depois que o Gabinete liberar seu primeiro acesso.</li></ul></div></section>
-<section class="article-section" id="passo-4"><h2><span class="step-number cca-tone-4">4</span>Conclua o cadastro</h2><p>Revise os dados e finalize o formulário. O sistema informará que as instruções de ativação foram encaminhadas ao seu e-mail.</p><div class="callout info"><div class="callout-title">Ignore o e-mail automático do SEI</div><p>Após o envio do formulário, você receberá uma mensagem automática com instruções padrão de ativação e um link para abrir chamado no SUAP. <strong>Não é necessário seguir esse link.</strong> Ignore essa mensagem e prossiga diretamente para a solicitação de liberação ao Gabinete, descrita no passo seguinte.</p></div><figure><a aria-label="Ampliar imagem" class="image-zoom-trigger" data-external-href="assets/sei/media/56d83b86276578544d4d.webp" href="assets/sei/media/56d83b86276578544d4d.webp" rel="noopener noreferrer" target="_blank" title="Abre em nova guia"><img alt="Mensagem do SEI informando que as instruções para ativar o cadastro foram encaminhadas por e-mail." data-external-src="assets/sei/media/56d83b86276578544d4d.webp" decoding="async" loading="lazy" src="assets/sei/media/56d83b86276578544d4d.webp" width="481" height="199"/></a><figcaption>O cadastro foi recebido, mas o acesso ainda precisa ser liberado.</figcaption></figure>
-<div class="callout info"><div class="callout-title">Próxima etapa: solicitação ao Gabinete</div><p>Para este fluxo, não é necessário abrir chamado no SUAP. Envie a solicitação de liberação diretamente ao Gabinete, conforme o passo seguinte.</p></div></section>
-<section class="article-section" id="passo-5"><h2><span class="step-number cca-tone-1">5</span>Solicite a liberação ao Gabinete</h2><p>Envie a solicitação para <a href="mailto:gabinete.baturite@ifce.edu.br"><strong>gabinete.baturite@ifce.edu.br</strong></a>.</p><div class="callout danger"><div class="callout-title">Envie a mensagem a partir do mesmo e-mail cadastrado no SEI</div><p>O endereço remetente deve ser igual ao e-mail pessoal informado no cadastro. Caso não se lembre ou não tenha mais acesso a ele, consulte as exceções na seção de problemas.</p></div>
-<div class="copy-box"><pre>Prezado,
+<section class="article-section" id="guia-certo"><h2>Este é o guia certo para você?</h2><div class="flow-grid"><div class="flow-card"><strong>Nunca se cadastrou</strong>Continue neste guia.</div><div class="flow-card"><strong>Já se cadastrou e esqueceu a senha</strong>Use o <a href="sei-recuperacao-de-senha.html">guia de recuperação de senha do SEI</a>.</div><div class="flow-card"><strong>Não sabe se já se cadastrou</strong>Tente o cadastro com o mesmo e-mail pessoal do Q-Acadêmico; as mensagens do sistema indicarão o próximo passo.</div></div><div class="callout warning"><div class="callout-title">Não use outro e-mail para testar ou contornar um erro</div><p>Se não lembrar se já fez o cadastro, use somente o mesmo e-mail pessoal cadastrado no Q-Acadêmico. Outro endereço pode gerar duplicidade e dificultar a liberação do acesso.</p></div></section>
+<div class="image-zoom-help"><span>🔍</span><div><strong>As imagens já estão ajustadas para leitura.</strong> Se precisar ver algum detalhe, clique ou toque na imagem para ampliá-la. Para fechar, use o X ou pressione Esc no computador.</div></div>
+<section class="article-section" id="antes"><h2>Antes de começar</h2><ul class="check-list"><li>Tenha CPF, RG, órgão expedidor, endereço completo e telefone.</li><li>Use o <strong>mesmo e-mail pessoal</strong> informado na ficha de pré-matrícula e cadastrado pela CCA no Q-Acadêmico.</li><li>Não use o e-mail institucional <code>@aluno.ifce.edu.br</code>.</li><li>Confirme que consegue acessar o e-mail escolhido.</li><li>Tenha sua matrícula e acesso ao SUAP, pois a liberação será solicitada por chamado.</li></ul><div class="callout info"><div class="callout-title">O e-mail deve coincidir nos dois sistemas</div><p>O mesmo endereço pessoal deverá constar no Q-Acadêmico e no SEI. Uma diferença entre os cadastros pode causar problemas de acesso e recuperação de senha.</p></div></section>
+<section class="article-section" id="passo-1"><h2><span class="step-number">1</span>Abra o cadastro de usuário externo</h2><p>Acesse a página do SEI para Usuários Externos e clique em <strong>Clique aqui para se cadastrar</strong>.</p><figure class="figure-compact"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/e86fb24a2ca56fd9a2b4.webp"><img alt="Tela de acesso externo do SEI com o link de cadastro destacado." decoding="async" height="506" loading="eager" src="assets/sei/media/e86fb24a2ca56fd9a2b4.webp" width="493"/></a><figcaption>Na página de login, escolha a opção de cadastro.</figcaption></figure><p>Na tela seguinte, clique em <strong>Clique aqui para continuar</strong>.</p><figure class="figure-compact"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/a37d411e4c5bcde19075.webp"><img alt="Tela de cadastro de usuário externo com o link para continuar destacado." decoding="async" height="313" loading="lazy" src="assets/sei/media/a37d411e4c5bcde19075.webp" width="455"/></a><figcaption>Confirme que deseja iniciar o cadastro.</figcaption></figure></section>
+<section class="article-section" id="passo-2"><h2><span class="step-number cca-tone-2">2</span>Preencha seus dados pessoais</h2><p>Informe os dados exatamente como aparecem em seus documentos. Preencha nome, CPF, RG, órgão expedidor, telefone e endereço residencial.</p><figure class="figure-wide"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/5fe555f0838aeda998a8.webp"><img alt="Formulário de dados cadastrais do usuário externo no SEI." decoding="async" height="732" loading="lazy" src="assets/sei/media/5fe555f0838aeda998a8.webp" width="1189"/></a><figcaption>Preencha os dados pessoais e de endereço.</figcaption></figure></section>
+<section class="article-section" id="passo-3"><h2><span class="step-number cca-tone-3">3</span>Informe o e-mail e crie a senha</h2><p>No bloco <strong>Dados de Autenticação</strong>, informe o e-mail pessoal cadastrado no Q-Acadêmico. Crie e confirme a senha.</p><figure class="figure-compact"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/68bc8ca94dde99e912ac.webp"><img alt="Campos de e-mail pessoal, senha e confirmação da senha no cadastro do SEI." decoding="async" height="319" loading="lazy" src="assets/sei/media/68bc8ca94dde99e912ac.webp" width="637"/></a><figcaption>O sistema exige uma senha com no mínimo 8 caracteres, contendo letras e números.</figcaption></figure><div class="callout warning"><div class="callout-title">Atenção ao e-mail</div><ul class="compact-list"><li>O endereço deve ser pessoal e estar ativo.</li><li>Não pode ser o e-mail institucional.</li><li>Guarde o e-mail e a senha: serão usados para acessar o SEI depois que o chamado for concluído com a liberação.</li></ul></div></section>
+<section class="article-section" id="passo-4"><h2><span class="step-number cca-tone-4">4</span>Conclua o cadastro e abra o e-mail do SEI</h2><p>Revise os dados e finalize o formulário. O sistema informará que as instruções de ativação foram encaminhadas ao seu e-mail.</p><figure class="figure-compact"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/56d83b86276578544d4d.webp"><img alt="Mensagem do SEI informando que as instruções para ativar o cadastro foram encaminhadas por e-mail." decoding="async" height="199" loading="lazy" src="assets/sei/media/56d83b86276578544d4d.webp" width="481"/></a><figcaption>O cadastro foi recebido, mas o acesso ainda precisa ser liberado.</figcaption></figure><p>Abra a mensagem com o assunto <strong>Cadastro de Usuário Externo no SEI-IFCE</strong>.</p><p>No corpo do e-mail, clique <strong>apenas no link do SUAP</strong>, que começa com <code>https://suap.ifce.edu.br/centralservicos/</code>.</p><figure class="figure-wide"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/tutorial-email-link-suap.webp"><img alt="E-mail do SEI com o link da Central de Serviços do SUAP destacado." decoding="async" height="570" loading="lazy" src="assets/sei/media/tutorial-email-link-suap.webp" width="954"/></a><figcaption>Para estudantes com acesso ao SUAP, use o link da Central de Serviços destacado no e-mail.</figcaption></figure><div class="callout info"><div class="callout-title">O cadastro inicial não libera o acesso sozinho</div><p>O link do e-mail conduz à etapa obrigatória de abertura do chamado no SUAP.</p></div></section>
+<section class="article-section" id="passo-5"><h2><span class="step-number">5</span>Entre no SUAP</h2><p>Ao abrir o link do e-mail, entre com seu <strong>número de matrícula</strong> no campo Usuário e com sua senha do SUAP.</p><figure class="figure-compact"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/tutorial-login-suap.webp"><img alt="Tela de login do SUAP com os campos Usuário e Senha." decoding="async" height="407" loading="lazy" src="assets/sei/media/tutorial-login-suap.webp" width="412"/></a><figcaption>Use sua matrícula e a senha do SUAP.</figcaption></figure><div class="callout"><div class="callout-title">Primeiro acesso ao SUAP</div><p>A senha padrão segue o formato <code>@IFCE</code> + data de nascimento, sem barras, no padrão DDMMAAAA. Exemplo fictício: <code>@IFCE01052005</code>.</p></div><div class="callout info"><div class="callout-title">A senha padrão não funcionou ou você esqueceu a senha?</div><p>Consulte a seção <a href="suapedu-primeiro-acesso.html#recuperacao"><strong>A senha padrão não funcionou</strong></a> no guia de primeiro acesso ao SuapEdu. Ela mostra o formulário, o e-mail de redefinição e as regras para criar a nova senha.</p></div></section>
+<section class="article-section" id="passo-6"><h2><span class="step-number cca-tone-2">6</span>Abra e envie o chamado</h2><p>Já logado, o link do e-mail deverá abrir a Central de Serviços. Se ele levar à página inicial do SUAP, siga manualmente:</p><div class="callout info"><div class="callout-title">Caminho manual</div><p><strong>Página de Início → Central de Serviços → Abrir Chamado → Administração → aba SEI → opção 4</strong>.</p></div><figure class="figure-wide"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/tutorial-central-servicos-sei.webp"><img alt="Página Abrir chamado para Administração com a aba SEI destacada." decoding="async" height="450" loading="lazy" src="assets/sei/media/tutorial-central-servicos-sei.webp" width="952"/></a><figcaption>Na área de Administração, escolha a aba SEI.</figcaption></figure><p>Selecione a opção <strong>4 — Solicitar acesso externo para discente</strong>.</p><figure class="figure-compact"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/tutorial-opcao-acesso-externo.webp"><img alt="Lista de serviços do SEI com a opção Solicitar acesso externo para discente destacada." decoding="async" height="478" loading="lazy" src="assets/sei/media/tutorial-opcao-acesso-externo.webp" width="636"/></a><figcaption>Escolha a opção específica para acesso externo de discente.</figcaption></figure><p>Role até o final e clique em <strong>Não encontrei nenhuma solução. Desejo abrir um novo chamado mesmo assim.</strong></p><figure class="figure-wide"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/tutorial-abrir-chamado.webp"><img alt="Botão para abrir um novo chamado mesmo assim." decoding="async" height="200" loading="lazy" src="assets/sei/media/tutorial-abrir-chamado.webp" width="845"/></a><figcaption>Use o botão ao final da página do serviço.</figcaption></figure><p>No campo <strong>Descrição</strong>, solicite a liberação do seu primeiro acesso e informe nome completo, CPF e o e-mail cadastrado no SEI. Preencha também o telefone adicional para contato.</p><figure class="figure-wide"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/tutorial-formulario-chamado.webp"><img alt="Formulário do chamado com campos Descrição, Telefone Adicional para Contato e Campus." decoding="async" height="574" loading="lazy" src="assets/sei/media/tutorial-formulario-chamado.webp" width="1190"/></a><figcaption>Preencha a descrição, o telefone e confira o campus antes de enviar.</figcaption></figure><div class="copy-box"><pre>Prezado,
 
-Realizei meu cadastro como usuário externo no SEI e solicito a liberação do acesso.
+Solicito a liberação do meu primeiro acesso como usuário externo (discente) ao SEI.
 
 Nome completo: [seu nome completo]
 CPF: [000.000.000-00]
-Número de matrícula, se souber: [sua matrícula]
-Curso: [seu curso]
-E-mail pessoal utilizado no cadastro do SEI: [seu e-mail]
+E-mail cadastrado no SEI: [seu e-mail]
 
-Atenciosamente,</pre><div class="copy-actions"><button class="copy-button" data-copy="Prezado,
+Desde já, agradeço a atenção.</pre><div class="copy-actions"><button class="copy-button" data-copy="Prezado,
 
-Realizei meu cadastro como usuário externo no SEI e solicito a liberação do acesso.
+Solicito a liberação do meu primeiro acesso como usuário externo (discente) ao SEI.
 
 Nome completo: [seu nome completo]
 CPF: [000.000.000-00]
-Número de matrícula, se souber: [sua matrícula]
-Curso: [seu curso]
-E-mail pessoal utilizado no cadastro do SEI: [seu e-mail]
+E-mail cadastrado no SEI: [seu e-mail]
 
-Atenciosamente,">Copiar modelo</button><a class="button button-primary" href="mailto:gabinete.baturite@ifce.edu.br?subject=Solicita%C3%A7%C3%A3o%20de%20libera%C3%A7%C3%A3o%20de%20acesso%20externo%20ao%20SEI&amp;body=Prezado%2C%0A%0ARealizei%20meu%20cadastro%20como%20usu%C3%A1rio%20externo%20no%20SEI%20e%20solicito%20a%20libera%C3%A7%C3%A3o%20do%20acesso.%0A%0ANome%20completo%3A%20%5Bseu%20nome%20completo%5D%0ACPF%3A%20%5B000.000.000-00%5D%0AN%C3%BAmero%20de%20matr%C3%ADcula%2C%20se%20souber%3A%20%5Bsua%20matr%C3%ADcula%5D%0ACurso%3A%20%5Bseu%20curso%5D%0AE-mail%20pessoal%20utilizado%20no%20cadastro%20do%20SEI%3A%20%5Bseu%20e-mail%5D%0A%0AAtenciosamente%2C">Solicitar liberação por e-mail</a></div></div></section>
-<section class="article-section" id="passo-6"><h2><span class="step-number cca-tone-2">6</span>Aguarde a confirmação</h2><p>Aguarde a confirmação do Gabinete antes de tentar acessar o SEI. Não há prazo de resposta informado neste guia.</p><div class="callout info"><div class="callout-title">Mantenha o histórico da solicitação</div><p>Se precisar pedir uma atualização, responda à própria mensagem enviada, sem iniciar uma conversa nova.</p></div></section>
-<section class="article-section" id="passo-7"><h2><span class="step-number cca-tone-3">7</span>Acesse o SEI</h2><p>Depois da confirmação de liberação, volte à página de Usuários Externos e entre com o mesmo e-mail e a senha criados no cadastro.</p><figure><a aria-label="Ampliar imagem" class="image-zoom-trigger" data-external-href="assets/sei/media/ecaf8fd042e4fd646f95.webp" href="assets/sei/media/ecaf8fd042e4fd646f95.webp" rel="noopener noreferrer" target="_blank" title="Abre em nova guia"><img alt="Tela de login do SEI para usuários externos com os campos e-mail e senha." data-external-src="assets/sei/media/ecaf8fd042e4fd646f95.webp" decoding="async" loading="lazy" src="assets/sei/media/ecaf8fd042e4fd646f95.webp" width="492" height="441"/></a><figcaption>Após a liberação, use as credenciais criadas no cadastro inicial.</figcaption></figure></section>
+Desde já, agradeço a atenção.">Copiar modelo</button></div></div><p>Por fim, clique em <strong>Confirmar</strong>.</p><div class="callout info"><div class="callout-title">Prazo estimado</div><p>O serviço informa prazo estimado de resolução de até <strong>36 horas</strong>.</p></div></section>
+<section class="article-section" id="passo-7"><h2><span class="step-number cca-tone-3">7</span>Acompanhe o chamado e acesse o SEI</h2><p>O chamado será encaminhado ao Gabinete do Campus Baturité. Para acompanhar, acesse <strong>SUAP → Central de Serviços → Meus Chamados</strong>.</p><figure class="figure-compact"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/tutorial-meus-chamados.webp"><img alt="Menu da Central de Serviços com Meus Chamados destacado." decoding="async" height="407" loading="lazy" src="assets/sei/media/tutorial-meus-chamados.webp" width="606"/></a><figcaption>Acompanhe o andamento em Meus Chamados.</figcaption></figure><p>Quando o chamado estiver fechado, abra-o e leia a resposta. A liberação precisa estar indicada na linha do tempo.</p><p>Após a confirmação da liberação, volte à página de Usuários Externos e entre com o mesmo e-mail e a senha criados no cadastro.</p><figure class="figure-compact"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/ecaf8fd042e4fd646f95.webp"><img alt="Tela de login do SEI para usuários externos com os campos e-mail e senha." decoding="async" height="441" loading="lazy" src="assets/sei/media/ecaf8fd042e4fd646f95.webp" width="492"/></a><figcaption>Depois da liberação, use as credenciais criadas no cadastro inicial.</figcaption></figure></section>
 <section class="article-section" id="problemas"><p class="eyebrow">Problemas técnicos</p><h2>Mensagens e situações mais comuns</h2>
-<h3 id="pendente">“Já existe cadastro pendente relacionado com este e-mail”</h3><figure><a aria-label="Ampliar imagem" class="image-zoom-trigger" data-external-href="assets/sei/media/dd6b512edf211aae84f2.webp" href="assets/sei/media/dd6b512edf211aae84f2.webp" rel="noopener noreferrer" target="_blank" title="Abre em nova guia"><img alt="Mensagem informando que já existe cadastro pendente relacionado com o e-mail." data-external-src="assets/sei/media/dd6b512edf211aae84f2.webp" decoding="async" loading="lazy" src="assets/sei/media/dd6b512edf211aae84f2.webp" width="516" height="232"/></a><figcaption>A mensagem indica que o formulário já foi enviado e o acesso ainda depende de liberação.</figcaption></figure>
-<p>Não faça outro cadastro. Envie a solicitação de liberação ao Gabinete. Caso já tenha enviado, aguarde a resposta ou responda à mesma conversa para solicitar atualização.</p>
-<h3 id="ja-cadastrado">“Já existe usuário cadastrado com este e-mail”</h3><figure><a aria-label="Ampliar imagem" class="image-zoom-trigger" data-external-href="assets/sei/media/b44825e27b973c9f96aa.webp" href="assets/sei/media/b44825e27b973c9f96aa.webp" rel="noopener noreferrer" target="_blank" title="Abre em nova guia"><img alt="Mensagem informando que já existe usuário cadastrado com o e-mail." data-external-src="assets/sei/media/b44825e27b973c9f96aa.webp" decoding="async" loading="lazy" src="assets/sei/media/b44825e27b973c9f96aa.webp" width="921" height="501"/></a><figcaption>Não tente cadastrar novamente o mesmo usuário.</figcaption></figure>
-<p><strong>Em regra</strong>, essa mensagem indica que já existe usuário registrado com o endereço. Use o <a href="sei-recuperacao-de-senha.html">guia de recuperação de senha</a>. Caso você nunca tenha recebido confirmação de liberação, escreva ao Gabinete.</p>
-<h3 id="duplicado">“Consulta retornou mais de um registro de USUÁRIO”</h3><figure><a aria-label="Ampliar imagem" class="image-zoom-trigger" data-external-href="assets/sei/media/1ef18e216c2dc6e6eb90.jpg" href="assets/sei/media/1ef18e216c2dc6e6eb90.jpg" rel="noopener noreferrer" target="_blank" title="Abre em nova guia"><img alt="Tela de erro do SEI com a mensagem consulta retornou mais de um registro de usuário." data-external-src="assets/sei/media/1ef18e216c2dc6e6eb90.jpg" decoding="async" loading="lazy" src="assets/sei/media/1ef18e216c2dc6e6eb90.jpg" width="1122" height="280"/></a><figcaption>O Gabinete precisa corrigir o cadastro duplicado.</figcaption></figure>
-<p>Envie ao Gabinete uma solicitação de exclusão do usuário duplicado. Depois da confirmação do ajuste, volte ao SEI e utilize <strong>Esqueci minha senha</strong>.</p><div class="copy-box"><pre>Prezado,
+<h3 id="pendente">“Já existe cadastro pendente relacionado com este e-mail”</h3><figure class="figure-compact"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/dd6b512edf211aae84f2.webp"><img alt="Mensagem informando que já existe cadastro pendente relacionado com o e-mail." decoding="async" height="232" loading="lazy" src="assets/sei/media/dd6b512edf211aae84f2.webp" width="516"/></a><figcaption>A mensagem indica que o formulário já foi enviado e o acesso ainda depende de liberação.</figcaption></figure><p>Não faça outro cadastro. Verifique qual situação se aplica:</p><ol><li><strong>Você concluiu o cadastro, mas ainda não abriu o chamado:</strong> prossiga a partir do <a href="#passo-4">e-mail automático do SEI</a> e abra o chamado no SUAP.</li><li><strong>Você já abriu o chamado:</strong> acompanhe o andamento em <strong>SUAP → Central de Serviços → Meus Chamados</strong> e aguarde a conclusão.</li></ol><div class="callout info"><div class="callout-title">Esta mensagem corresponde a um cadastro ainda pendente</div><p>Quando o acesso já foi liberado, esta não é a mensagem esperada. Não associe o aviso de cadastro pendente a esquecimento de senha.</p></div>
+<h3 id="ja-cadastrado">“Já existe usuário cadastrado com este e-mail”</h3><figure class="figure-wide"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/b44825e27b973c9f96aa.webp"><img alt="Mensagem informando que já existe usuário cadastrado com o e-mail." decoding="async" height="501" loading="lazy" src="assets/sei/media/b44825e27b973c9f96aa.webp" width="921"/></a><figcaption>Não tente cadastrar novamente o mesmo usuário.</figcaption></figure><p>Essa mensagem indica que já existe um usuário associado ao endereço. Volte à tela de login. Caso não lembre a senha, use o <a href="sei-recuperacao-de-senha.html">guia de recuperação de senha do SEI</a>.</p><p>Se você nunca conseguiu entrar, a recuperação não funcionar ou houver dúvida sobre a situação do cadastro, abra um chamado no SUAP pelo fluxo do <a href="#passo-6">passo 6</a> e transcreva a mensagem recebida.</p>
+<h3 id="duplicado">“Consulta retornou mais de um registro de USUÁRIO”</h3><figure class="figure-wide"><a aria-label="Ampliar imagem" class="image-zoom-trigger" href="assets/sei/media/1ef18e216c2dc6e6eb90.jpg"><img alt="Tela de erro do SEI com a mensagem consulta retornou mais de um registro de usuário." decoding="async" height="280" loading="lazy" src="assets/sei/media/1ef18e216c2dc6e6eb90.jpg" width="1122"/></a><figcaption>O cadastro duplicado precisa ser corrigido antes do acesso.</figcaption></figure><p>Abra um chamado no SUAP, na área do SEI, e solicite a correção do usuário duplicado. Depois da confirmação do ajuste, volte ao SEI e utilize <strong>Esqueci minha senha</strong>.</p><div class="copy-box"><pre>Prezado,
 
-Ao tentar acessar o SEI, recebi a mensagem “Consulta retornou mais de um registro de USUÁRIO”. Solicito a exclusão do cadastro duplicado.
+Ao tentar acessar o SEI, recebi a mensagem “Consulta retornou mais de um registro de USUÁRIO”. Solicito a correção do cadastro duplicado.
 
 Nome completo: [seu nome completo]
 CPF: [000.000.000-00]
-Número de matrícula, se souber: [sua matrícula]
+Número de matrícula: [sua matrícula]
 Curso: [seu curso]
 E-mail pessoal utilizado no SEI: [seu e-mail]
 
 Atenciosamente,</pre><div class="copy-actions"><button class="copy-button" data-copy="Prezado,
 
-Ao tentar acessar o SEI, recebi a mensagem “Consulta retornou mais de um registro de USUÁRIO”. Solicito a exclusão do cadastro duplicado.
+Ao tentar acessar o SEI, recebi a mensagem “Consulta retornou mais de um registro de USUÁRIO”. Solicito a correção do cadastro duplicado.
 
 Nome completo: [seu nome completo]
 CPF: [000.000.000-00]
-Número de matrícula, se souber: [sua matrícula]
+Número de matrícula: [sua matrícula]
 Curso: [seu curso]
 E-mail pessoal utilizado no SEI: [seu e-mail]
 
-Atenciosamente,">Copiar modelo</button><a class="button button-primary" href="mailto:gabinete.baturite@ifce.edu.br?subject=Corre%C3%A7%C3%A3o%20de%20usu%C3%A1rio%20duplicado%20no%20SEI&amp;body=Prezado%2C%0A%0AAo%20tentar%20acessar%20o%20SEI%2C%20recebi%20a%20mensagem%20%E2%80%9CConsulta%20retornou%20mais%20de%20um%20registro%20de%20USU%C3%81RIO%E2%80%9D.%20Solicito%20a%20exclus%C3%A3o%20do%20cadastro%20duplicado.%0A%0ANome%20completo%3A%20%5Bseu%20nome%20completo%5D%0ACPF%3A%20%5B000.000.000-00%5D%0AN%C3%BAmero%20de%20matr%C3%ADcula%2C%20se%20souber%3A%20%5Bsua%20matr%C3%ADcula%5D%0ACurso%3A%20%5Bseu%20curso%5D%0AE-mail%20pessoal%20utilizado%20no%20SEI%3A%20%5Bseu%20e-mail%5D%0A%0AAtenciosamente%2C">Solicitar correção do cadastro duplicado</a></div></div>
-<h3 id="email-nao-chega">O e-mail de recuperação de senha não chegou</h3><p>Antes de solicitar uma alteração, tenha certeza de que:</p><ul class="check-list"><li>verificou Spam, Lixo eletrônico, Promoções, Outros e pastas semelhantes;</li><li>a caixa de e-mail não está cheia;</li><li>aguardou alguns minutos e repetiu a solicitação;</li><li>informou exatamente o e-mail cadastrado;</li><li>está consultando a conta correta.</li></ul><div class="callout warning"><div class="callout-title">Se a mensagem continuar sem chegar</div><ol><li>Solicite à CCA a alteração do e-mail pessoal no Q-Acadêmico.</li><li>Depois, solicite ao Gabinete a alteração para o mesmo endereço no SEI.</li><li>Após a confirmação das duas alterações, repita a recuperação de senha.</li></ol><p>O novo endereço deve ser pessoal, ativo e não institucional.</p></div>
-<h3 id="nao-lembra-email">Não lembro qual e-mail usei no SEI</h3><p>Escreva ao Gabinete e informe claramente que não se lembra do endereço utilizado. Inclua nome completo, CPF, matrícula, se souber, e curso.</p><p>Se o Gabinete localizar o e-mail e você não tiver mais acesso a ele, informe um novo e-mail pessoal para atualização no SEI. Depois, solicite à CCA a alteração para o mesmo endereço no Q-Acadêmico.</p>
-<h3 id="alterar-email">Sei qual é o e-mail, mas quero alterá-lo</h3><p>Solicite a mudança aos dois setores: ao Gabinete, para o SEI, e à CCA, para o Q-Acadêmico. Informe exatamente o mesmo novo endereço pessoal nas duas solicitações.</p><div class="callout danger"><div class="callout-title">Não altere apenas um dos sistemas</div><p>Cadastros com e-mails diferentes podem causar novos problemas de acesso e recuperação de senha.</p></div></section>
-<section class="article-section faq" id="faq"><p class="eyebrow">Perguntas frequentes</p><h2>Dúvidas rápidas</h2><details><summary>Posso usar o e-mail institucional?</summary><p>Não. Use um e-mail pessoal. O endereço institucional possui campo próprio e não deve ser utilizado como e-mail de recuperação no SEI.</p></details><details><summary>Preciso abrir chamado no SUAP?</summary><p>No fluxo adotado pelo Campus Baturité, a solicitação de liberação é enviada diretamente ao Gabinete por e-mail. Não é necessário abrir chamado no SUAP.</p></details><details><summary>Quanto tempo demora a liberação?</summary><p>Não há prazo de resposta informado neste guia. Aguarde a confirmação do Gabinete antes de acessar o sistema.</p></details><details><summary>Esqueci a senha criada no cadastro.</summary><p>Consulte o <a href="sei-recuperacao-de-senha.html">guia de recuperação de senha</a>. A senha recebida é temporária e deve ser alterada no primeiro login.</p></details></section>
-<section class="article-section" id="seguranca"><p class="eyebrow">Segurança</p><h2>Proteja seus dados</h2><ul class="security-list"><li>Não envie sua senha à CCA, ao Gabinete ou a qualquer outro setor.</li><li>Use somente endereços institucionais oficiais do IFCE para solicitar atendimento, como os terminados em <code>@ifce.edu.br</code> ou <code>@baturite.ifce.edu.br</code>.</li><li>Não compartilhe códigos ou mensagens de recuperação.</li><li>Ao usar computador compartilhado, encerre a sessão ao terminar.</li></ul></section>
-<section class="article-section" id="contatos"><h2>Contatos</h2><p><strong>Liberação e correções no cadastro do SEI:</strong><br/><a href="mailto:gabinete.baturite@ifce.edu.br">gabinete.baturite@ifce.edu.br</a></p><p><strong>Alteração do e-mail pessoal no Q-Acadêmico:</strong><br/><a href="mailto:cca.baturite@ifce.edu.br">cca.baturite@ifce.edu.br</a></p><p class="meta">Última atualização: julho de 2026.</p></section>
-</article><aside aria-label="Nesta página" class="toc"><h2>Nesta página</h2><ol><li><a href="#guia-certo">Escolher o fluxo</a></li><li><a href="#antes">Antes de começar</a></li><li><a href="#passo-1">Abrir o cadastro</a></li><li><a href="#passo-2">Dados pessoais</a></li><li><a href="#passo-3">E-mail e senha</a></li><li><a href="#passo-4">Concluir cadastro</a></li><li><a href="#passo-5">Solicitar liberação</a></li><li><a href="#passo-6">Aguardar confirmação</a></li><li><a href="#passo-7">Acessar o SEI</a></li><li><a href="#problemas">Resolver problemas</a></li><li><a href="#faq">Dúvidas rápidas</a></li></ol></aside></div></main><footer class="site-footer"><div class="footer-inner"><div class="footer-note"><strong>Coordenadoria de Controle Acadêmico — CCA</strong><br/>IFCE Campus Baturité · <a href="mailto:cca.baturite@ifce.edu.br">cca.baturite@ifce.edu.br</a></div><div>Desenvolvido e mantido pela CCA.<br/><span class="small">Estatísticas de acesso são utilizadas para aprimorar o conteúdo.</span></div></div></footer><script>(()=>{document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const v=b.getAttribute('data-copy');try{await navigator.clipboard.writeText(v);const o=b.textContent;b.textContent='Copiado';setTimeout(()=>b.textContent=o,1600)}catch(_){window.prompt('Copie o texto:',v)}}));})();</script>
-<script>
-(function () {
-  const triggers = Array.from(document.querySelectorAll('figure a.image-zoom-trigger'));
-  if (!triggers.length) return;
-
-  const overlay = document.createElement('div');
-  overlay.className = 'image-lightbox';
-  overlay.setAttribute('role', 'dialog');
-  overlay.setAttribute('aria-modal', 'true');
-  overlay.setAttribute('aria-label', 'Imagem ampliada');
-  overlay.innerHTML = `
-    <div class="image-lightbox-dialog">
-      <img alt="">
-      <button type="button" class="image-lightbox-close" aria-label="Fechar imagem ampliada">×</button>
-    </div>
-  `;
-  document.body.appendChild(overlay);
-
-  const modalImage = overlay.querySelector('img');
-  const closeButton = overlay.querySelector('.image-lightbox-close');
-  let lastTrigger = null;
-
-  function openLightbox(trigger) {
-    const sourceImage = trigger.querySelector('img');
-    lastTrigger = trigger;
-    modalImage.src = trigger.getAttribute('href') || sourceImage.src;
-    modalImage.alt = sourceImage.alt || 'Imagem ampliada';
-    overlay.classList.add('is-open');
-    document.body.classList.add('lightbox-open');
-    closeButton.focus();
-  }
-
-  function closeLightbox() {
-    overlay.classList.remove('is-open');
-    document.body.classList.remove('lightbox-open');
-    modalImage.removeAttribute('src');
-    if (lastTrigger) lastTrigger.focus();
-  }
-
-  triggers.forEach((trigger) => {
-    trigger.addEventListener('click', (event) => {
-      event.preventDefault();
-      openLightbox(trigger);
-    });
-  });
-
-  closeButton.addEventListener('click', closeLightbox);
-  overlay.addEventListener('click', (event) => {
-    if (event.target === overlay) closeLightbox();
-  });
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
-      closeLightbox();
-    }
-  });
-})();
-</script>
-<script id="cca-lightbox-focus-trap">
-document.addEventListener('keydown', function (event) {
-  if (event.key !== 'Tab') return;
-  const overlay = document.querySelector('.image-lightbox.is-open');
-  if (!overlay) return;
-  const focusable = Array.from(overlay.querySelectorAll('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
-    .filter(function (item) { return !item.disabled && item.getClientRects().length > 0; });
-  if (!focusable.length) {
-    event.preventDefault();
-    return;
-  }
-  const first = focusable[0];
-  const last = focusable[focusable.length - 1];
-  if (event.shiftKey && document.activeElement === first) {
-    event.preventDefault();
-    last.focus();
-  } else if (!event.shiftKey && document.activeElement === last) {
-    event.preventDefault();
-    first.focus();
-  }
-});
-</script><script data-goatcounter="https://cca-baturite.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script></body></html>
+Atenciosamente,">Copiar modelo</button><a class="button button-secondary" href="#passo-6">Ver como abrir o chamado</a></div></div>
+<h3 id="email-nao-chega">O e-mail automático do SEI não chegou</h3><p>Antes de repetir o cadastro, confirme que:</p><ul class="check-list"><li>verificou Spam, Lixo eletrônico, Promoções, Outros e pastas semelhantes;</li><li>a caixa de e-mail não está cheia;</li><li>aguardou alguns minutos;</li><li>informou exatamente o e-mail pessoal cadastrado no Q-Acadêmico;</li><li>está consultando a conta correta.</li></ul><div class="callout warning"><div class="callout-title">Evite criar cadastros repetidos</div><p>Se o sistema passar a informar que há cadastro pendente ou usuário já cadastrado, siga a orientação correspondente nesta seção em vez de preencher um novo formulário.</p></div>
+<h3 id="recuperacao-nao-chega">O e-mail de recuperação de senha do SEI não chegou</h3><p>Confira as pastas de spam, o espaço disponível na caixa e se informou exatamente o e-mail cadastrado. Persistindo o problema:</p><ol><li>solicite à CCA a conferência ou alteração do e-mail pessoal no Q-Acadêmico;</li><li>abra um chamado no SUAP para que o mesmo endereço seja conferido ou atualizado no cadastro do SEI;</li><li>após a confirmação das duas informações, repita a recuperação de senha.</li></ol><p>O endereço deve ser pessoal, ativo e igual nos dois sistemas.</p>
+<h3 id="nao-lembra-email">Não lembro qual e-mail usei no SEI</h3><p>Confirme com a CCA qual e-mail pessoal está cadastrado no Q-Acadêmico. Em seguida, abra um chamado no SUAP e solicite a conferência do endereço associado ao seu usuário externo no SEI. Informe nome completo, CPF, matrícula e curso.</p>
+<h3 id="alterar-email">Sei qual é o e-mail, mas quero alterá-lo</h3><p>Solicite a alteração nos dois sistemas: à CCA, para o Q-Acadêmico, e por chamado no SUAP, para o cadastro do SEI. Informe exatamente o mesmo novo endereço pessoal nas duas solicitações.</p><div class="callout danger"><div class="callout-title">Não altere apenas um dos sistemas</div><p>Cadastros com e-mails diferentes podem causar novos problemas de acesso e recuperação de senha.</p></div></section>
+<section class="article-section faq" id="faq"><p class="eyebrow">Perguntas frequentes</p><h2>Dúvidas rápidas</h2><details><summary>Posso usar o e-mail institucional?</summary><p>Não. Use um e-mail pessoal. O endereço institucional possui campo próprio e não deve ser utilizado como e-mail de recuperação no SEI.</p></details><details><summary>Preciso abrir chamado no SUAP?</summary><p>Sim. Depois do cadastro inicial, use o link recebido no e-mail automático do SEI e abra o chamado de liberação na Central de Serviços do SUAP.</p></details><details><summary>Quanto tempo demora a liberação?</summary><p>O serviço informa prazo estimado de até 36 horas após a abertura do chamado. Acompanhe o andamento em Meus Chamados.</p></details><details><summary>Esqueci a senha criada no cadastro do SEI.</summary><p>Consulte o <a href="sei-recuperacao-de-senha.html">guia de recuperação de senha do SEI</a>.</p></details><details><summary>Esqueci a senha do SUAP.</summary><p>Use a seção <a href="suapedu-primeiro-acesso.html#recuperacao">A senha padrão não funcionou</a> do guia de primeiro acesso ao SuapEdu.</p></details></section>
+<section class="article-section" id="seguranca"><p class="eyebrow">Segurança</p><h2>Proteja seus dados</h2><ul class="check-list"><li>Não envie sua senha à CCA, ao Gabinete ou a qualquer outro setor.</li><li>Confira se os endereços começam com <code>https://sei.ifce.edu.br</code> ou <code>https://suap.ifce.edu.br</code>.</li><li>Não compartilhe códigos ou mensagens de recuperação.</li><li>Ao usar computador compartilhado, encerre a sessão ao terminar.</li></ul></section>
+<section class="article-section" id="contatos"><h2>Atendimento</h2><p><strong>Liberação e correções no cadastro do SEI:</strong><br/>Abra um chamado no <a aria-label="SUAP — abre em nova guia" href="https://suap.ifce.edu.br" rel="noopener noreferrer" target="_blank">SUAP</a>, pela Central de Serviços e pela área SEI.</p><p><strong>Conferência ou alteração do e-mail pessoal no Q-Acadêmico:</strong><br/><a href="mailto:cca.baturite@ifce.edu.br">cca.baturite@ifce.edu.br</a></p><p class="meta">Última atualização: julho de 2026.</p></section>
+</article><aside aria-label="Nesta página" class="toc"><h2>Nesta página</h2><ol><li><a href="#guia-certo">Escolher o fluxo</a></li><li><a href="#antes">Antes de começar</a></li><li><a href="#passo-1">Abrir o cadastro</a></li><li><a href="#passo-2">Dados pessoais</a></li><li><a href="#passo-3">E-mail e senha</a></li><li><a href="#passo-4">Abrir o e-mail</a></li><li><a href="#passo-5">Entrar no SUAP</a></li><li><a href="#passo-6">Abrir o chamado</a></li><li><a href="#passo-7">Acompanhar e acessar</a></li><li><a href="#problemas">Resolver problemas</a></li><li><a href="#faq">Dúvidas rápidas</a></li></ol></aside></div>
+</main>
+<footer class="site-footer"><div class="footer-inner"><div class="footer-note"><strong>Coordenadoria de Controle Acadêmico — CCA</strong><br/>IFCE Campus Baturité · <a href="mailto:cca.baturite@ifce.edu.br">cca.baturite@ifce.edu.br</a></div><div>Desenvolvido e mantido pela CCA.<br/><span class="small">Estatísticas de acesso são utilizadas para aprimorar o conteúdo.</span></div></div></footer>
+<script>(()=>{document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{const v=b.getAttribute('data-copy');try{await navigator.clipboard.writeText(v);const o=b.textContent;b.textContent='Copiado';setTimeout(()=>b.textContent=o,1600)}catch(_){window.prompt('Copie o texto:',v)}}));})();</script>
+<script>(function(){const triggers=Array.from(document.querySelectorAll('figure a.image-zoom-trigger'));if(!triggers.length)return;const overlay=document.createElement('div');overlay.className='image-lightbox';overlay.setAttribute('role','dialog');overlay.setAttribute('aria-modal','true');overlay.setAttribute('aria-label','Imagem ampliada');overlay.innerHTML='<div class="image-lightbox-dialog"><img alt=""><button type="button" class="image-lightbox-close" aria-label="Fechar imagem ampliada">×</button></div>';document.body.appendChild(overlay);const modalImage=overlay.querySelector('img');const closeButton=overlay.querySelector('.image-lightbox-close');let lastTrigger=null;function openLightbox(trigger){const sourceImage=trigger.querySelector('img');lastTrigger=trigger;modalImage.src=trigger.getAttribute('href')||sourceImage.src;modalImage.alt=sourceImage.alt||'Imagem ampliada';overlay.classList.add('is-open');document.body.classList.add('lightbox-open');closeButton.focus()}function closeLightbox(){overlay.classList.remove('is-open');document.body.classList.remove('lightbox-open');modalImage.removeAttribute('src');if(lastTrigger)lastTrigger.focus()}triggers.forEach(trigger=>trigger.addEventListener('click',event=>{event.preventDefault();openLightbox(trigger)}));closeButton.addEventListener('click',closeLightbox);overlay.addEventListener('click',event=>{if(event.target===overlay)closeLightbox()});document.addEventListener('keydown',event=>{if(event.key==='Escape'&&overlay.classList.contains('is-open'))closeLightbox()})})();</script>
+<script async="" data-goatcounter="https://cca-baturite.goatcounter.com/count" src="https://gc.zgo.at/count.js"></script>
+</body></html>
