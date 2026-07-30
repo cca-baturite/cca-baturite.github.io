@@ -1,0 +1,159 @@
+name: Aplicar refinamentos finais antes da divulgação
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/final-public-refinements.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refinamentos-finais-divulgacao-cca
+  cancel-in-progress: false
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar a árvore atual
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar e auditar os refinamentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+
+          root = Path('.').resolve()
+          q_hub_path = root / 'guias/q-academico.html'
+          q_access_path = root / 'guias/q-academico-acesso-e-senha.html'
+          suap_path = root / 'guias/suapedu.html'
+          index_path = root / 'guias/index.html'
+
+          def replace_once(text, old, new, label):
+              count = text.count(old)
+              assert count == 1, f'{label}: esperado 1, encontrado {count}'
+              return text.replace(old, new, 1)
+
+          # Q-Acadêmico — página central
+          q_hub = q_hub_path.read_text(encoding='utf-8')
+          q_unavailable_css = '''<style id="cca-q-unavailable-action">
+          .q-hub-page .button-unavailable{color:#6d6558;background:#f3efe6;border:1.5px dashed #b9ad97;cursor:not-allowed;box-shadow:none}
+          .q-hub-page .button-unavailable:hover{background:#f3efe6}
+          .q-hub-page .availability-note{margin-left:.35rem;padding:.13rem .45rem;border-radius:999px;background:#e7dcc4;color:#5d4824;font-size:.72rem;font-weight:850;letter-spacing:.04em;text-transform:uppercase}
+          </style>'''
+          assert 'id="cca-q-unavailable-action"' not in q_hub
+          q_hub = replace_once(q_hub, '</head>', q_unavailable_css + '</head>', 'CSS da ação indisponível do Q-Acadêmico')
+          q_hub = replace_once(
+              q_hub,
+              'title="Abre em nova guia">Acessar o Q-Acadêmico</a><div class="hero-helper-links">',
+              'title="Abre em nova guia">Acessar o Q-Acadêmico</a><span aria-disabled="true" class="button button-unavailable">Solicitar documentos <span class="availability-note">Em breve</span></span><div class="hero-helper-links">',
+              'Ação futura de documentos do Q-Acadêmico',
+          )
+          q_hub_path.write_text(q_hub, encoding='utf-8')
+
+          # Q-Acadêmico — acesso e senha na mesma identidade visual da página central
+          q_access = q_access_path.read_text(encoding='utf-8')
+          q_identity_css = '''<style id="cca-q-system-identity">
+          .q-system-page{--green-950:#3d301b;--green-900:#5d4824;--green-700:#8a6a2f;--green-600:#9d7b39;--green-100:#f2ead7;--green-050:#fbf8ef;--blue-700:#6e5426;--blue-050:#fbf5e7;--ink:#2f2b22;--muted:#696257;--line:#e1d8c7;--surface:#fff;--page:#f8f7f3;--shadow:0 12px 30px rgba(93,72,36,.10)}
+          .q-system-page .site-header{background:linear-gradient(135deg,#3d301b,#7a5d2a);border-bottom-color:#7ebc8d}
+          .q-system-page .site-footer{background:#3d301b}
+          .q-system-page figcaption{background:#fbf8ef;border-left-color:#8a6a2f}
+          </style>'''
+          assert 'id="cca-q-system-identity"' not in q_access
+          q_access = replace_once(q_access, '</head>', q_identity_css + '</head>', 'Identidade visual do Q-Acadêmico')
+          q_access = replace_once(q_access, '<body>', '<body class="q-system-page">', 'Classe da página de acesso do Q-Acadêmico')
+          q_access_path.write_text(q_access, encoding='utf-8')
+
+          # Página inicial — selo de versão discreto, sem contaminar título técnico ou metadados sociais
+          index = index_path.read_text(encoding='utf-8')
+          version_css = '''<style id="cca-version-badge">
+          .hero-title-line{display:flex;flex-wrap:wrap;align-items:center;gap:.65rem 1rem;margin-bottom:.75rem}
+          .hero-title-line h1{margin:0}
+          .version-badge{display:inline-flex;align-items:center;padding:.3rem .65rem;border-radius:999px;background:#e8f3ec;color:#12452f;border:1px solid #b9d5c3;font-size:.82rem;font-weight:850;white-space:nowrap}
+          </style>'''
+          assert 'id="cca-version-badge"' not in index
+          index = replace_once(index, '</head>', version_css + '</head>', 'CSS do selo de versão')
+          index = replace_once(
+              index,
+              '<h1>Guias da CCA - IFCE Baturité</h1>',
+              '<div class="hero-title-line"><h1>Guias da CCA - IFCE Baturité</h1><span class="version-badge">Versão 1.0</span></div>',
+              'Selo de versão da página inicial',
+          )
+          index_path.write_text(index, encoding='utf-8')
+
+          # SuapEdu — novos atalhos no destaque inicial
+          suap = suap_path.read_text(encoding='utf-8')
+          suap = replace_once(
+              suap,
+              '<a class="button button-secondary suap" href="suapedu-principais-funcoes.html">Conhecer as principais funções</a><a aria-label="Abrir o SUAP',
+              '<a class="button button-secondary suap" href="suapedu-principais-funcoes.html">Conhecer as principais funções</a><a class="button button-secondary suap" href="suapedu-principais-funcoes.html#documentos">Solicitar documentos</a><a class="button button-secondary suap" href="suapedu-email.html">E-mail institucional</a><a aria-label="Abrir o SUAP',
+              'Atalhos de documentos e e-mail do SuapEdu',
+          )
+          suap_path.write_text(suap, encoding='utf-8')
+
+          # Auditoria estrutural
+          class Parser(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.ids = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if attrs.get('id'):
+                      self.ids.append(attrs['id'])
+
+          for page in (q_hub_path, q_access_path, suap_path, index_path):
+              parser = Parser()
+              parser.feed(page.read_text(encoding='utf-8'))
+              assert len(parser.ids) == len(set(parser.ids)), f'ID duplicado: {page}'
+
+          email_page = root / 'guias/suapedu-email.html'
+          functions_page = root / 'guias/suapedu-principais-funcoes.html'
+          assert email_page.is_file(), email_page
+          assert functions_page.is_file(), functions_page
+          parser = Parser()
+          parser.feed(functions_page.read_text(encoding='utf-8'))
+          assert 'documentos' in parser.ids, 'Âncora #documentos ausente'
+
+          final_q_hub = q_hub_path.read_text(encoding='utf-8')
+          final_q_access = q_access_path.read_text(encoding='utf-8')
+          final_index = index_path.read_text(encoding='utf-8')
+          final_suap = suap_path.read_text(encoding='utf-8')
+          assert 'aria-disabled="true" class="button button-unavailable"' in final_q_hub
+          assert '<span class="availability-note">Em breve</span>' in final_q_hub
+          assert '<body class="q-system-page">' in final_q_access
+          assert 'id="cca-q-system-identity"' in final_q_access
+          assert '<span class="version-badge">Versão 1.0</span>' in final_index
+          assert 'href="suapedu-principais-funcoes.html#documentos">Solicitar documentos</a>' in final_suap
+          assert 'href="suapedu-email.html">E-mail institucional</a>' in final_suap
+
+          print('OK: quatro refinamentos finais aplicados e auditados')
+          PY
+
+      - name: Publicar alteração limpa
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/final-public-refinements.yml
+          git add -A
+          changed="$(git diff --cached --name-only)"
+          echo "$changed"
+          for path in \
+            guias/index.html \
+            guias/q-academico.html \
+            guias/q-academico-acesso-e-senha.html \
+            guias/suapedu.html; do
+            echo "$changed" | grep -qx "$path"
+          done
+          test -z "$(echo "$changed" | grep -Ev '^(guias/index.html|guias/q-academico.html|guias/q-academico-acesso-e-senha.html|guias/suapedu.html|\.github/workflows/final-public-refinements.yml)$')"
+          git commit -m "Refina Q-Acadêmico, SuapEdu e identificação da versão"
+          git push origin HEAD:main
