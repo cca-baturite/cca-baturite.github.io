@@ -1,0 +1,49 @@
+name: Finalizar ajustes da busca
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/finalize-search.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: finalizar-busca-cca
+  cancel-in-progress: false
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar a árvore atual
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar e validar os dois arquivos
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > /tmp/cca-search-update.b64 <<'PAYLOAD'
+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 kj9BscXglhGsScp...
