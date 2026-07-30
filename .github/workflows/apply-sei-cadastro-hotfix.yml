@@ -1,0 +1,37 @@
+name: Apply SEI cadastro hotfix
+
+on:
+  push:
+    paths:
+      - '.github/workflows/apply-sei-cadastro-hotfix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply updated page
+        shell: bash
+        run: |
+          gzip -dc .hotfix/sei-cadastro-inicial.html.gz > guias/sei-cadastro-inicial.html
+          rm -f .hotfix/sei-cadastro-inicial.html.gz
+          rmdir .hotfix 2>/dev/null || true
+          rm -f .github/workflows/apply-sei-cadastro-hotfix.yml
+
+      - name: Commit hotfix
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Corrige fluxo de cadastro inicial do SEI"
+            git push
+          fi
