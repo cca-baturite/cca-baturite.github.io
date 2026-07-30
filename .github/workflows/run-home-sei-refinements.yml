@@ -1,0 +1,57 @@
+name: Executar refinamentos da página inicial e do SEI
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: executar-refinamentos-home-sei-cca
+  cancel-in-progress: false
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar a árvore atual
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extrair e executar a alteração validada
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PYCODE'
+          from pathlib import Path
+          import textwrap
+
+          source_path = Path('.github/workflows/apply-home-sei-refinements.yml')
+          source = source_path.read_text(encoding='utf-8')
+          opening = "          python3 - <<'PY'\n"
+          start = source.index(opening) + len(opening)
+          end = source.index("\n          PY", start)
+          code = textwrap.dedent(source[start:end])
+          compile(code, '/tmp/apply-home-sei-refinements.py', 'exec')
+          Path('/tmp/apply-home-sei-refinements.py').write_text(code, encoding='utf-8')
+          PYCODE
+          python3 /tmp/apply-home-sei-refinements.py
+
+      - name: Publicar alteração limpa
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/apply-home-sei-refinements.yml
+          rm -f .github/workflows/run-home-sei-refinements.yml
+          git add -A
+          changed="$(git diff --cached --name-only)"
+          echo "$changed"
+          echo "$changed" | grep -qx 'guias/index.html'
+          echo "$changed" | grep -qx 'guias/sei.html'
+          echo "$changed" | grep -qx 'guias/assets/busca.json'
+          test -z "$(echo "$changed" | grep -Ev '^(guias/index.html|guias/sei.html|guias/assets/busca.json|\.github/workflows/apply-home-sei-refinements.yml|\.github/workflows/run-home-sei-refinements.yml)$')"
+          git commit -m "Refina página inicial e atalhos do SEI"
+          git push origin HEAD:main
