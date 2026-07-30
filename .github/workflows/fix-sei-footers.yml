@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - .github/workflows/fix-sei-footers.yml
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -42,7 +43,8 @@ jobs:
               '<strong>Coordenadoria de Controle Acadêmico — CCA</strong><br/>'
               'IFCE Campus Baturité · <a href="mailto:cca.baturite@ifce.edu.br">'
               'cca.baturite@ifce.edu.br</a></div><div>Desenvolvido e mantido pela CCA.'
-              '<br/><span class="small">Estatísticas de acesso são utilizadas para aprimorar o conteúdo.'</n              'span></div></div></footer>'
+              '<br/><span class="small">Estatísticas de acesso são utilizadas para aprimorar o conteúdo.'
+              '</span></div></div></footer>'
           )
 
           changed = []
