@@ -1,0 +1,79 @@
+name: Adicionar atalhos complementares na página inicial
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/add-home-system-shortcuts.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: atalhos-home-sistemas-cca
+  cancel-in-progress: false
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar a árvore atual
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar e validar os atalhos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path('guias/index.html')
+          text = path.read_text(encoding='utf-8')
+
+          def replace_once(source, old, new, label):
+              count = source.count(old)
+              assert count == 1, f'{label}: esperado 1, encontrado {count}'
+              return source.replace(old, new, 1)
+
+          style = '''<style id="cca-home-unavailable-actions">
+          .system-card .button-unavailable{color:#6d6558;background:#f3efe6;border:1.5px dashed #b9ad97;cursor:not-allowed;box-shadow:none}
+          .system-card .availability-note{margin-left:.35rem;padding:.13rem .45rem;border-radius:999px;background:#e7dcc4;color:#5d4824;font-size:.72rem;font-weight:850;letter-spacing:.04em;text-transform:uppercase}
+          </style>'''
+          assert 'id="cca-home-unavailable-actions"' not in text
+          text = replace_once(text, '</head>', style + '</head>', 'Estilo da ação indisponível')
+
+          q_old = '<article class="system-card"><span class="badge">Guias disponíveis</span><h2>Q-Acadêmico</h2><p>Acesso, senha e orientações para estudantes que permanecem vinculados ao Q-Acadêmico.</p><div class="hero-actions"><a class="button button-primary" href="q-academico.html">Abrir a área do Q-Acadêmico</a><a class="button button-secondary" href="q-academico-acesso-e-senha.html">Acesso e senha</a></div></article>'
+          q_new = '<article class="system-card"><span class="badge">Guias disponíveis</span><h2>Q-Acadêmico</h2><p>Acesso, senha e orientações para estudantes que permanecem vinculados ao Q-Acadêmico.</p><div class="hero-actions"><a class="button button-primary" href="q-academico.html">Abrir a área do Q-Acadêmico</a><a class="button button-secondary" href="q-academico-acesso-e-senha.html">Acesso e senha</a><span aria-disabled="true" class="button button-unavailable">Solicitar documentos <span class="availability-note">Em breve</span></span></div></article>'
+          text = replace_once(text, q_old, q_new, 'Atalho futuro do Q-Acadêmico')
+
+          suap_old = '<article class="system-card"><span class="badge">Guias disponíveis</span><h2>SuapEdu</h2><p>Primeiro acesso e mapa inicial das funções acadêmicas para os ingressantes matriculados no SUAP.</p><div class="hero-actions"><a class="button button-primary" href="suapedu.html">Conhecer o SuapEdu</a><a class="button button-secondary" href="suapedu-primeiro-acesso.html">Primeiro acesso</a><a class="button button-secondary" href="suapedu-principais-funcoes.html">Principais funções</a></div></article>'
+          suap_new = '<article class="system-card"><span class="badge">Guias disponíveis</span><h2>SuapEdu</h2><p>Primeiro acesso e mapa inicial das funções acadêmicas para os ingressantes matriculados no SUAP.</p><div class="hero-actions"><a class="button button-primary" href="suapedu.html">Conhecer o SuapEdu</a><a class="button button-secondary" href="suapedu-primeiro-acesso.html">Primeiro acesso</a><a class="button button-secondary" href="suapedu-principais-funcoes.html">Principais funções</a><a class="button button-secondary" href="suapedu-principais-funcoes.html#documentos">Solicitar documentos</a><a class="button button-secondary" href="suapedu-email.html">E-mail institucional</a></div></article>'
+          text = replace_once(text, suap_old, suap_new, 'Atalhos do SuapEdu')
+
+          assert Path('guias/suapedu-email.html').is_file()
+          functions = Path('guias/suapedu-principais-funcoes.html').read_text(encoding='utf-8')
+          assert 'id="documentos"' in functions
+
+          assert text.count('class="button button-unavailable"') == 1
+          assert text.count('href="suapedu-principais-funcoes.html#documentos"') == 1
+          assert text.count('href="suapedu-email.html"') == 1
+          path.write_text(text, encoding='utf-8')
+          print('OK: atalhos complementares adicionados à página inicial')
+          PY
+
+      - name: Publicar alteração limpa
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/add-home-system-shortcuts.yml
+          git add -A
+          changed="$(git diff --cached --name-only)"
+          echo "$changed"
+          echo "$changed" | grep -qx 'guias/index.html'
+          test -z "$(echo "$changed" | grep -Ev '^(guias/index.html|\.github/workflows/add-home-system-shortcuts.yml)$')"
+          git commit -m "Adiciona atalhos de documentos e e-mail na página inicial"
+          git push origin HEAD:main
