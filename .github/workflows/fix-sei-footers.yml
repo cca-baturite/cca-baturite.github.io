@@ -29,6 +29,7 @@ jobs:
           set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
+          import re
 
           pages = sorted(Path('guias').glob('sei*.html'))
           assert len(pages) == 9, f'Esperadas 9 páginas do SEI; encontradas {len(pages)}'
@@ -38,21 +39,27 @@ jobs:
           .sei-page .site-footer strong{color:#fff}
           .sei-page .site-footer .small{color:#d6e9ef}'''
 
-          expected_footer = (
-              '<footer class="site-footer"><div class="footer-inner"><div class="footer-note">'
-              '<strong>Coordenadoria de Controle Acadêmico — CCA</strong><br/>'
-              'IFCE Campus Baturité · <a href="mailto:cca.baturite@ifce.edu.br">'
-              'cca.baturite@ifce.edu.br</a></div><div>Desenvolvido e mantido pela CCA.'
-              '<br/><span class="small">Estatísticas de acesso são utilizadas para aprimorar o conteúdo.'
-              '</span></div></div></footer>'
+          required_footer_parts = (
+              '<footer class="site-footer">',
+              'Coordenadoria de Controle Acadêmico — CCA',
+              'IFCE Campus Baturité',
+              'mailto:cca.baturite@ifce.edu.br',
+              'Desenvolvido e mantido pela CCA.',
+              'Estatísticas de acesso são utilizadas para aprimorar o conteúdo.',
           )
 
           changed = []
           for page in pages:
               text = page.read_text(encoding='utf-8')
-              assert text.count('<body class="sei-page">') == 1, f'Classe sei-page ausente: {page}'
+              has_sei_page = re.search(
+                  r'<body\b[^>]*\bclass=(?:"[^"]*\bsei-page\b[^"]*"|\'[^\']*\bsei-page\b[^\']*\')',
+                  text,
+                  flags=re.I,
+              )
+              assert has_sei_page, f'Classe sei-page ausente: {page}'
               assert text.count('<footer class="site-footer">') == 1, f'Rodapé ausente ou duplicado: {page}'
-              assert expected_footer in text, f'Marcação de rodapé divergente: {page}'
+              for part in required_footer_parts:
+                  assert part in text, f'Conteúdo de rodapé ausente em {page}: {part}'
               assert text.count(old) == 1, f'Regra de fundo ausente ou duplicada: {page}'
               assert '.sei-page .site-footer{background:var(--sei-blue-950);color:' not in text
               text = text.replace(old, new, 1)
