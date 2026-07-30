@@ -1,0 +1,269 @@
+name: Aplicar refinamentos da página inicial e do SEI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-home-sei-refinements.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refinamentos-home-sei-cca
+  cancel-in-progress: false
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar a árvore atual
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar e validar os refinamentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import unquote
+          import json
+
+          root = Path('.').resolve()
+          index_path = root / 'guias/index.html'
+          sei_path = root / 'guias/sei.html'
+          search_path = root / 'guias/assets/busca.json'
+
+          def replace_once(text, old, new, label):
+              count = text.count(old)
+              assert count == 1, f'{label}: esperado 1, encontrado {count}'
+              return text.replace(old, new, 1)
+
+          # Página inicial
+          index = index_path.read_text(encoding='utf-8')
+          index = replace_once(
+              index,
+              '<title>Guias da CCA | IFCE Campus Baturité</title>',
+              '<title>Guia da CCA - IFCE Baturité</title>',
+              'Título da página inicial',
+          )
+          index = replace_once(
+              index,
+              '<meta content="Guias da CCA | IFCE Campus Baturité" property="og:site_name"/>',
+              '<meta content="Guia da CCA - IFCE Baturité" property="og:site_name"/>',
+              'Nome social da página inicial',
+          )
+          index = replace_once(
+              index,
+              '<meta content="Guias da CCA | IFCE Campus Baturité" property="og:title"/>',
+              '<meta content="Guia da CCA - IFCE Baturité" property="og:title"/>',
+              'Título social da página inicial',
+          )
+          index = replace_once(
+              index,
+              '<h1>Guias da CCA</h1>',
+              '<h1>Guia da CCA - IFCE Baturité</h1>',
+              'Título visível da página inicial',
+          )
+          index = replace_once(
+              index,
+              'Cadastro, recuperação de senha e abertura de solicitações acadêmicas.',
+              'Cadastro, recuperação de senha, solução de problemas e abertura de processos acadêmicos.',
+              'Descrição da área do SEI',
+          )
+          index = replace_once(
+              index,
+              '<a class="button button-secondary" href="sei-recuperacao-de-senha.html">Recuperação de senha</a>',
+              '<a class="button button-secondary" href="sei-recuperacao-de-senha.html">Recuperação de senha</a><a class="button button-secondary" href="sei.html#problemas-de-acesso">Problemas para entrar ou usar o SEI</a>',
+              'Botão de problemas do SEI na página inicial',
+          )
+          index = replace_once(
+              index,
+              '>Abrir solicitação pelo celular</a>',
+              '>Abrir processo pelo celular</a>',
+              'Botão de processo pelo celular',
+          )
+          index = replace_once(
+              index,
+              '>Abrir solicitação pelo computador</a>',
+              '>Abrir processo pelo computador</a>',
+              'Botão de processo pelo computador',
+          )
+
+          video_css = r'''
+          .videos-coming-soon{
+            margin:2rem 0 4rem;
+            padding:clamp(1.3rem,3vw,2rem);
+            display:grid;
+            grid-template-columns:auto minmax(0,1fr) auto;
+            gap:1.2rem;
+            align-items:center;
+            background:linear-gradient(135deg,#fff,#f5f1ff);
+            border:1px solid #d9d0f2;
+            border-left:7px solid #7556a6;
+            border-radius:var(--radius);
+            box-shadow:var(--shadow);
+          }
+          .videos-coming-soon h2{margin-bottom:.35rem}
+          .videos-coming-soon p:last-child{margin:0;color:var(--muted)}
+          .videos-coming-soon-icon{
+            width:58px;height:58px;display:grid;place-items:center;
+            border-radius:16px;background:#eee9fa;color:#7556a6;
+          }
+          .videos-coming-soon-icon svg{width:30px;height:30px}
+          .videos-coming-soon-badge{
+            display:inline-flex;align-items:center;justify-content:center;
+            padding:.38rem .78rem;border-radius:999px;
+            background:#7556a6;color:#fff;font-size:.82rem;font-weight:800;
+            white-space:nowrap;
+          }
+          @media(max-width:680px){
+            .videos-coming-soon{grid-template-columns:auto 1fr}
+            .videos-coming-soon-badge{grid-column:1 / -1;justify-self:start}
+          }
+          '''
+          assert '.videos-coming-soon{' not in index
+          index = replace_once(index, '</style>', video_css + '\n</style>', 'CSS da área de vídeos')
+
+          video_markup = '''<section aria-labelledby="videos" class="videos-coming-soon"><div aria-hidden="true" class="videos-coming-soon-icon"><svg fill="none" viewBox="0 0 24 24"><rect height="16" rx="3" stroke="currentColor" stroke-width="1.8" width="18" x="3" y="4"></rect><path d="m10 9 5 3-5 3V9Z" fill="currentColor"></path></svg></div><div><p class="eyebrow">Vídeos</p><h2 id="videos">Guias em vídeo</h2><p>Orientações em vídeo serão adicionadas gradualmente para complementar os guias escritos.</p></div><span class="videos-coming-soon-badge">Em breve</span></section>'''
+          index = replace_once(
+              index,
+              '</div></section></main><footer class="site-footer">',
+              '</div></section>' + video_markup + '</main><footer class="site-footer">',
+              'Área de vídeos',
+          )
+          index_path.write_text(index, encoding='utf-8')
+
+          # Página central do SEI
+          sei = sei_path.read_text(encoding='utf-8')
+          sei = replace_once(
+              sei,
+              '<h3>Abrir uma solicitação</h3><p>Use o guia correspondente ao aparelho para protocolar corretamente.</p>',
+              '<h3>Abrir um processo</h3><p>Use o guia correspondente ao aparelho para abrir e protocolar o processo corretamente.</p>',
+              'Terminologia de processo no cartão do SEI',
+          )
+          sei = replace_once(
+              sei,
+              '>Acessar o SEI</a><div class="hero-helper-links">',
+              '>Acessar o SEI</a><a class="button button-secondary" href="#problemas-de-acesso">Problemas para entrar ou usar o SEI</a><div class="hero-helper-links">',
+              'Botão de problemas no destaque do SEI',
+          )
+
+          problems_css = r'''
+          .sei-problems-panel{
+            border-top:5px solid #7556a6;
+            background:linear-gradient(135deg,#fff,#f7f4fc);
+          }
+          .sei-problems-heading{display:flex;gap:1rem;align-items:flex-start}
+          .sei-problems-icon{
+            flex:0 0 auto;width:56px;height:56px;display:grid;place-items:center;
+            border-radius:15px;background:#eee9fa;color:#7556a6;
+          }
+          .sei-problems-icon svg{width:29px;height:29px}
+          .sei-problems-heading h2{margin-bottom:.35rem}
+          .sei-problems-heading p:last-child{margin:0;color:var(--muted)}
+          .sei-problems-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.1rem}
+          @media(max-width:640px){
+            .sei-problems-heading{align-items:flex-start}
+            .sei-problems-actions .button{width:100%;text-align:center}
+          }
+          '''
+          assert '.sei-problems-panel{' not in sei
+          sei = replace_once(sei, '</style>', problems_css + '\n</style>', 'CSS da ajuda do SEI')
+
+          problems_markup = '''<section class="article-section sei-problems-panel" id="problemas-de-acesso"><div class="sei-problems-heading"><div aria-hidden="true" class="sei-problems-icon"><svg fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.8"></circle><path d="M9.8 9a2.4 2.4 0 0 1 4.6.9c0 1.7-2.4 2-2.4 3.6" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><circle cx="12" cy="17" fill="currentColor" r="1"></circle></svg></div><div><p class="eyebrow">Ajuda de acesso</p><h2>Problemas para entrar ou usar o SEI</h2><p>As mensagens técnicas e as soluções já estão organizadas nos guias de cadastro inicial e recuperação de senha.</p></div></div><div class="sei-problems-actions"><a class="button button-primary" href="sei-cadastro-inicial.html#problemas">Problemas no cadastro inicial</a><a class="button button-secondary" href="sei-recuperacao-de-senha.html#problemas">Problemas de senha e acesso</a></div></section>'''
+          sei = replace_once(
+              sei,
+              '</div></section><section class="article-section" id="guias">',
+              '</div></section>' + problems_markup + '<section class="article-section" id="guias">',
+              'Área dedicada a problemas do SEI',
+          )
+          sei = replace_once(
+              sei,
+              '<li><a href="#comece">Escolha um guia</a></li><li><a href="#guias">Guias e resumos</a></li>',
+              '<li><a href="#comece">Escolha um guia</a></li><li><a href="#problemas-de-acesso">Problemas de acesso</a></li><li><a href="#guias">Guias e resumos</a></li>',
+              'Índice da página do SEI',
+          )
+          sei_path.write_text(sei, encoding='utf-8')
+
+          # Índice da busca
+          data = json.loads(search_path.read_text(encoding='utf-8'))
+          assert len(data) == 46
+          by_title = {item['t']: item for item in data}
+          problem = by_title['Problemas para entrar ou usar o SEI']
+          problem['u'] = 'sei.html#problemas-de-acesso'
+          problem['d'] = 'Escolha a solução para cadastro pendente, duplicidade, liberação, senha temporária ou dificuldade de acesso.'
+          phone = by_title.pop('Abrir solicitação no SEI pelo celular')
+          phone['t'] = 'Abrir processo no SEI pelo celular'
+          desktop = by_title.pop('Abrir solicitação no SEI pelo computador')
+          desktop['t'] = 'Abrir processo no SEI pelo computador'
+          search_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          # Auditoria estrutural e de destinos
+          class Parser(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.ids = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if attrs.get('id'):
+                      self.ids.append(attrs['id'])
+
+          parsed = {}
+          for page in root.joinpath('guias').glob('*.html'):
+              parser = Parser()
+              parser.feed(page.read_text(encoding='utf-8'))
+              assert len(parser.ids) == len(set(parser.ids)), f'ID duplicado: {page}'
+              parsed[page.resolve()] = set(parser.ids)
+
+          refreshed = json.loads(search_path.read_text(encoding='utf-8'))
+          assert len(refreshed) == 46
+          assert len({(item['t'].casefold(), item['u']) for item in refreshed}) == 46
+          for item in refreshed:
+              raw, _, fragment = item['u'].partition('#')
+              target = (index_path.parent / unquote(raw)).resolve()
+              assert target.is_file(), item['u']
+              if fragment:
+                  assert unquote(fragment) in parsed[target], item['u']
+
+          final_index = index_path.read_text(encoding='utf-8')
+          final_sei = sei_path.read_text(encoding='utf-8')
+          for marker in (
+              'Guia da CCA - IFCE Baturité',
+              'href="sei.html#problemas-de-acesso"',
+              'id="videos"',
+              '>Em breve</span>',
+              '>Abrir processo pelo celular</a>',
+              '>Abrir processo pelo computador</a>',
+          ):
+              assert marker in final_index, marker
+          for marker in (
+              'id="problemas-de-acesso"',
+              'sei-cadastro-inicial.html#problemas',
+              'sei-recuperacao-de-senha.html#problemas',
+              '<h3>Abrir um processo</h3>',
+          ):
+              assert marker in final_sei, marker
+
+          print('OK: página inicial, área do SEI e busca atualizadas')
+          PY
+
+      - name: Publicar alteração limpa
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f .github/workflows/apply-home-sei-refinements.yml
+          git add -A
+          changed="$(git diff --cached --name-only)"
+          echo "$changed"
+          echo "$changed" | grep -qx 'guias/index.html'
+          echo "$changed" | grep -qx 'guias/sei.html'
+          echo "$changed" | grep -qx 'guias/assets/busca.json'
+          test -z "$(echo "$changed" | grep -Ev '^(guias/index.html|guias/sei.html|guias/assets/busca.json|\.github/workflows/apply-home-sei-refinements.yml)$')"
+          git commit -m "Refina página inicial e atalhos do SEI"
+          git push origin HEAD:main
