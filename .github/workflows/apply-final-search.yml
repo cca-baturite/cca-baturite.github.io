@@ -1,0 +1,129 @@
+name: Aplicar ajustes finais da busca
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/apply-final-search.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ajustes-finais-busca-cca
+  cancel-in-progress: false
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar a árvore atual
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reconstruir e validar o pacote
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat \
+            .github/search-update/payload.part00 \
+            .github/search-update/payload.part01 \
+            .github/search-update/payload.part02.00 \
+            .github/search-update/payload.part02.01 \
+            .github/search-update/payload.part02.02 \
+            .github/search-update/payload.part03.00 \
+            .github/search-update/payload.part03.01 \
+            .github/search-update/payload.part03.02 \
+            | base64 --decode > /tmp/cca-search-update.zip
+          echo "0f3858f59952ff83f9a720a907f82ecc26c8dae38b9e573a62892d81c00cd0bb  /tmp/cca-search-update.zip" | sha256sum -c -
+          rm -rf /tmp/cca-search-update
+          mkdir -p /tmp/cca-search-update
+          unzip -q /tmp/cca-search-update.zip -d /tmp/cca-search-update
+          test -f /tmp/cca-search-update/guias/index.html
+          test -f /tmp/cca-search-update/guias/assets/busca.json
+          test "$(find /tmp/cca-search-update -type f | wc -l | tr -d ' ')" = "2"
+
+      - name: Aplicar e auditar a busca
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp /tmp/cca-search-update/guias/index.html guias/index.html
+          cp /tmp/cca-search-update/guias/assets/busca.json guias/assets/busca.json
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import unquote
+          import json
+
+          root = Path('.').resolve()
+          index = root / 'guias/index.html'
+          search_path = root / 'guias/assets/busca.json'
+          html = index.read_text(encoding='utf-8')
+          data = json.loads(search_path.read_text(encoding='utf-8'))
+
+          assert len(data) == 46, len(data)
+          assert len({(item['t'].casefold(), item['u']) for item in data}) == 46
+          assert any(item['t'] == 'Problemas para entrar ou usar o SEI' for item in data)
+          for marker in (
+              'id="busca-status"',
+              'aria-activedescendant',
+              'class="busca-chips"',
+              'data-q="problemas no SEI"',
+              'name="color-scheme"',
+              'cca-rendering-consistency',
+              'goatcounter.com/count',
+          ):
+              assert marker in html, marker
+
+          class Parser(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=True)
+                  self.ids = []
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if attrs.get('id'):
+                      self.ids.append(attrs['id'])
+
+          parsed = {}
+          for page in root.joinpath('guias').glob('*.html'):
+              parser = Parser()
+              parser.feed(page.read_text(encoding='utf-8'))
+              assert len(parser.ids) == len(set(parser.ids)), page
+              parsed[page.resolve()] = set(parser.ids)
+
+          for item in data:
+              raw, _, fragment = item['u'].partition('#')
+              target = (index.parent / unquote(raw)).resolve()
+              assert target.is_file(), item['u']
+              if fragment:
+                  assert unquote(fragment) in parsed[target], item['u']
+
+          print('OK: 46 entradas, destinos e âncoras válidos')
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          html = Path('guias/index.html').read_text(encoding='utf-8')
+          scripts = re.findall(r'<script([^>]*)>(.*?)</script>', html, flags=re.I | re.S)
+          code = next(body for attrs, body in scripts if 'busca.json' in body)
+          Path('/tmp/cca-search.js').write_text(code, encoding='utf-8')
+          PY
+          node --check /tmp/cca-search.js
+
+      - name: Publicar árvore limpa
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -rf .github/search-update
+          rm -f .github/workflows/apply-final-search.yml
+          git add -A
+          changed="$(git diff --cached --name-only)"
+          echo "$changed"
+          echo "$changed" | grep -qx 'guias/index.html'
+          echo "$changed" | grep -qx 'guias/assets/busca.json'
+          test -z "$(echo "$changed" | grep -Ev '^(guias/index.html|guias/assets/busca.json|\.github/search-update/|\.github/workflows/apply-final-search.yml)$')"
+          git commit -m "Aprimora atalhos e cobertura da busca"
+          git push origin HEAD:main
