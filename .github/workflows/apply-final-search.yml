@@ -125,6 +125,6 @@ jobs:
           echo "$changed"
           echo "$changed" | grep -qx 'guias/index.html'
           echo "$changed" | grep -qx 'guias/assets/busca.json'
-          test -z "$(echo "$changed" | grep -Ev '^(guias/index.html|guias/assets/busca.json|\.github/search-update/|\.github/workflows/apply-final-search.yml)$')"
+          test -z "$(echo "$changed" | grep -Ev '^(guias/index.html|guias/assets/busca.json|\.github/search-update/.*|\.github/workflows/apply-final-search.yml)$')"
           git commit -m "Aprimora atalhos e cobertura da busca"
           git push origin HEAD:main
