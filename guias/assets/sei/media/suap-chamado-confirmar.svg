@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="449" height="180" viewBox="0 0 449 180" role="img" aria-labelledby="t d">
+<title id="t">Botão Confirmar e prazo estimado</title><desc id="d">Representação orientativa do botão Confirmar e da informação de resolução em até 36 horas.</desc>
+<rect width="449" height="180" fill="#fff"/>
+<rect x="54" y="52" width="128" height="47" rx="25" fill="#178d53"/>
+<text x="78" y="83" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#fff">Confirmar</text>
+<text x="54" y="128" font-family="Arial, sans-serif" font-size="15" fill="#5e6570">Este chamado deve ser resolvido em <tspan font-weight="700">até 36 horas.</tspan></text>
+</svg>
