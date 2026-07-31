@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="873" height="500" viewBox="0 0 873 500" role="img" aria-labelledby="t d">
+<title id="t">Formulário Solicitar acesso externo para discente</title><desc id="d">Representação orientativa do título do serviço e do campo Descrição no SUAP.</desc>
+<rect width="873" height="500" fill="#fff"/>
+<text x="18" y="24" font-family="Arial, sans-serif" font-size="14" fill="#8b8b8b">Início › SEI - Demandas sistêmicas › Solicitar acesso externo para discente › Solicitar acesso externo para discente</text>
+<rect x="17" y="36" width="615" height="48" fill="none" stroke="#ff8126" stroke-width="7"/>
+<text x="31" y="69" font-family="Arial, sans-serif" font-size="30" font-weight="700" fill="#17202a">Solicitar acesso externo para discente</text>
+<path d="M18 146l6-7 6 7" fill="none" stroke="#d2d2d2" stroke-width="3"/>
+<rect x="45" y="122" width="260" height="43" fill="none" stroke="#f51c27" stroke-width="7"/>
+<text x="58" y="151" font-family="Arial, sans-serif" font-size="22" fill="#202020">Descreva o Seu Chamado</text>
+<rect x="56" y="191" width="817" height="309" rx="4" fill="#f6f6f6" stroke="#ededed"/>
+<text x="188" y="226" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#111"><tspan fill="#c91515">*</tspan> Descrição:</text>
+<rect x="299" y="207" width="574" height="237" rx="7" fill="#fff" stroke="#d6d6d6"/>
+<text x="299" y="471" font-family="Arial, sans-serif" font-size="15" fill="#6b6b6b">0 caracteres informados.</text>
+<text x="299" y="496" font-family="Arial, sans-serif" font-size="15" fill="#6b6b6b">Descreva a sua solicitação</text>
+</svg>
