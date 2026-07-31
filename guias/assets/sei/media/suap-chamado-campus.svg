@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="782" height="180" viewBox="0 0 782 180" role="img" aria-labelledby="t d">
+<title id="t">Campos de telefone adicional e campus</title><desc id="d">Representação orientativa dos campos Telefone Adicional para Contato e Campus BAT no SUAP.</desc>
+<rect width="782" height="180" fill="#f7f7f7"/>
+<line x1="0" y1="12" x2="782" y2="12" stroke="#ddd"/>
+<text x="42" y="39" font-family="Arial, sans-serif" font-size="17" fill="#171717">Telefone Adicional para</text><text x="143" y="61" font-family="Arial, sans-serif" font-size="17" fill="#171717">Contato:</text>
+<rect x="236" y="24" width="546" height="47" rx="7" fill="#fff" stroke="#d6d6d6"/>
+<text x="236" y="96" font-family="Arial, sans-serif" font-size="15" fill="#7a5b4c">Para agilizar o atendimento, informe um número adicional para contato.</text>
+<line x1="0" y1="113" x2="782" y2="113" stroke="#e1e1e1"/>
+<text x="137" y="145" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#171717"><tspan fill="#c91515">*</tspan> Campus:</text>
+<rect x="236" y="125" width="546" height="47" rx="7" fill="#fff" stroke="#d6d6d6"/>
+<text x="243" y="155" font-family="Arial, sans-serif" font-size="18" fill="#111">BAT</text>
+</svg>
