@@ -1,0 +1,7 @@
+---
+---
+<svg xmlns="http://www.w3.org/2000/svg" width="356" height="264" viewBox="0 0 356 264" role="img" aria-labelledby="title desc">
+<title id="title">Central de Serviços — Meus Chamados</title>
+<desc id="desc">Captura do menu do SUAP com a opção Meus Chamados destacada.</desc>
+<image width="356" height="264" href="data:image/webp;base64,{% include_relative suap-meus-chamados.webp.b64.part1 %}{% include_relative suap-meus-chamados.webp.b64.part2 %}{% include_relative suap-meus-chamados.webp.b64.part3 %}{% include_relative suap-meus-chamados.webp.b64.part4 %}"/>
+</svg>
