@@ -1,0 +1,91 @@
+name: Aplicar PNG original no passo 5
+
+on:
+  push:
+    paths:
+      - .github/workflows/aplicar-png-passo5.yml
+
+permissions:
+  contents: write
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obter repositório
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Recuperar e aplicar o PNG original
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          media="guias/assets/sei/media"
+          mkdir -p "$media" /tmp/passo5
+          encontrado=""
+
+          for sha in 642c0315a736be464281dd82b9c6bab62ad096eb 5b2804eba9e0f1fe493c59d54870517afa7ef546; do
+            curl -fsSL \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/$GITHUB_REPOSITORY/git/blobs/$sha" \
+              | jq -r '.content' | tr -d '\n' | base64 -d > "/tmp/passo5/$sha.png"
+
+            if python3 - "/tmp/passo5/$sha.png" <<'PY'
+from pathlib import Path
+import hashlib, struct, sys
+p = Path(sys.argv[1])
+b = p.read_bytes()
+if b[:8] != b'\x89PNG\r\n\x1a\n':
+    raise SystemExit(1)
+w, h = struct.unpack('>II', b[16:24])
+hash_ok = hashlib.sha256(b).hexdigest() == 'e2e9d69096202be5af8d00032197b0725cfee0d07d092100681694695d100c67'
+raise SystemExit(0 if (w, h) == (873, 589) and hash_ok else 1)
+PY
+            then
+              cp "/tmp/passo5/$sha.png" "$media/suap-chamado-descricao.png"
+              encontrado="$sha"
+              break
+            fi
+          done
+
+          test -n "$encontrado"
+
+          python3 - <<'PY'
+from pathlib import Path
+import re
+p = Path('guias/sei-cadastro-inicial.html')
+s = p.read_text(encoding='utf-8')
+s = s.replace('assets/sei/media/suap-chamado-descricao.svg', 'assets/sei/media/suap-chamado-descricao.png')
+s = re.sub(
+    r'(<img[^>]*src="assets/sei/media/suap-chamado-descricao\.png"[^>]*?)width="\d+" height="\d+"',
+    r'\1width="873" height="589"',
+    s,
+)
+p.write_text(s, encoding='utf-8')
+PY
+
+      - name: Validar e publicar
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+from pathlib import Path
+import hashlib, struct
+png = Path('guias/assets/sei/media/suap-chamado-descricao.png').read_bytes()
+assert png[:8] == b'\x89PNG\r\n\x1a\n'
+assert struct.unpack('>II', png[16:24]) == (873, 589)
+assert hashlib.sha256(png).hexdigest() == 'e2e9d69096202be5af8d00032197b0725cfee0d07d092100681694695d100c67'
+html = Path('guias/sei-cadastro-inicial.html').read_text(encoding='utf-8')
+assert html.count('assets/sei/media/suap-chamado-descricao.png') == 2
+assert 'assets/sei/media/suap-chamado-descricao.svg' not in html
+assert 'width="873" height="589"' in html
+PY
+          rm -f .github/workflows/aplicar-png-passo5.yml
+          rm -f .github/workflows/aplicar-imagens-originais-sei.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Substitui imagem do passo 5 pelo PNG original"
+          git push origin HEAD:main
