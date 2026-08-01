@@ -1,0 +1,119 @@
+name: Aplicar imagens originais do chamado SEI
+
+on:
+  push:
+    paths:
+      - .github/workflows/aplicar-imagens-originais-sei.yml
+
+permissions:
+  contents: write
+
+jobs:
+  aplicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Obter repositório
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Aplicar os arquivos originais
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          media="guias/assets/sei/media"
+          html="guias/sei-cadastro-inicial.html"
+
+          # Passo 5: usa a captura original já preparada no repositório.
+          if [ -f "$media/suap-chamado-descricao-final.svg" ]; then
+            cp "$media/suap-chamado-descricao-final.svg" "$media/suap-chamado-descricao.svg"
+          else
+            # Recupera possíveis blobs binários criados durante o hotfix e
+            # seleciona automaticamente a captura PNG com aproximadamente 878x592.
+            mkdir -p /tmp/sei-assets
+            encontrado=""
+            for sha in 642c0315a736be464281dd82b9c6bab62ad096eb 5b2804eba9e0f1fe493c59d54870517afa7ef546; do
+              curl -fsSL \
+                -H "Authorization: Bearer $GH_TOKEN" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "https://api.github.com/repos/$GITHUB_REPOSITORY/git/blobs/$sha" \
+                | jq -r '.content' | tr -d '\n' | base64 -d > "/tmp/sei-assets/$sha.bin"
+              if python3 - "/tmp/sei-assets/$sha.bin" <<'PY'
+import struct, sys
+p=sys.argv[1]
+b=open(p,'rb').read()
+if b[:8] != b'\x89PNG\r\n\x1a\n':
+    raise SystemExit(1)
+w,h=struct.unpack('>II', b[16:24])
+raise SystemExit(0 if 850 <= w <= 900 and 560 <= h <= 620 else 1)
+PY
+              then
+                cp "/tmp/sei-assets/$sha.bin" "$media/suap-chamado-descricao.png"
+                encontrado="png"
+                break
+              fi
+            done
+            if [ "$encontrado" != "png" ]; then
+              echo "A captura original do passo 5 não foi localizada." >&2
+              exit 1
+            fi
+            python3 - <<'PY'
+from pathlib import Path
+import re
+p=Path('guias/sei-cadastro-inicial.html')
+s=p.read_text(encoding='utf-8')
+s=s.replace('assets/sei/media/suap-chamado-descricao.svg','assets/sei/media/suap-chamado-descricao.png')
+s=re.sub(r'(<img[^>]+src="assets/sei/media/suap-chamado-descricao\.png"[^>]+)width="873" height="500"',r'\1width="878" height="592"',s)
+p.write_text(s,encoding='utf-8')
+PY
+          fi
+
+          # Passo 6: restaura a captura real como arquivo WebP direto,
+          # evitando a incorporação dentro de SVG que causava a imagem quebrada.
+          git show e23a50d6d010be64264661818e0ce844fc1298ec:guias/assets/sei/media/suap-meus-chamados.webp > "$media/suap-meus-chamados.webp"
+          python3 - <<'PY'
+from pathlib import Path
+p=Path('guias/sei-cadastro-inicial.html')
+s=p.read_text(encoding='utf-8')
+s=s.replace('assets/sei/media/suap-meus-chamados.svg','assets/sei/media/suap-meus-chamados.webp')
+p.write_text(s,encoding='utf-8')
+PY
+
+          # Remove somente arquivos quebrados ou temporários deste hotfix.
+          rm -f "$media/suap-meus-chamados.svg"
+          rm -f "$media/.suap-chamado-descricao.png.b64.part1"
+          rm -f "$media/.upload-test.bin"
+          rm -f "$media/suap-chamado-descricao-final.svg"
+          if grep -q 'suap-chamado-descricao.png' "$html"; then
+            rm -f "$media/suap-chamado-descricao.svg"
+          fi
+          rm -f .github/workflows/aplicar-imagens-originais-sei.yml
+
+      - name: Validar referências e arquivos
+        run: |
+          set -euo pipefail
+          html="guias/sei-cadastro-inicial.html"
+          grep -q 'suap-chamado-confirmar.svg' "$html"
+          grep -q 'suap-meus-chamados.webp' "$html"
+          test -s guias/assets/sei/media/suap-meus-chamados.webp
+          if grep -q 'suap-chamado-descricao.png' "$html"; then
+            test -s guias/assets/sei/media/suap-chamado-descricao.png
+          else
+            grep -q 'suap-chamado-descricao.svg' "$html"
+            test -s guias/assets/sei/media/suap-chamado-descricao.svg
+          fi
+          ! grep -q 'suap-meus-chamados.svg' "$html"
+
+      - name: Publicar correção
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nenhuma alteração pendente."
+            exit 0
+          fi
+          git commit -m "Substitui imagens quebradas do chamado SEI pelos arquivos originais"
+          git push origin HEAD:main
