@@ -1,0 +1,57 @@
+name: Adiciona chips de documentos
+
+on:
+  push:
+    branches:
+      - adiciona-chips-documentos
+    paths:
+      - .github/workflows/adiciona-chips-documentos.yml
+
+permissions:
+  contents: write
+
+jobs:
+  ajustar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o ramo
+        uses: actions/checkout@v4
+        with:
+          ref: adiciona-chips-documentos
+          fetch-depth: 0
+
+      - name: Inserir os chips de documentos
+        shell: python
+        run: |
+          from pathlib import Path
+
+          caminho = Path("guias/index.html")
+          html = caminho.read_text(encoding="utf-8")
+
+          marcador = '<button class="chip" data-q="o que posso solicitar" type="button">O que posso solicitar?</button>'
+          novos = (
+              marcador
+              + '<button class="chip" data-q="emitir documentos q academico" type="button">Emitir documentos no Q-Acadêmico</button>'
+              + '<button class="chip" data-q="emitir documentos suapedu" type="button">Emitir documentos no SuapEdu</button>'
+          )
+
+          assert html.count(marcador) == 1
+          assert 'data-q="emitir documentos q academico"' not in html
+          assert 'data-q="emitir documentos suapedu"' not in html
+
+          html = html.replace(marcador, novos, 1)
+
+          assert html.count('class="chip"') == 8
+          assert html.count('data-q="emitir documentos q academico"') == 1
+          assert html.count('data-q="emitir documentos suapedu"') == 1
+
+          caminho.write_text(html, encoding="utf-8")
+
+      - name: Remover o fluxo temporário e publicar os chips no ramo
+        run: |
+          git config user.name "cca-bat"
+          git config user.email "cca-bat@users.noreply.github.com"
+          git rm .github/workflows/adiciona-chips-documentos.yml
+          git add guias/index.html
+          git commit -m "Adiciona chips de documentos na busca inicial"
+          git push origin HEAD:adiciona-chips-documentos
