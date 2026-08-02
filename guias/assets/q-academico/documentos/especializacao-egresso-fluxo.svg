@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="970" viewBox="0 0 1000 970" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="990" viewBox="0 0 1000 990" role="img" aria-labelledby="t d">
 <title id="t">Documentos para egresso de especialização lato sensu</title>
 <desc id="d">Resumo visual dos documentos disponíveis, do erro de nomenclatura e da Certidão de Conclusão.</desc>
 <style>
 .bg{fill:#f8f7f3}.card{fill:#fff;stroke:#e1d8c7;stroke-width:2}.head{fill:#7a5d2a}.soft{fill:#fbf8ef}.selected{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.titlebox{fill:#fffdf8;stroke:#e1d8c7;stroke-width:2}.danger{fill:#fff1f0;stroke:#b42318;stroke-width:2}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.blue{fill:#edf6fc;stroke:#0b63a8;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#5d4824}.b{font:22px Arial,sans-serif;fill:#2f2b22}.s{font:18px Arial,sans-serif;fill:#696257}.alert{font:700 19px Arial,sans-serif;fill:#b42318}.ok{font:700 20px Arial,sans-serif;fill:#23653a}.note{font:700 19px Arial,sans-serif;fill:#124c7a}
 </style>
-<rect class="bg" width="1000" height="970"/>
+<rect class="bg" width="1000" height="990"/>
 <rect class="card" x="35" y="30" width="930" height="360" rx="18"/>
 <rect class="head" x="35" y="30" width="930" height="72" rx="18"/>
 <text class="h" x="70" y="76">1. Especialização concluída — módulo EGRESSO</text>
@@ -25,6 +25,7 @@
 <text class="b" x="100" y="725">O corpo do documento identifica corretamente a especialização lato sensu concluída.</text>
 <rect class="blue" x="35" y="785" width="930" height="70" rx="14"/>
 <text class="note" x="70" y="826">Documento definitivo da pós-graduação: Certificado Digital.</text>
-<rect class="green" x="35" y="875" width="930" height="62" rx="14"/>
-<text class="ok" x="70" y="911">✓ Autenticação eletrônica incluída — sem carimbo, ida à CCA ou e-mail.</text>
+<rect class="green" x="35" y="875" width="930" height="82" rx="14"/>
+<text class="ok" x="70" y="909">✓ Autenticação eletrônica incluída.</text>
+<text class="s" x="70" y="940">Não precisa de carimbo, ida à CCA ou solicitação por e-mail.</text>
 </svg>
