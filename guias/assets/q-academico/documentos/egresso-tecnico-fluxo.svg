@@ -2,7 +2,7 @@
 <title id="t">Documentos para egresso de curso técnico</title>
 <desc id="d">Resumo visual da lista e da Certidão de Conclusão do curso técnico.</desc>
 <style>
-.bg{fill:#f8f7f3}.card{fill:#fff;stroke:#e1d8c7;stroke-width:2}.head{fill:#7a5d2a}.soft{fill:#fbf8ef}.selected{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.titlebox{fill:#fffdf8;stroke:#e1d8c7;stroke-width:2}.blue{fill:#edf6fc;stroke:#0b63a8;stroke-width:2}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#5d4824}.b{font:22px Arial,sans-serif;fill:#2f2b22}.s{font:18px Arial,sans-serif;fill:#696257}.note{font:700 19px Arial,sans-serif;fill:#124c7a}.ok{font:700 20px Arial,sans-serif;fill:#23653a}
+.bg{fill:#f8f7f3}.card{fill:#fff;stroke:#e1d8c7;stroke-width:2}.head{fill:#7a5d2a}.soft{fill:#fbf8ef}.selected{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.titlebox{fill:#fffdf8;stroke:#e1d8c7;stroke-width:2}.blue{fill:#edf6fc;stroke:#0b63a8;stroke-width:2}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#5d4824}.docname{font:700 23px Arial,sans-serif;fill:#5d4824;text-anchor:middle}.b{font:22px Arial,sans-serif;fill:#2f2b22}.s{font:18px Arial,sans-serif;fill:#696257}.note{font:700 19px Arial,sans-serif;fill:#124c7a}.ok{font:700 20px Arial,sans-serif;fill:#23653a}
 </style>
 <rect class="bg" width="1000" height="850"/>
 <rect class="card" x="35" y="30" width="930" height="360" rx="18"/>
@@ -16,8 +16,8 @@
 <text class="b" x="100" y="311">Horário do Aluno — Vertical</text>
 <rect class="card" x="35" y="420" width="930" height="185" rx="18"/>
 <text class="t" x="70" y="470">2. PDF gerado</text>
-<rect class="titlebox" x="235" y="495" width="530" height="65" rx="8"/>
-<text class="t" x="301" y="538">CERTIDÃO DE CONCLUSÃO DE CURSO</text>
+<rect class="titlebox" x="100" y="495" width="800" height="65" rx="8"/>
+<text class="docname" x="500" y="538">CERTIDÃO DE CONCLUSÃO DE CURSO</text>
 <rect class="blue" x="35" y="630" width="930" height="92" rx="14"/>
 <text class="note" x="70" y="663">Na tela: “Curso Técnico”. No PDF: “Certidão de Conclusão de Curso”.</text>
 <text class="s" x="70" y="694">A diferença de título é esperada; confira o curso e os dados pessoais.</text>
