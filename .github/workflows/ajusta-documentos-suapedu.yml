@@ -1,0 +1,93 @@
+name: Ajusta documentos do SuapEdu
+
+on:
+  push:
+    branches:
+      - ajusta-documentos-suapedu
+    paths:
+      - .github/workflows/ajusta-documentos-suapedu.yml
+
+permissions:
+  contents: write
+
+jobs:
+  ajustar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o ramo
+        uses: actions/checkout@v4
+        with:
+          ref: ajusta-documentos-suapedu
+          fetch-depth: 0
+
+      - name: Aplicar os ajustes solicitados
+        shell: python
+        run: |
+          from pathlib import Path
+
+          def substituir_unico(caminho: Path, antigo: str, novo: str) -> None:
+              texto = caminho.read_text(encoding="utf-8")
+              quantidade = texto.count(antigo)
+              assert quantidade == 1, f"{caminho}: esperado 1 trecho, encontrado {quantidade}"
+              caminho.write_text(texto.replace(antigo, novo, 1), encoding="utf-8")
+
+          inicio = Path("guias/index.html")
+          trecho_antigo = (
+              '<a class="button button-secondary" href="suapedu-principais-funcoes.html">Principais funções</a>'
+              '<a class="button button-secondary" href="suapedu-principais-funcoes.html#documentos">Solicitar documentos</a>'
+              '<a class="button button-secondary" href="suapedu-email.html">E-mail institucional</a></div></article>'
+          )
+          trecho_novo = (
+              '<a class="button button-secondary" href="suapedu-principais-funcoes.html">Principais funções</a>'
+              '<a class="button button-secondary" href="suapedu-email.html">E-mail institucional</a>'
+              '<a class="button button-secondary" href="suapedu-principais-funcoes.html#documentos">Emitir documentos</a></div>'
+              '<details class="q-documents-preview"><summary>Ver documentos disponíveis</summary>'
+              '<p>Declaração de Vínculo, Histórico Parcial, Declaração de Carga Horária Integralizada, Declaração de Matrícula, Declaração de Matrícula com disciplinas cursando e Comprovante de Dados Acadêmicos. As opções podem variar conforme o vínculo acadêmico.</p>'
+              '</details></article>'
+          )
+          substituir_unico(inicio, trecho_antigo, trecho_novo)
+
+          pagina_suap = Path("guias/suapedu.html")
+          substituir_unico(
+              pagina_suap,
+              '<a class="button button-secondary suap" href="suapedu-principais-funcoes.html#documentos">Solicitar documentos</a>',
+              '<a class="button button-secondary suap" href="suapedu-principais-funcoes.html#documentos">Emitir documentos</a>',
+          )
+          substituir_unico(
+              pagina_suap,
+              '<h2>Solicitar documentos acadêmicos</h2>',
+              '<h2>Emitir documentos acadêmicos</h2>',
+          )
+          substituir_unico(
+              pagina_suap,
+              '<a class="button button-suap" href="suapedu-principais-funcoes.html#documentos">Solicitar documentos</a>',
+              '<a class="button button-suap" href="suapedu-principais-funcoes.html#documentos">Emitir documentos</a>',
+          )
+
+          funcoes = Path("guias/suapedu-principais-funcoes.html")
+          substituir_unico(
+              funcoes,
+              '<a class="button button-secondary suap" href="#documentos">Solicitar documentos</a>',
+              '<a class="button button-secondary suap" href="#documentos">Emitir documentos</a>',
+          )
+
+          html_inicio = inicio.read_text(encoding="utf-8")
+          assert html_inicio.count('href="suapedu-email.html">E-mail institucional</a><a class="button button-secondary" href="suapedu-principais-funcoes.html#documentos">Emitir documentos</a>') == 1
+          assert html_inicio.count('<summary>Ver documentos disponíveis</summary>') == 2
+          assert 'Solicitar documentos</a>' not in html_inicio
+
+          for caminho in Path("guias").glob("suapedu*.html"):
+              assert "Solicitar documentos" not in caminho.read_text(encoding="utf-8"), caminho
+
+          busca = Path("guias/assets/busca.json").read_text(encoding="utf-8")
+          assert '"t": "Emitir documentos acadêmicos no SuapEdu"' in busca
+          assert '"u": "suapedu-principais-funcoes.html#documentos"' in busca
+
+      - name: Remover o fluxo temporário e publicar os ajustes no ramo
+        run: |
+          git config user.name "cca-bat"
+          git config user.email "cca-bat@users.noreply.github.com"
+          git rm .github/workflows/ajusta-documentos-suapedu.yml
+          git add guias/index.html guias/suapedu.html guias/suapedu-principais-funcoes.html
+          git commit -m "Atualiza emissão de documentos no SuapEdu"
+          git push origin HEAD:ajusta-documentos-suapedu
