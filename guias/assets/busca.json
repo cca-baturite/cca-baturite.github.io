@@ -1,5 +1,54 @@
 [
   {
+    "t": "Emitir documentos no Q-Acadêmico",
+    "u": "q-academico-documentos.html",
+    "s": "Q-Acadêmico",
+    "d": "Declarações, certidões, boletim, histórico parcial e horário, conforme a situação acadêmica.",
+    "k": "documentos emitir emissao declaração declaracao certidao histórico historico boletim horário horario assinatura autenticação autenticacao carimbo cca email"
+  },
+  {
+    "t": "Documentos para matrícula ativa ou trancada",
+    "u": "q-academico-documentos-aluno.html",
+    "s": "Q-Acadêmico",
+    "d": "Documentos para estudante matriculado ou com matrícula trancada.",
+    "k": "matriculado ativa trancada trancamento declaração matricula histórico boletim horário"
+  },
+  {
+    "t": "Declaração de conclusão — aguardando colação",
+    "u": "q-academico-aguardando-colacao.html",
+    "s": "Q-Acadêmico",
+    "d": "Comprovar a conclusão antes da colação de grau.",
+    "k": "aguardando colacao colação grau conclusão concluinte declaração"
+  },
+  {
+    "t": "Documentos para egresso de curso superior",
+    "u": "q-academico-egresso-superior.html",
+    "s": "Q-Acadêmico",
+    "d": "Certidão no sistema e orientação específica para solicitar o histórico.",
+    "k": "egresso superior graduação graduacao certidão certidao conclusão histórico diploma colação"
+  },
+  {
+    "t": "Documentos para egresso de curso técnico",
+    "u": "q-academico-egresso-tecnico.html",
+    "s": "Q-Acadêmico",
+    "d": "Certidão, histórico parcial, boletim e horário.",
+    "k": "egresso tecnico técnico subsequente certidão conclusão histórico diploma"
+  },
+  {
+    "t": "Documentos da especialização lato sensu",
+    "u": "q-academico-especializacao.html",
+    "s": "Q-Acadêmico",
+    "d": "Documentos para aluno e egresso de especialização.",
+    "k": "especialização especializacao lato sensu pós pos graduação certificado certidão declaração matrícula"
+  },
+  {
+    "t": "Certidão de Conclusão de Curso",
+    "u": "q-academico-documentos.html#egresso",
+    "s": "Q-Acadêmico",
+    "d": "Emitida diretamente no módulo EGRESSO, conforme o tipo de curso concluído.",
+    "k": "certidao conclusao curso formado formada egresso diploma certificado provisório provisorio autenticação eletrônica"
+  },
+  {
     "t": "Trancamento de Matrícula",
     "u": "sei-solicitacoes-disponiveis.html#trancamento-de-matricula",
     "s": "SEI",
@@ -103,13 +152,6 @@
     "s": "SEI",
     "d": "Solicitar a emissão do diploma de curso técnico.",
     "k": "diploma certificado tecnico subsequente emitir emissao registro registrar documento concluir conclusao formado formada segunda via retirar pronto"
-  },
-  {
-    "t": "Certidão de Conclusão de Curso",
-    "u": "sei-solicitacoes-disponiveis.html#certidao-de-conclusao-de-curso",
-    "s": "SEI",
-    "d": "Comprova a conclusão do curso enquanto o diploma não fica pronto — útil para posse e concurso.",
-    "k": "certidao declaracao conclusao concluinte concluir comprovante comprovar documento formado formada posse concurso emprego diploma demorando"
   },
   {
     "t": "Transferência Externa / Guia de Transferência",

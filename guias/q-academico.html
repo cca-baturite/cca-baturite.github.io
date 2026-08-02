@@ -1,20 +1,600 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="color-scheme" content="only light"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Acesso, senha, documentos e orientações do Q-Acadêmico."><title>Q-Acadêmico — Guias e serviços | Guias da CCA</title><link rel="preload" as="font" href="assets/fonts/InterVariable.woff2" type="font/woff2" crossorigin><link rel="icon" href="assets/brand/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png"><link rel="stylesheet" href="assets/q-academico/documentos.css"></head><body>
-<a class="skip-link" href="#conteudo">Ir para o conteúdo</a><header class="site-header"><div class="header-inner">
-<a class="brand" href="index.html" aria-label="Página inicial dos Guias da CCA"><img class="brand-mark" src="assets/brand/favicon-192.png" width="44" height="44" alt=""><span><strong>Guias da CCA</strong><span>IFCE Campus Baturité</span></span></a>
-<nav class="site-nav" aria-label="Navegação principal"><a href="index.html">Início</a><a href="q-academico.html" aria-current="page">Q-Acadêmico</a><a href="sei.html">SEI</a><a href="suapedu.html">SuapEdu</a></nav>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="color-scheme" content="only light"/><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Guias e serviços do Q-Acadêmico para estudantes do IFCE Campus Baturité."><title>Q-Acadêmico — Guias e serviços | Guias da CCA</title><link as="font" crossorigin="" href="assets/fonts/InterVariable.woff2" rel="preload" type="font/woff2"/><link href="assets/brand/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/brand/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/brand/apple-touch-icon.png" rel="apple-touch-icon"/><meta content="website" property="og:type"/><meta content="pt_BR" property="og:locale"/><meta content="Guias da CCA | IFCE Campus Baturité" property="og:site_name"/><meta content="Q-Acadêmico — Guias e serviços | Guias da CCA" property="og:title"/><meta content="Guias e serviços do Q-Acadêmico para estudantes do IFCE Campus Baturité." property="og:description"/><meta content="https://cca-baturite.github.io/guias/q-academico.html" property="og:url"/><meta content="https://cca-baturite.github.io/guias/assets/brand/og-image.png" property="og:image"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="summary_large_image" name="twitter:card"/><style>@font-face{font-family:"Inter";src:url("assets/fonts/InterVariable.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap;}
+:root {
+  --green-950:#0b3424; --green-900:#12452f; --green-700:#1f6b45; --green-600:#2b7a52;
+  --green-100:#e8f3ec; --green-050:#f3f8f5; --lime:#2b7a52; --lime-soft:#e8f3ec;
+  --ink:#202a25; --muted:#5b6861; --line:#d8e0db; --surface:#fff; --page:#f7f8f6;
+  --warning:#fff3d6; --warning-line:#c48722; --danger:#b42318; --danger-bg:#fff1f0;
+  --success:#e9f7ed; --success-line:#398651; --shadow:0 12px 30px rgba(18,69,47,.10);
+  --radius:16px;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);background:var(--page);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:17px;line-height:1.63}
+img{max-width:100%;height:auto} a{color:#0878a8;text-underline-offset:.18em} button,input{font:inherit}
+.status-strip{background:#fff3d6;border-bottom:1px solid #e7c77f;color:#67480d;text-align:center;padding:.45rem 1rem;font-size:.9rem;font-weight:750}
+.site-header{background:linear-gradient(135deg,var(--green-950),var(--green-700));color:#fff;border-bottom:5px solid var(--lime)}
+.header-inner,.page-shell,.footer-inner{width:min(1160px,calc(100% - 2rem));margin-inline:auto}
+.header-inner{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:1.2rem}
+.brand{display:flex;gap:.9rem;align-items:center;color:#fff;text-decoration:none}
+.brand-mark{width:44px;height:44px;border-radius:12px;background:#fff;padding:6px;box-sizing:border-box;display:block}
+.brand strong{display:block;font-size:1.05rem;line-height:1.15} .brand span span{display:block;font-size:.8rem;opacity:.86}
+.site-nav{display:flex;gap:.4rem;flex-wrap:wrap} .site-nav a{color:#fff;text-decoration:none;padding:.45rem .7rem;border-radius:8px} .site-nav a:hover,.site-nav a[aria-current]{background:rgba(255,255,255,.14)}
+.breadcrumb{margin:1.1rem 0 .5rem;color:var(--muted);font-size:.92rem} .breadcrumb ol{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.4rem} .breadcrumb li+li::before{content:"/";margin-right:.4rem;color:#8a9790}
+.hero{margin:1rem 0 1.7rem;padding:clamp(1.5rem,3vw,2.5rem);border-radius:22px;background:var(--surface);box-shadow:var(--shadow);border:1px solid var(--line);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-80px;top:-100px;width:260px;height:260px;border-radius:50%;background:var(--green-100);opacity:.85}
+.hero::before{content:"";position:absolute;right:65px;bottom:-75px;width:170px;height:170px;border-radius:50%;background:var(--lime-soft);opacity:.7}
+.hero>*{position:relative;z-index:1} .eyebrow{margin:0 0 .35rem;color:var(--green-700);font-size:.84rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+h1,h2,h3{line-height:1.18;color:var(--green-900)} h1{font-size:clamp(2rem,5vw,3.35rem);margin:0 0 .75rem;max-width:930px} h2{font-size:clamp(1.45rem,3vw,2.05rem);margin:0 0 .8rem} h3{font-size:1.18rem;margin:0 0 .5rem}
+.lead{font-size:1.12rem;max-width:850px;color:#334a54} .hero-actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.2rem}
+.button{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;padding:.78rem 1rem;border-radius:10px;font-weight:780;text-decoration:none;border:2px solid transparent}
+.button-primary{color:#fff;background:var(--green-700)} .button-primary:hover{background:var(--green-900)} .button-secondary{color:var(--green-900);background:#fff;border-color:var(--lime)}
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1.3rem} .quick-item{padding:.9rem 1rem;background:var(--green-050);border:1px solid #d5eaf0;border-radius:12px} .quick-item strong{display:block;color:var(--green-900)} .quick-item span{color:var(--muted);font-size:.94rem}
+.content-layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:2rem;align-items:start;padding-bottom:4rem} .article{min-width:0}
+.article-section{scroll-margin-top:1rem;margin-bottom:1.2rem;padding:clamp(1.2rem,2.5vw,1.8rem);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 6px 18px rgba(18,69,47,.045)}
+.article-section>h2::after{content:"";display:block;width:3.3rem;height:4px;margin-top:.55rem;border-radius:999px;background:var(--lime)}
+.step-number{width:2.2rem;height:2.2rem;display:inline-grid;place-items:center;margin-right:.55rem;border-radius:50%;background:var(--green-700);color:#fff;font-weight:800;font-size:1rem;vertical-align:.2rem}
+figure{margin:1.1rem 0 .3rem;padding:.8rem;background:#fbfcfb;border:1px solid var(--line);border-radius:13px} figure a{display:block} figure img{display:block;margin:auto;border-radius:8px;box-shadow:0 5px 16px rgba(24,49,58,.13);max-height:760px} figcaption{margin-top:.8rem;padding:.55rem .8rem;color:#2c3a33;font-size:.98rem;line-height:1.5;text-align:left;font-weight:600;background:var(--green-050);border-left:4px solid var(--green-700);border-radius:0 10px 10px 0}
+.image-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem} .image-grid figure{margin:.6rem 0}
+.callout{margin:1rem 0;padding:1rem 1.05rem;border-radius:12px;border-left:5px solid var(--green-700);background:var(--green-050)} .callout strong{color:var(--green-900)}
+.callout-warning{background:var(--warning);border-left-color:var(--warning-line)} .callout-warning strong{color:#6c4a0d}
+.callout-danger{background:var(--danger-bg);border-left-color:var(--danger)} .callout-danger strong{color:var(--danger)}
+.callout-success{background:var(--success);border-left-color:var(--success-line)} .callout-success strong{color:#23653a}
+.checklist{padding-left:1.25rem} .checklist li{margin:.35rem 0} code{background:#eef4f6;padding:.12rem .32rem;border-radius:5px}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;margin:1rem 0} .choice-card{border:1px solid var(--line);border-radius:12px;padding:1rem;background:#fbfcfb} .choice-card h3{color:var(--green-900)} .choice-card.example{border-top:5px solid var(--lime)}
+.toc{position:sticky;top:1rem;padding:1rem;border:1px solid var(--line);background:var(--surface);border-radius:14px;box-shadow:0 6px 18px rgba(18,69,47,.045)} .toc strong{display:block;color:var(--green-900);margin-bottom:.5rem} .toc ol{padding-left:1.25rem;margin:.4rem 0} .toc li{margin:.35rem 0;font-size:.93rem} .toc a{text-decoration:none} .toc a:hover{text-decoration:underline}
+details{margin:.9rem 0;border:1px solid var(--line);border-radius:12px;background:#fbfcfb;padding:.75rem 1rem} summary{cursor:pointer;font-weight:800;color:var(--green-900)} .mini{color:var(--muted);font-size:.92rem}
+.data-note{font-size:.92rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:.75rem;margin-top:1rem}
+.site-footer{background:#eaf3f5;border-top:1px solid var(--line);color:#38515b} .footer-inner{padding:1.5rem 0;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap} .footer-note a{color:var(--green-900)}
+@media(max-width:900px){.content-layout{grid-template-columns:1fr}.toc{position:static}}
+@media(max-width:760px){body{font-size:16px}.header-inner{align-items:flex-start;padding:1rem 0;flex-direction:column}.quick-grid,.image-grid,.choice-grid{grid-template-columns:1fr}.site-nav{width:100%}figure img{max-height:none}}
+@media print{.status-strip,.site-nav,.toc,.hero-actions{display:none}body{background:#fff;font-size:11pt}.hero,.article-section{box-shadow:none;break-inside:avoid}.content-layout{display:block}a{color:inherit;text-decoration:none}}
+
+.access-help{
+  margin-top:14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+}
+.access-help-label{
+  width:100%;
+  margin:0 0 2px;
+  font-weight:700;
+  color:var(--green-900);
+}
+@media (max-width:640px){
+  .access-help .button{width:100%;text-align:center}
+}
+
+.figure-wide{
+  width:100%;
+  max-width:none;
+  margin:18px 0 24px;
+}
+.figure-wide img{
+  width:100%;
+  height:auto;
+  object-fit:contain;
+}
+
+/* Visualizador de imagens */
+figure a.image-zoom-trigger{
+  position:relative;
+  display:block;
+  cursor:zoom-in;
+}
+
+.image-lightbox{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:28px;
+  background:rgba(0,18,28,.88);
+}
+.image-lightbox.is-open{display:flex}
+.image-lightbox-dialog{
+  position:relative;
+  width:min(96vw,1500px);
+  max-height:94vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.image-lightbox img{
+  max-width:100%;
+  max-height:90vh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  border-radius:10px;
+  background:#fff;
+  box-shadow:0 18px 50px rgba(0,0,0,.45);
+}
+.image-lightbox-close{
+  position:absolute;
+  top:-18px;
+  right:-18px;
+  width:46px;
+  height:46px;
+  border:2px solid #fff;
+  border-radius:50%;
+  background:#0b6688;
+  color:#fff;
+  font-size:2rem;
+  line-height:1;
+  cursor:pointer;
+  box-shadow:0 5px 18px rgba(0,0,0,.35);
+}
+.image-lightbox-close:hover,
+.image-lightbox-close:focus{
+  background:#084b66;
+  outline:3px solid rgba(255,255,255,.55);
+  outline-offset:2px;
+}
+body.lightbox-open{overflow:hidden}
+.image-zoom-help{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  margin:14px 0 20px;
+  padding:12px 14px;
+  border:1px solid #b8d7e3;
+  border-radius:12px;
+  background:#eef8fb;
+  color:#173b49;
+}
+.image-zoom-help strong{display:block}
+@media (max-width:640px){
+  .image-lightbox{padding:16px}
+  .image-lightbox-close{
+    top:-10px;
+    right:-8px;
+    width:42px;
+    height:42px;
+  }
+
+}
+
+.figure-readable{
+  width:100%;
+  max-width:none;
+  margin:18px 0 28px;
+}
+.figure-readable img{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+}
+.figure-medium{
+  width:min(100%,760px);
+  margin:18px auto 28px;
+}
+.figure-medium img{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+}
+.figure-compact{
+  width:min(100%,480px);
+  margin:18px auto 28px;
+}
+.figure-compact img{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+}
+.article figure{
+  padding:12px;
+}
+.article figure figcaption{
+  margin-top:10px;
+}
+
+.visual-summary{
+  margin: 12px 0 28px;
+}
+.visual-summary .intro-note{
+  margin: 10px 0 18px;
+}
+.visual-summary details{
+  border:1px solid #cfe0e7;
+  border-radius:14px;
+  background:#f9fcfd;
+  margin:16px 0;
+  overflow:hidden;
+}
+.visual-summary summary{
+  cursor:pointer;
+  list-style:none;
+  padding:16px 18px;
+  font-weight:800;
+  color:var(--green-900);
+  background:#eef7fa;
+}
+.visual-summary summary::-webkit-details-marker{
+  display:none;
+}
+.visual-summary summary::after{
+  content:"▾";
+  float:right;
+  color:var(--green-900);
+}
+.visual-summary details[open] summary::after{
+  content:"▴";
+}
+.visual-summary .visual-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:18px;
+  padding:18px;
+}
+.visual-summary .visual-card{
+  border:1px solid #d6e5ea;
+  border-radius:12px;
+  background:#fff;
+  padding:12px;
+}
+.visual-summary .visual-card .mini-step{
+  display:inline-block;
+  margin-bottom:10px;
+  padding:4px 10px;
+  border-radius:999px;
+  background:#0d87c7;
+  color:#fff;
+  font-size:.85rem;
+  font-weight:700;
+}
+.visual-summary .visual-card h3{
+  margin:0 0 10px;
+  font-size:1.02rem;
+}
+.visual-summary .visual-card p{
+  margin:10px 0 0;
+  font-size:.97rem;
+}
+.visual-summary .visual-card figure{
+  margin:0;
+  padding:8px;
+}
+.visual-summary .visual-card figure figcaption{
+  display:none;
+}
+.visual-summary .visual-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:16px;
+}
+@media (max-width:640px){
+  .visual-summary .visual-grid{
+    grid-template-columns:1fr;
+    padding:14px;
+  }
+}
+
+.requests-intro{
+  margin-bottom:24px;
+}
+.category-section{
+  scroll-margin-top:20px;
+}
+.request-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:18px;
+  margin-top:18px;
+}
+.request-card{
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+  padding:20px;
+  border:1px solid #cfe0e7;
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 5px 18px rgba(10,61,76,.05);
+}
+.request-card h3{
+  margin:12px 0 8px;
+  color:var(--green-900);
+  font-size:1.12rem;
+}
+.request-card p{
+  margin:0 0 12px;
+}
+.request-status{
+  align-self:flex-start;
+  display:inline-flex;
+  padding:5px 10px;
+  border-radius:999px;
+  background:#fff3d6;
+  color:#76520a;
+  font-size:.82rem;
+  font-weight:800;
+}
+.request-card.status-sector .request-status{
+  background:#eaf2ff;
+  color:#174c80;
+}
+.request-card.status-historical .request-status{
+  background:#f1edf8;
+  color:#563c76;
+}
+.request-reference{
+  font-size:.9rem;
+  color:#5a6e75;
+}
+.request-note{
+  margin:4px 0 14px;
+  padding:10px 12px;
+  border-left:4px solid #1894c2;
+  background:#eef8fb;
+  font-size:.94rem;
+}
+.request-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:auto;
+  padding-top:8px;
+}
+.request-actions .button{
+  padding:9px 12px;
+  font-size:.9rem;
+}
+.category-lead{
+  margin-bottom:4px;
+}
+.category-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:16px 0 28px;
+}
+.category-links a{
+  padding:8px 11px;
+  border:1px solid #b9d4df;
+  border-radius:999px;
+  color:var(--green-900);
+  background:#f8fcfd;
+  font-weight:700;
+  text-decoration:none;
+}
+.category-links a:hover{
+  background:#eaf6fa;
+}
+@media (max-width:640px){
+  .request-grid{
+    grid-template-columns:1fr;
+  }
+  .request-actions .button{
+    width:100%;
+    text-align:center;
+  }
+}
+
+.doc-status{
+  display:inline-flex;
+  align-self:flex-start;
+  margin-top:8px;
+  padding:5px 10px;
+  border-radius:999px;
+  font-size:.8rem;
+  font-weight:800;
+}
+.doc-none{
+  background:#e8f5ec;
+  color:#1f6b45;
+}
+.doc-required{
+  background:#fff0e8;
+  color:#9a3f12;
+}
+.doc-variable{
+  background:#fff6d9;
+  color:#755400;
+}
+.doc-confirm{
+  background:#eef2f5;
+  color:#4a5b63;
+}
+.doc-summary{
+  margin:8px 0 12px!important;
+  padding:10px 12px;
+  border-radius:10px;
+  background:#f7fafb;
+  border:1px solid #dce8ed;
+}
+.doc-details{
+  margin:8px 0 14px;
+  border:1px solid #cedfe6;
+  border-radius:12px;
+  background:#fbfcfb;
+  overflow:hidden;
+}
+.doc-details summary{
+  cursor:pointer;
+  padding:11px 13px;
+  font-weight:800;
+  color:var(--green-900);
+  background:#eef7fa;
+}
+.doc-details ul{
+  margin:12px 18px 8px 32px;
+  padding:0;
+}
+.doc-details li{
+  margin-bottom:8px;
+}
+.doc-detail-note{
+  margin:8px 16px 14px!important;
+  padding:10px 12px;
+  border-left:4px solid #1894c2;
+  background:#f0f8fb;
+  font-size:.92rem;
+}
+
+
+.skip-link{
+  position:absolute;
+  left:1rem;
+  top:-5rem;
+  z-index:9999;
+  background:var(--surface,#fff);
+  color:var(--green-900,#135b35);
+  padding:.7rem 1rem;
+  border-radius:8px;
+  box-shadow:var(--shadow,0 8px 24px rgba(0,0,0,.12));
+}
+.skip-link:focus{top:1rem}
+
+
+.sei-hub-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+  margin:18px 0 6px;
+}
+.sei-hub-card{
+  padding:18px;
+  border:1px solid #cbdde4;
+  border-radius:16px;
+  background:linear-gradient(145deg,#fff,#f5fafb);
+}
+.sei-hub-card h3{
+  margin:0 0 7px;
+  color:var(--green-900,#12452f);
+}
+.sei-hub-card p{margin:0 0 14px}
+@media(max-width:760px){
+  .sei-hub-grid{grid-template-columns:1fr}
+}
+
+
+.sr-only{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+
+
+.sr-only{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+
+
+.sr-only{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+
+
+.sei-hub-page .sei-hub-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:1.7rem;align-items:center;background:linear-gradient(135deg,#fff 0%,#f1f9fc 58%,#eef7e5 100%)}
+.sei-hub-page .sei-hub-hero .eyebrow,.sei-hub-page .sei-hub-hero h1,.sei-hub-page .sei-hub-hero .lead,.sei-hub-page .sei-hub-hero .hero-actions{grid-column:1}
+.sei-hub-page .hub-hero-route{grid-column:2;grid-row:1/6;display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:18px;background:rgba(255,255,255,.82);border:1px solid #cfe3e9;box-shadow:0 10px 24px rgba(18,69,47,.07)}
+.sei-hub-page .route-step{display:grid;grid-template-columns:38px 1fr;gap:12px;align-items:start;padding:12px;border-radius:13px;background:#fff;border:1px solid #deebef}.sei-hub-page .route-number{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#0b7fa6;color:#fff;font-weight:850}.sei-hub-page .route-step strong{display:block;color:#0a536d}.sei-hub-page .route-step span:last-child{display:block;color:#60737b;font-size:.91rem;margin-top:2px}
+.sei-hub-page .hero-helper-links{display:flex;gap:.9rem;align-items:center;padding:.7rem .2rem}.sei-hub-page .hero-helper-links a{font-weight:750;color:#0b6688}
+.sei-hub-page .sei-hub-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:20px}
+.sei-hub-page .sei-hub-card-v2{--card:#0e8b86;--soft:#edf9f7;position:relative;display:flex;flex-direction:column;min-height:300px;padding:22px;border-radius:19px;border:1px solid #d5e5ea;background:#fff;box-shadow:0 8px 20px rgba(0,72,95,.055);overflow:hidden}.sei-hub-page .sei-hub-card-v2::before{content:"";position:absolute;inset:0 0 auto;height:8px;background:var(--card)}.sei-hub-page .hub-access{--card:#2779c3;--soft:#edf5fd}.sei-hub-page .hub-open{--card:#0e9188;--soft:#edf9f7}.sei-hub-page .hub-consult{--card:#c98713;--soft:#fff8ec}.sei-hub-page .hub-specific{--card:#6b5bc9;--soft:#f3f0fe}
+.sei-hub-page .hub-card-icon{width:62px;height:62px;border-radius:17px;display:grid;place-items:center;background:var(--soft);color:var(--card);margin:4px 0 16px}.sei-hub-page .hub-card-icon svg{width:34px;height:34px}.sei-hub-page .sei-hub-card-v2 h3{font-size:1.45rem;color:#0b2b3a}.sei-hub-page .sei-hub-card-v2 p{color:#4d626a}.sei-hub-page .hub-card-button{margin-top:auto;background:var(--card);color:#fff;border:0}.sei-hub-page .hub-card-secondary{display:block;margin-top:12px;font-size:.91rem;font-weight:720;color:var(--card)}
+.sei-hub-page .device-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:20px}.sei-hub-page .device-guide-card{--device:#0e9188;display:grid;grid-template-columns:70px 1fr;gap:10px 16px;align-items:start;padding:20px;border-radius:18px;border:1px solid #d7e7eb;background:#fff}.sei-hub-page .device-desktop{--device:#386fc2}.sei-hub-page .device-icon{grid-row:1/5;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#f1f8fa;color:var(--device);border:1px solid #cde2e8}.sei-hub-page .device-icon svg{width:34px;height:34px}.sei-hub-page .device-guide-card h3,.sei-hub-page .device-guide-card p{margin:0}.sei-hub-page .device-guide-card .button{justify-self:start;background:var(--device)}.sei-hub-page .device-secondary{font-weight:750;color:var(--device)}
+.sei-hub-page .hub-info-panel{border-left:7px solid #0e9188}.sei-hub-page .info-follow{border-left-color:#386fc2}
+@media(max-width:900px){.sei-hub-page .sei-hub-hero{grid-template-columns:1fr}.sei-hub-page .hub-hero-route{grid-column:1;grid-row:auto}.sei-hub-page .sei-hub-grid,.sei-hub-page .device-guide-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.sei-hub-page .device-guide-card{grid-template-columns:1fr}.sei-hub-page .device-icon{grid-row:auto}.sei-hub-page .hero-helper-links{flex-direction:column;align-items:flex-start;gap:.3rem}}
+
+
+.q-hub-page{
+  --green-950:#3d301b; --green-900:#5d4824; --green-700:#8a6a2f; --green-600:#9d7b39;
+  --green-100:#f2ead7; --green-050:#fbf8ef; --lime:#2b7a52; --lime-soft:#e8f3ec;
+  --ink:#2f2b22; --muted:#696257; --line:#e1d8c7; --surface:#fff; --page:#f8f7f3;
+  --shadow:0 12px 30px rgba(93,72,36,.10);
+}
+.q-hub-page .site-header{background:linear-gradient(135deg,#3d301b,#7a5d2a);border-bottom-color:#7ebc8d}
+.q-hub-page .q-hub-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:1.7rem;align-items:center;background:linear-gradient(135deg,#fff 0%,#fbf6e9 58%,#eef7e5 100%)}
+.q-hub-page .q-hub-hero .eyebrow,.q-hub-page .q-hub-hero h1,.q-hub-page .q-hub-hero .lead,.q-hub-page .q-hub-hero .hero-actions{grid-column:1}
+.q-hub-page .hub-hero-route{border-color:#e3d8bd;box-shadow:0 10px 24px rgba(93,72,36,.07)}
+.q-hub-page .route-step{border-color:#eee5d3}.q-hub-page .route-number{background:#7a5d2a}.q-hub-page .route-step strong{color:#5d4824}.q-hub-page .hero-helper-links a{color:#6e5426}
+.q-hub-page .hub-access{--card:#7a5d2a;--soft:#fbf5e7}.q-hub-page .hub-open{--card:#2b7a52;--soft:#eef7f1}.q-hub-page .hub-consult{--card:#0b63a8;--soft:#eef6fc}.q-hub-page .hub-specific{--card:#6b5bc9;--soft:#f3f0fe}
+.q-hub-page .hub-info-panel{border-left-color:#7a5d2a}.q-hub-page .info-follow{border-left-color:#2b7a52}
+.q-hub-page .system-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px}.q-hub-page .system-choice{padding:20px;border:1px solid var(--line);border-radius:17px;background:#fff}.q-hub-page .system-choice h3{margin-bottom:.45rem}.q-hub-page .system-choice .badge{display:inline-block;margin-bottom:.7rem;padding:.25rem .6rem;border-radius:999px;background:var(--green-100);color:var(--green-900);font-size:.82rem;font-weight:800}.q-hub-page .system-choice.suap-choice .badge{background:#e8f3ec;color:#1f6b45}
+.q-hub-page .future-guide{margin-top:auto;padding-top:14px;color:#665f54;font-size:.93rem;font-weight:720}
+@media(max-width:900px){.q-hub-page .q-hub-hero{grid-template-columns:1fr}.q-hub-page .hub-hero-route{grid-column:1;grid-row:auto}.q-hub-page .system-choice-grid{grid-template-columns:1fr}}
+</style><style id="cca-focus-visible">
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid #ffbf47 !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 1px #1f2933;
+}
+</style><style data-v94-intrinsic-image-sizing>:where(img[width][height]){width:auto;height:auto}</style><style id="cca-rendering-consistency">
+:root{color-scheme:only light}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-weight:400;font-optical-sizing:auto;text-rendering:optimizeLegibility}
+@supports (-moz-appearance:none){
+  :root{--muted:#46545a;--line:#cbd6d0}
+  body{font-weight:425}
+}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+</style><style id="cca-q-unavailable-action">
+.q-hub-page .button-unavailable{color:#6d6558;background:#f3efe6;border:1.5px dashed #b9ad97;cursor:not-allowed;box-shadow:none}
+.q-hub-page .button-unavailable:hover{background:#f3efe6}
+.q-hub-page .availability-note{margin-left:.35rem;padding:.13rem .45rem;border-radius:999px;background:#e7dcc4;color:#5d4824;font-size:.72rem;font-weight:850;letter-spacing:.04em;text-transform:uppercase}
+</style></head>
+<body class="sei-hub-page q-hub-page">
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<header class="site-header"><div class="header-inner">
+<a aria-label="Página inicial dos Guias da CCA" class="brand" href="index.html"><img alt="" class="brand-mark" height="44" src="assets/brand/favicon-192.png" width="44"/><span><strong>Guias da CCA</strong><span>IFCE Campus Baturité</span></span></a>
+<nav aria-label="Navegação principal" class="site-nav"><a href="index.html">Início</a><a aria-current="page" href="q-academico.html">Q-Acadêmico</a><a href="sei.html">SEI</a><a href="suapedu.html">SuapEdu</a></nav>
 </div></header>
-<main class="page-shell" id="conteudo"><nav class="breadcrumb" aria-label="Você está aqui"><ol><li><a href="index.html">Guias</a></li><li>Q-Acadêmico</li></ol></nav>
-<section class="hero"><p class="eyebrow">Q-Acadêmico</p><h1>Q-Acadêmico — Guias e serviços</h1><p class="lead">Acesse os guias do sistema acadêmico utilizado por estudantes e egressos que ainda mantêm seus registros no Q-Acadêmico.</p><div class="hero-actions"><a class="button button-primary" href="https://antigo.qacademico.ifce.edu.br/" target="_blank" rel="noopener">Abrir o Q-Acadêmico</a><a class="button button-secondary" href="q-academico-documentos.html">Emitir documentos</a></div></section>
-<div class="content-layout"><article class="article">
-<section class="article-section" id="comece"><h2>Por onde começar</h2><div class="cards">
-<article class="guide-card"><span class="badge">Guia disponível</span><h3>Acesso e senha</h3><p>Primeiro acesso, recuperação de senha e correção do e-mail cadastrado.</p><a class="button button-primary" href="q-academico-acesso-e-senha.html">Abrir guia</a></article>
-<article class="guide-card"><span class="badge">Guia disponível</span><h3>Emitir documentos</h3><p>Declarações, certidões, boletim, histórico parcial e horário, conforme sua situação acadêmica.</p><a class="button button-primary" href="q-academico-documentos.html">Abrir guia</a></article>
+<main class="page-shell" id="conteudo">
+<nav aria-label="Caminho da página" class="breadcrumb"><ol><li><a href="index.html">Guias</a></li><li aria-current="page">Q-Acadêmico</li></ol></nav>
+<section class="hero q-hub-hero">
+<p class="eyebrow">Q-Acadêmico · Perfis Aluno e Egresso</p><h1>Q-Acadêmico — Guias e serviços</h1>
+<p class="lead">Orientações para acesso, consultas e emissão de documentos de estudantes e egressos que permanecem vinculados ao Q-Acadêmico.</p>
+<div class="hero-actions"><a aria-label="Acessar o Q-Acadêmico — abre em nova guia" class="button button-primary" href="https://antigo.qacademico.ifce.edu.br/" rel="noopener noreferrer" target="_blank" title="Abre em nova guia">Acessar o Q-Acadêmico</a><a class="button button-secondary" href="q-academico-documentos.html">Emitir documentos</a><div class="hero-helper-links"><a href="q-academico-acesso-e-senha.html">Primeiro acesso ou recuperar senha</a></div></div>
+<div class="hub-hero-route">
+<div class="route-step"><span class="route-number">1</span><div><strong>Confirme o sistema</strong><span>Q-Acadêmico e SuapEdu coexistem no campus.</span></div></div>
+<div class="route-step"><span class="route-number">2</span><div><strong>Acesse sua conta</strong><span>Use matrícula e senha no perfil adequado: Aluno ou Egresso.</span></div></div>
+<div class="route-step"><span class="route-number">3</span><div><strong>Emita seus documentos</strong><span>Escolha a situação acadêmica e gere o PDF no próprio sistema.</span></div></div>
 </div></section>
-<section class="article-section" id="documentos"><h2>Documentos emitidos pelo Q-Acadêmico</h2><div class="callout callout-success"><strong>Documento pronto para uso.</strong> Os documentos emitidos diretamente pelo Q-Acadêmico já possuem <strong>assinatura ou autenticação eletrônica</strong>, com chave ou link para conferência. Por isso, não é necessário ir à CCA, pedir carimbo ou assinatura, nem solicitar outra via por e-mail. Baixe o PDF e encaminhe o próprio arquivo.</div>
-<p>As opções variam entre os módulos <strong>ALUNO</strong> e <strong>EGRESSO</strong> e conforme a situação do vínculo. O guia de documentos separa estudantes matriculados, matrícula trancada, aguardando colação, egressos de curso superior, técnico e especialização.</p><div class="actions"><a class="button button-primary" href="q-academico-documentos.html">Escolher minha situação</a></div></section>
-<section class="article-section" id="sistemas"><h2>Qual sistema usar?</h2><table class="compare"><thead><tr><th>Finalidade</th><th>Sistema</th></tr></thead><tbody><tr><td>Emitir automaticamente declarações, certidões, boletim, histórico parcial e horário disponíveis para o seu perfil</td><td><strong>Q-Acadêmico</strong></td></tr><tr><td>Protocolar pedidos que dependem de análise, como trancamento, aproveitamento, colação e outras solicitações acadêmicas</td><td><strong>SEI</strong></td></tr><tr><td>Consultar funções acadêmicas dos ingressantes já migrados para o novo sistema</td><td><strong>SuapEdu</strong></td></tr></tbody></table>
-<div class="callout callout-info"><strong>Emitir documento não é abrir uma solicitação no SEI.</strong> Quando o PDF está disponível no Q-Acadêmico, gere-o diretamente. Procure a CCA apenas diante de falha confirmada ou de uma exceção indicada no próprio guia.</div></section>
-<section class="article-section" id="coexistencia"><h2>Q-Acadêmico e SuapEdu coexistem</h2><p>O sistema correto depende do vínculo e da turma. Estudantes que ainda permanecem no Q-Acadêmico continuam utilizando esta área. Ingressantes matriculados no SuapEdu devem consultar a área específica do novo sistema.</p><div class="actions"><a class="button button-secondary" href="suapedu.html">Ir para o SuapEdu</a><a class="button button-secondary" href="sei.html">Ir para o SEI</a></div></section>
-</article><aside class="toc" aria-label="Nesta página"><strong>Nesta página</strong><ol><li><a href="#comece">Por onde começar</a></li><li><a href="#documentos">Emitir documentos</a></li><li><a href="#sistemas">Qual sistema usar</a></li><li><a href="#coexistencia">Coexistência dos sistemas</a></li></ol></aside></div></main>
-<footer class="site-footer"><div class="footer-inner"><div class="footer-note"><strong>Coordenadoria de Controle Acadêmico — CCA</strong><br>IFCE Campus Baturité · <a href="mailto:cca.baturite@ifce.edu.br">cca.baturite@ifce.edu.br</a></div><div class="footer-credit">Concebido, desenvolvido, revisado, atualizado e mantido pela CCA.<br><span class="small">Última atualização: 2 de agosto de 2026.</span></div></div></footer>
+<div class="content-layout"><article class="article">
+<section class="article-section" id="comece"><h2>Por onde começar</h2><p>O item do menu Q-Acadêmico agora leva a esta página central. O guia de acesso e senha permanece como uma orientação específica.</p>
+<div class="sei-hub-grid">
+<article class="sei-hub-card-v2 hub-access"><div aria-hidden="true" class="hub-card-icon"><svg aria-hidden="true" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2" stroke="currentColor" stroke-width="1.8"></circle><path d="M5.5 20c.8-4 3-6 6.5-6s5.7 2 6.5 6" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path><path d="M17 13.5v5M14.5 16h5" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></div><h3>Primeiro acesso ou recuperação de senha</h3><p>Crie a senha no primeiro acesso ou substitua uma senha esquecida pelo mesmo procedimento.</p><a class="button hub-card-button" href="q-academico-acesso-e-senha.html">Abrir guia de acesso e senha</a></article>
+<article class="sei-hub-card-v2 hub-open"><div aria-hidden="true" class="hub-card-icon"><svg aria-hidden="true" fill="none" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.8"></rect><path d="M8 9h8M8 13h5M8 17h7" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></div><h3>Emitir documentos acadêmicos</h3><p>Gere declarações, certidões, boletim, histórico parcial e horário, conforme sua situação acadêmica.</p><a class="button hub-card-button" href="q-academico-documentos.html">Abrir guia de documentos</a></article>
+<article class="sei-hub-card-v2 hub-consult"><div aria-hidden="true" class="hub-card-icon"><svg aria-hidden="true" fill="none" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="15" rx="2" stroke="currentColor" stroke-width="1.8"></rect><path d="M7 8h10M7 12h7M7 16h5" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></div><h3>Estudantes matriculados no SuapEdu</h3><p>Ingressantes matriculados diretamente no SUAP devem usar a área SuapEdu para as consultas acadêmicas indicadas nos respectivos guias.</p><a class="button hub-card-button" href="suapedu.html">Ir para o SuapEdu</a></article>
+<article class="sei-hub-card-v2 hub-specific"><div aria-hidden="true" class="hub-card-icon"><svg aria-hidden="true" fill="none" viewBox="0 0 24 24"><path d="M7 3h7l5 5v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 3v5h5M9 13h6M9 16h4" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></div><h3>Solicitações acadêmicas</h3><p>Os documentos automáticos são emitidos no Q-Acadêmico. Pedidos que dependem de protocolo e análise continuam sendo realizados pelo SEI.</p><a class="button hub-card-button" href="sei.html">Ir para a área do SEI</a></article>
+</div><div class="callout-success"><strong>Documento pronto para uso.</strong> Os PDFs emitidos pelo Q-Acadêmico já possuem <strong>assinatura ou autenticação eletrônica</strong>, com chave ou link para conferência. Não é necessário ir à CCA, pedir carimbo ou assinatura, nem solicitar outra via por e-mail. A exceção indicada no guia é o histórico do egresso de curso superior, que não é gerado pelo sistema.</div></section>
+<section class="article-section hub-info-panel" id="coexistencia"><h2>Q-Acadêmico e SuapEdu coexistem</h2><p>Os dois sistemas não devem ser tratados como versões intercambiáveis. O sistema correto depende de onde o vínculo acadêmico do estudante foi registrado.</p>
+<div class="system-choice-grid"><article class="system-choice"><span class="badge">Q-Acadêmico</span><h3>Estudantes que permanecem no sistema anterior</h3><p>Continuam consultando informações e emitindo os documentos acadêmicos disponibilizados para seu vínculo.</p><a href="q-academico-acesso-e-senha.html">Ver orientação de acesso e senha</a></article><article class="system-choice suap-choice"><span class="badge">SuapEdu</span><h3>Estudantes matriculados diretamente no SUAP</h3><p>Devem seguir os guias do SuapEdu para primeiro acesso, funções acadêmicas e e-mail institucional.</p><a href="suapedu.html">Abrir a área do SuapEdu</a></article></div>
+<div class="callout-info"><strong>Em caso de dúvida sobre o sistema:</strong> verifique a orientação recebida na matrícula ou procure a CCA antes de tentar alterar credenciais.</div></section>
+<section class="article-section hub-info-panel info-follow" id="encaminhamentos"><h2>Encaminhamentos por tarefa</h2><ul class="check-list"><li><strong>Acesso ou senha do Q-Acadêmico:</strong> use o guia específico desta área.</li><li><strong>Declarações, certidões, boletim, histórico parcial e horário:</strong> consulte o guia de documentos e emita o PDF no próprio Q-Acadêmico.</li><li><strong>Consultas de estudantes matriculados no SuapEdu:</strong> siga a área SuapEdu.</li><li><strong>Pedidos sujeitos a análise:</strong> consulte a área do SEI e o catálogo de procedimentos.</li></ul></section>
+</article><aside aria-label="Nesta página" class="toc"><strong>Nesta página</strong><ol><li><a href="#comece">Por onde começar</a></li><li><a href="#coexistencia">Coexistência dos sistemas</a></li><li><a href="#encaminhamentos">Encaminhamentos</a></li></ol></aside></div>
+</main>
+<footer class="site-footer"><div class="footer-inner"><div class="footer-note"><strong>Coordenadoria de Controle Acadêmico — CCA</strong><br/>IFCE Campus Baturité · <a href="mailto:cca.baturite@ifce.edu.br">cca.baturite@ifce.edu.br</a></div><div>Desenvolvido e mantido pela CCA.<br/><span class="small">Estatísticas de acesso são utilizadas para aprimorar o conteúdo.</span></div></div></footer>
 <script data-goatcounter="https://cca-baturite.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script></body></html>
