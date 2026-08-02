@@ -1,54 +1,5 @@
 [
   {
-    "t": "Emitir documentos no Q-Acadêmico",
-    "u": "q-academico-documentos.html",
-    "s": "Q-Acadêmico",
-    "d": "Declarações, certidões, boletim, histórico parcial e horário, conforme a situação acadêmica.",
-    "k": "documentos emitir emissao declaração declaracao certidao histórico historico boletim horário horario assinatura autenticação autenticacao carimbo cca email"
-  },
-  {
-    "t": "Documentos para matrícula ativa ou trancada",
-    "u": "q-academico-documentos-aluno.html",
-    "s": "Q-Acadêmico",
-    "d": "Documentos para estudante matriculado ou com matrícula trancada.",
-    "k": "matriculado ativa trancada trancamento declaração matricula histórico boletim horário"
-  },
-  {
-    "t": "Declaração de conclusão — aguardando colação",
-    "u": "q-academico-aguardando-colacao.html",
-    "s": "Q-Acadêmico",
-    "d": "Comprovar a conclusão antes da colação de grau.",
-    "k": "aguardando colacao colação grau conclusão concluinte declaração"
-  },
-  {
-    "t": "Documentos para egresso de curso superior",
-    "u": "q-academico-egresso-superior.html",
-    "s": "Q-Acadêmico",
-    "d": "Certidão no sistema e orientação específica para solicitar o histórico.",
-    "k": "egresso superior graduação graduacao certidão certidao conclusão histórico diploma colação"
-  },
-  {
-    "t": "Documentos para egresso de curso técnico",
-    "u": "q-academico-egresso-tecnico.html",
-    "s": "Q-Acadêmico",
-    "d": "Certidão, histórico parcial, boletim e horário.",
-    "k": "egresso tecnico técnico subsequente certidão conclusão histórico diploma"
-  },
-  {
-    "t": "Documentos da especialização lato sensu",
-    "u": "q-academico-especializacao.html",
-    "s": "Q-Acadêmico",
-    "d": "Documentos para aluno e egresso de especialização.",
-    "k": "especialização especializacao lato sensu pós pos graduação certificado certidão declaração matrícula"
-  },
-  {
-    "t": "Certidão de Conclusão de Curso",
-    "u": "q-academico-documentos.html#egresso",
-    "s": "Q-Acadêmico",
-    "d": "Emitida diretamente no módulo EGRESSO, conforme o tipo de curso concluído.",
-    "k": "certidao conclusao curso formado formada egresso diploma certificado provisório provisorio autenticação eletrônica"
-  },
-  {
     "t": "Trancamento de Matrícula",
     "u": "sei-solicitacoes-disponiveis.html#trancamento-de-matricula",
     "s": "SEI",
@@ -238,20 +189,6 @@
     "k": "acompanhar acompanhamento andamento consulta consultar pesquisa publica processo protocolo numero recibo resultado resposta deferido indeferido aprovado negado tramitacao tramite demora demorando status situacao saiu resposta quanto tempo"
   },
   {
-    "t": "Primeiro acesso ao Q-Acadêmico",
-    "u": "q-academico-acesso-e-senha.html",
-    "s": "Q-Acadêmico",
-    "d": "Acessar o Q-Acadêmico pela primeira vez e definir a senha.",
-    "k": "q academico qacademico primeiro acesso criar senha login logar entrar modulo perfil aluno veterano notas boletim frequencia matricula link email hora validade"
-  },
-  {
-    "t": "Esqueci a senha do Q-Acadêmico",
-    "u": "q-academico-acesso-e-senha.html",
-    "s": "Q-Acadêmico",
-    "d": "Recuperar a senha de acesso ao Q-Acadêmico.",
-    "k": "esqueci esqueceu senha q academico qacademico recuperar recuperacao redefinir resetar trocar alterar nao consigo entrar bloqueado link email chegou nao chega spam lixo expirou hora validade cadastrado errado corrigir alterar email antigo desatualizado"
-  },
-  {
     "t": "Primeiro acesso ao SuapEdu",
     "u": "suapedu-primeiro-acesso.html",
     "s": "SuapEdu",
@@ -299,13 +236,6 @@
     "s": "SuapEdu",
     "d": "Emitir documentos com autenticação eletrônica diretamente no sistema.",
     "k": "documento documentos emitir emissao baixar download pdf autenticacao declaracao comprovante matricula vinculo historico atestado suap suapedu"
-  },
-  {
-    "t": "Q-Acadêmico ou SuapEdu? Qual sistema usar",
-    "u": "q-academico.html#coexistencia",
-    "s": "Sistemas",
-    "d": "Entenda qual sistema corresponde ao seu vínculo acadêmico.",
-    "k": "qual sistema usar q academico qacademico suap suapedu diferenca coexistem antigo novo ingressante veterano matriculado vinculo onde consultar"
   },
   {
     "t": "Consultar disciplinas no SuapEdu",
@@ -362,5 +292,215 @@
     "s": "SuapEdu",
     "d": "Veja como criar, acessar no computador ou configurar no celular.",
     "k": "email institucional academico aluno ifce gmail google acessar entrar criar configurar celular computador senha mensagens conta"
+  },
+  {
+    "t": "Emitir documentos no Q-Acadêmico",
+    "u": "q-academico-documentos.html",
+    "s": "Q-Acadêmico",
+    "d": "Declarações, certidões, boletim, histórico parcial e horário, conforme a sua situação acadêmica.",
+    "k": "documento documentos emitir emissao solicitar solicitacao tirar pegar baixar gerar imprimir declaracao certidao comprovante atestado papel pdf tutorial passo a passo como faco"
+  },
+  {
+    "t": "Documentos para quem está regularmente matriculado",
+    "u": "q-academico-documentos-aluno.html",
+    "s": "Q-Acadêmico",
+    "d": "Boletim, declarações de matrícula, percentual de conclusão, histórico parcial e horário para matrícula ativa.",
+    "k": "matriculado matriculada matricula ativa regular regularmente cursando aluno aluna estudante veterano tecnico graduacao modulo aluno tutorial pdf imprimir baixar guia passo a telas ver ler arquivo completo prefiro"
+  },
+  {
+    "t": "Documentos para quem está com a matrícula trancada",
+    "u": "q-academico-documentos-aluno.html",
+    "s": "Q-Acadêmico",
+    "d": "Declaração de matrícula trancada, boletim, histórico parcial e horário.",
+    "k": "trancada trancado trancamento tranquei suspensa suspenso interrompida parada pausei afastado afastei vinculo suspenso pedir solicitar consigo posso tutorial pdf guia passo a telas ver ler arquivo completo imprimir baixar prefiro"
+  },
+  {
+    "t": "Declaração de Conclusão — Aguardando Colação de Grau",
+    "u": "q-academico-aguardando-colacao.html",
+    "s": "Q-Acadêmico",
+    "d": "Comprove a conclusão acadêmica enquanto a colação de grau ainda está pendente.",
+    "k": "aguardando colacao grau concludente concluinte terminei acabei integralizei paguei todas as disciplinas falta colar colei nao colei ainda comprovar conclusao emprego empresa selecao concurso cerimonia formatura tutorial pdf imprimir guia passo a telas ver ler arquivo completo baixar prefiro"
+  },
+  {
+    "t": "Documentos para egresso de curso superior",
+    "u": "q-academico-egresso-superior.html",
+    "s": "Q-Acadêmico",
+    "d": "Certidão de Conclusão pelo sistema. O histórico segue orientação específica da CCA.",
+    "k": "egresso egressa formado formada colei grau graduacao licenciatura bacharelado tecnologo superior faculdade modulo egresso tutorial pdf imprimir baixar guia passo a telas ver ler arquivo completo prefiro"
+  },
+  {
+    "t": "Documentos para egresso de curso técnico subsequente",
+    "u": "q-academico-egresso-tecnico.html",
+    "s": "Q-Acadêmico",
+    "d": "Certidão de Conclusão de Curso Técnico, histórico parcial, boletim e horário.",
+    "k": "egresso tecnico subsequente concluido concluida terminei o tecnico formei modulo egresso tutorial pdf guia passo a telas ver ler arquivo completo imprimir baixar prefiro"
+  },
+  {
+    "t": "Especialização em andamento — documentos disponíveis",
+    "u": "q-academico-especializacao.html",
+    "s": "Q-Acadêmico",
+    "d": "Declaração com disciplinas, percentual de conclusão, boletim, histórico parcial e horário.",
+    "k": "especializacao lato sensu pos graduacao posgraduacao cursando andamento fazendo especializando tutorial pdf imprimir baixar guia passo a telas ver ler arquivo completo prefiro"
+  },
+  {
+    "t": "Especialização concluída — certidão e histórico",
+    "u": "q-academico-especializacao.html",
+    "s": "Q-Acadêmico",
+    "d": "Certidão de Conclusão e histórico parcial enquanto o Certificado Digital não fica disponível.",
+    "k": "especializacao lato sensu pos graduacao concluida terminei acabei formei certidao tutorial pdf guia passo a telas ver ler arquivo completo imprimir baixar prefiro"
+  },
+  {
+    "t": "Declaração de matrícula",
+    "u": "q-academico-documentos-aluno.html#matriculado",
+    "s": "Q-Acadêmico",
+    "d": "Comprova o vínculo atual. Exigida para passe estudantil, estágio e comprovação escolar em geral.",
+    "k": "declaracao matricula comprovante atestado vinculo passe estudantil meia passagem onibus transporte estagio bolsa auxilio banco plano de saude convenio desconto academia cinema comprovar que estudo que sou aluno"
+  },
+  {
+    "t": "Declaração de matrícula com disciplina",
+    "u": "q-academico-documentos-aluno.html#matriculado",
+    "s": "Q-Acadêmico",
+    "d": "Comprova o vínculo e relaciona as disciplinas em que você está matriculado no período.",
+    "k": "declaracao matricula disciplina disciplinas componentes materias cadeiras quais estou cursando lista"
+  },
+  {
+    "t": "Declaração de percentual de conclusão",
+    "u": "q-academico-documentos-aluno.html#matriculado",
+    "s": "Q-Acadêmico",
+    "d": "Atesta o percentual já cursado em relação ao total exigido pelo curso.",
+    "k": "percentual porcentagem porcento quanto ja cursei quanto falta para terminar progresso estagio requisito edital selecao"
+  },
+  {
+    "t": "Boletim escolar",
+    "u": "q-academico-documentos-aluno.html#matriculado",
+    "s": "Q-Acadêmico",
+    "d": "Notas parciais e faltas do período letivo.",
+    "k": "boletim notas nota faltas falta media medias desempenho frequencia rendimento"
+  },
+  {
+    "t": "Histórico escolar parcial",
+    "u": "q-academico-documentos-aluno.html#matriculado",
+    "s": "Q-Acadêmico",
+    "d": "Disciplinas cursadas, carga horária, notas e situação em cada componente.",
+    "k": "historico escolar parcial simples conferencia notas disciplinas cursadas carga horaria aprovado reprovado situacao"
+  },
+  {
+    "t": "Horário do aluno",
+    "u": "q-academico-documentos-aluno.html#matriculado",
+    "s": "Q-Acadêmico",
+    "d": "Grade de aulas do período letivo atual.",
+    "k": "horario horarios grade aulas quadro cronograma vertical dias semana"
+  },
+  {
+    "t": "Declaração de matrícula trancada",
+    "u": "q-academico-documentos-aluno.html#trancado",
+    "s": "Q-Acadêmico",
+    "d": "Comprova que o vínculo está temporariamente suspenso a seu pedido.",
+    "k": "declaracao matricula trancada trancamento comprovar tranquei suspenso pedir solicitar consigo emitir"
+  },
+  {
+    "t": "Certidão de Conclusão de Curso",
+    "u": "q-academico-documentos.html#egresso",
+    "s": "Q-Acadêmico",
+    "d": "Comprova a conclusão do curso enquanto o documento definitivo está em processamento.",
+    "k": "certidao conclusao curso formado egresso provisorio enquanto o diploma nao fica pronto comprovar formatura terminei"
+  },
+  {
+    "t": "Validar a autenticidade de um documento",
+    "u": "q-academico-documentos.html#autenticidade",
+    "s": "Q-Acadêmico",
+    "d": "Confira pela chave impressa no PDF, no módulo VALIDAR DOCUMENTOS do Q-Acadêmico.",
+    "k": "validar validacao autenticidade autenticar conferir verificar checar chave codigo autenticacao eletronica verificador empresa instituicao concurso banca rh legitimo verdadeiro falso fraude conferencia comprovar tutorial pdf guia passo a telas ver ler arquivo completo prefiro"
+  },
+  {
+    "t": "Não consigo emitir o histórico como egresso de curso superior",
+    "u": "q-academico-egresso-superior.html#historico",
+    "s": "Q-Acadêmico",
+    "d": "A emissão não é concluída neste módulo. Solicite o histórico à CCA por e-mail.",
+    "k": "historico nao sai nao gera nao gerou nao baixa nao funciona nao aparece nao carrega nao abre erro trava travou bug clico e nada acontece some some da tela egresso superior formado email cca solicitar pedir"
+  },
+  {
+    "t": "A certidão aparece como “Curso Técnico”, mas fiz especialização",
+    "u": "q-academico-especializacao.html#concluida",
+    "s": "Q-Acadêmico",
+    "d": "É um erro de rótulo na tela. A opção gera corretamente a certidão da especialização.",
+    "k": "rotulo errado nome errado opcao errada certidao curso tecnico especializacao lato sensu engano erro do sistema nomenclatura confuso estranho"
+  },
+  {
+    "t": "O título do PDF veio diferente do que selecionei no menu",
+    "u": "q-academico-egresso-tecnico.html#certidao",
+    "s": "Q-Acadêmico",
+    "d": "A diferença entre a opção do menu e o título do documento é esperada.",
+    "k": "titulo diferente nome diferente mudou certidao conclusao curso tecnico pdf menu tela esperado normal errado documento errado"
+  },
+  {
+    "t": "A declaração de matrícula não aparece na especialização",
+    "u": "q-academico-especializacao.html#cursando",
+    "s": "Q-Acadêmico",
+    "d": "Para lato sensu o sistema oferece apenas a Declaração de Matrícula com Disciplina.",
+    "k": "declaracao matricula nao aparece nao tem nao existe nao encontro falta opcao sumiu especializacao lato sensu com disciplina padrao comum"
+  },
+  {
+    "t": "Empresa ou instituição exige documento com carimbo",
+    "u": "q-academico-documentos.html#autenticidade",
+    "s": "Q-Acadêmico",
+    "d": "Oriente o destinatário a conferir a chave no módulo VALIDAR DOCUMENTOS.",
+    "k": "carimbo carimbado assinatura assinado assinar autenticado reconhecer firma cartorio original via original nao aceitam nao aceita exigem querem papel fisico validade legal vale comprovar autenticidade validar validacao a"
+  },
+  {
+    "t": "Guarde o histórico parcial antes da colação de grau",
+    "u": "q-academico-aguardando-colacao.html#antes",
+    "s": "Q-Acadêmico",
+    "d": "Depois da migração para EGRESSO, o histórico de curso superior deixa de ser gerado.",
+    "k": "antes da colacao salvar guardar baixar copia historico parcial perder deixa de gerar migrar egresso formatura precaucao dica"
+  },
+  {
+    "t": "O documento que preciso não aparece na lista",
+    "u": "q-academico.html#encaminhamentos",
+    "s": "Q-Acadêmico",
+    "d": "A lista varia conforme a situação registrada. Se faltar a opção, procure a CCA.",
+    "k": "nao aparece nao tem nao encontro sumiu falta opcao lista suspensa dropdown selecione um documento perfil situacao diferente vazio"
+  },
+  {
+    "t": "Esqueci a senha do Q-Acadêmico",
+    "u": "q-academico-acesso-e-senha.html#problemas",
+    "s": "Q-Acadêmico",
+    "d": "Recupere a senha pelo link de primeiro acesso e recuperação, na tela de login.",
+    "k": "esqueci esqueceu senha perdi recuperar recuperacao redefinir resetar trocar alterar nao consigo entrar logar login acesso bloqueado nao lembro"
+  },
+  {
+    "t": "Primeiro acesso ao Q-Acadêmico",
+    "u": "q-academico-acesso-e-senha.html#antes-de-comecar",
+    "s": "Q-Acadêmico",
+    "d": "Crie a sua senha e entre no módulo correto pela primeira vez.",
+    "k": "primeiro acesso criar senha cadastrar entrar logar login matricula modulo aluno egresso novato calouro nunca acessei"
+  },
+  {
+    "t": "Diploma de curso superior: quem emite e como acompanhar",
+    "u": "q-academico-egresso-superior.html#definitivos",
+    "s": "Q-Acadêmico",
+    "d": "A expedição do diploma é da Coordenadoria de Registros Acadêmicos (CRA), na Reitoria.",
+    "k": "diploma digital definitivo quando fica pronto prazo demora atraso retirar buscar receber cra reitoria registros academicos nao e a cca quem faz"
+  },
+  {
+    "t": "Certificado digital da especialização",
+    "u": "q-academico-especializacao.html#certificado",
+    "s": "Q-Acadêmico",
+    "d": "Na pós-graduação lato sensu o documento definitivo é o Certificado Digital, não o diploma.",
+    "k": "certificado digital lato sensu definitivo pos graduacao diploma da pos quando sai prazo especializacao"
+  },
+  {
+    "t": "Q-Acadêmico ou SuapEdu: qual sistema é o meu?",
+    "u": "q-academico.html#coexistencia",
+    "s": "Sistemas",
+    "d": "Entenda qual sistema corresponde ao seu vínculo acadêmico.",
+    "k": "qual sistema usar q academico qacademico suap suapedu diferenca coexistem coexistencia antigo novo ingressante veterano matriculado vinculo onde consultar dois sistemas onde entro nao sei qual usar login errado"
+  },
+  {
+    "t": "Documento automático ou pedido com análise no SEI?",
+    "u": "q-academico.html#encaminhamentos",
+    "s": "Q-Acadêmico",
+    "d": "O Q-Acadêmico emite na hora; pedidos que dependem de análise seguem pelo SEI.",
+    "k": "sei processo protocolo analise pedido requerimento diferenca quando usar cada sistema automatico imediato na hora demora deferimento"
   }
 ]
