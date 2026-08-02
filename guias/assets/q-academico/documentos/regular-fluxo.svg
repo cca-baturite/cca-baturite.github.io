@@ -2,7 +2,7 @@
 <title id="t">Documentos para estudante regularmente matriculado</title>
 <desc id="d">Resumo visual da lista de documentos, da declaração de matrícula e da autenticação eletrônica.</desc>
 <style>
-.bg{fill:#f8f7f3}.card{fill:#fff;stroke:#e1d8c7;stroke-width:2}.head{fill:#7a5d2a}.soft{fill:#fbf8ef}.selected{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.titlebox{fill:#fffdf8;stroke:#e1d8c7;stroke-width:2}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#5d4824}.b{font:22px Arial,sans-serif;fill:#2f2b22}.s{font:18px Arial,sans-serif;fill:#696257}.ok{font:700 20px Arial,sans-serif;fill:#23653a}
+.bg{fill:#f8f7f3}.card{fill:#fff;stroke:#e1d8c7;stroke-width:2}.head{fill:#7a5d2a}.soft{fill:#fbf8ef}.selected{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.titlebox{fill:#fffdf8;stroke:#e1d8c7;stroke-width:2}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#5d4824}.docname{font:700 23px Arial,sans-serif;fill:#5d4824;text-anchor:middle}.b{font:22px Arial,sans-serif;fill:#2f2b22}.s{font:18px Arial,sans-serif;fill:#696257}.ok{font:700 20px Arial,sans-serif;fill:#23653a}
 </style>
 <rect class="bg" width="1000" height="940"/>
 <rect class="card" x="35" y="30" width="930" height="470" rx="18"/>
@@ -18,8 +18,8 @@
 <text class="b" x="100" y="405">Horário do Aluno — Vertical</text>
 <rect class="card" x="35" y="525" width="930" height="245" rx="18"/>
 <text class="t" x="70" y="575">2. PDF gerado</text>
-<rect class="titlebox" x="245" y="600" width="510" height="66" rx="8"/>
-<text class="t" x="314" y="643">DECLARAÇÃO DE MATRÍCULA</text>
+<rect class="titlebox" x="100" y="600" width="800" height="66" rx="8"/>
+<text class="docname" x="500" y="643">DECLARAÇÃO DE MATRÍCULA</text>
 <text class="b" x="100" y="714">O arquivo apresenta vínculo, curso, período letivo e demais dados acadêmicos.</text>
 <rect class="green" x="35" y="795" width="930" height="112" rx="14"/>
 <text class="ok" x="70" y="835">✓ Assinatura ou autenticação eletrônica incluída</text>
