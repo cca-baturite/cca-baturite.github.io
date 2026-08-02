@@ -1,15 +1,15 @@
 name: Aplicar PNG original no passo 5
 
 on:
-  push:
-    paths:
-      - .github/workflows/aplicar-png-passo5.yml
+  issues:
+    types: [opened]
 
 permissions:
   contents: write
 
 jobs:
   aplicar:
+    if: github.event.issue.title == 'Executar hotfix PNG passo 5'
     runs-on: ubuntu-latest
     steps:
       - name: Obter repositório
