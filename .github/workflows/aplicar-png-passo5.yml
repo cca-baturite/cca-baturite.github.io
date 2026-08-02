@@ -17,19 +17,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Montar PNG e atualizar página
+      - name: Aplicar imagem original
         run: |
           set -euo pipefail
           media="guias/assets/sei/media"
           html="guias/sei-cadastro-inicial.html"
-          cat "$media/.passo5.b64.part0" "$media/.passo5.b64.part1" "$media/.passo5.b64.part2" "$media/.passo5.b64.part3" "$media/.passo5.b64.part4" "$media/.passo5.b64.part5" | base64 -d > "$media/suap-chamado-descricao.png"
-          python3 -c "from pathlib import Path; import hashlib,struct; b=Path('$media/suap-chamado-descricao.png').read_bytes(); assert b[:8]==b'\x89PNG\r\n\x1a\n'; assert struct.unpack('>II',b[16:24])==(873,589); assert hashlib.sha256(b).hexdigest()=='e2e9d69096202be5af8d00032197b0725cfee0d07d092100681694695d100c67'"
-          python3 -c "from pathlib import Path; import re; p=Path('$html'); s=p.read_text(encoding='utf-8'); s=s.replace('assets/sei/media/suap-chamado-descricao.svg','assets/sei/media/suap-chamado-descricao.png'); s=re.sub(r'(<img[^>]*src=\"assets/sei/media/suap-chamado-descricao\\.png\"[^>]*?)width=\"\\d+\" height=\"\\d+\"',r'\\1width=\"873\" height=\"589\"',s); p.write_text(s,encoding='utf-8')"
-          python3 -c "from pathlib import Path; s=Path('$html').read_text(encoding='utf-8'); assert s.count('assets/sei/media/suap-chamado-descricao.png')==2; assert 'assets/sei/media/suap-chamado-descricao.svg' not in s; assert 'width=\"873\" height=\"589\"' in s"
-          rm -f "$media/suap-chamado-descricao.svg"
-          rm -f "$media/.passo5.b64.part0" "$media/.passo5.b64.part1" "$media/.passo5.b64.part2" "$media/.passo5.b64.part3" "$media/.passo5.b64.part4" "$media/.passo5.b64.part5"
-          rm -f .github/workflows/aplicar-png-passo5.yml
-          rm -f .github/workflows/aplicar-imagens-originais-sei.yml
+          base64 -d "$media/.passo5-original.b64" > "$media/suap-chamado-descricao.png"
+          python3 -c "from pathlib import Path; import hashlib,struct; b=Path('$media/suap-chamado-descricao.png').read_bytes(); assert b[:8].hex()=='89504e470d0a1a0a'; assert struct.unpack('>II',b[16:24])==(873,589); assert hashlib.sha256(b).hexdigest()=='e2e9d69096202be5af8d00032197b0725cfee0d07d092100681694695d100c67'"
+          python3 -c "from pathlib import Path; p=Path('$html'); s=p.read_text(encoding='utf-8').replace('assets/sei/media/suap-chamado-descricao.svg','assets/sei/media/suap-chamado-descricao.png').replace('src=\"assets/sei/media/suap-chamado-descricao.png\" width=\"873\" height=\"500\"','src=\"assets/sei/media/suap-chamado-descricao.png\" width=\"873\" height=\"589\"'); p.write_text(s,encoding='utf-8')"
+          python3 -c "from pathlib import Path; s=Path('$html').read_text(encoding='utf-8'); assert s.count('assets/sei/media/suap-chamado-descricao.png')==2; assert 'assets/sei/media/suap-chamado-descricao.svg' not in s; assert 'src=\"assets/sei/media/suap-chamado-descricao.png\" width=\"873\" height=\"589\"' in s"
+          rm -f "$media/suap-chamado-descricao.svg" "$media/.passo5-original.b64"
+          rm -f "$media"/.passo5.b64.part0 "$media"/.passo5.b64.part1 "$media"/.passo5.b64.part2 "$media"/.passo5.b64.part3 "$media"/.passo5.b64.part4 "$media"/.passo5.b64.part5
+          rm -f .github/workflows/aplicar-png-passo5.yml .github/workflows/aplicar-imagens-originais-sei.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
