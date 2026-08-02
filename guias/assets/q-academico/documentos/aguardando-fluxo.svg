@@ -1,1 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="760" viewBox="0 0 1000 760" role="img" aria-labelledby="t d"><title id="t">Documentos para quem aguarda colação de grau</title><desc id="d">Resumo visual da lista de documentos e da Declaração de Conclusão aguardando colação.</desc><style>.bg{fill:#f7f8f6}.card{fill:#fff;stroke:#d3ddd7;stroke-width:2}.head{fill:#12452f}.soft{fill:#e8f3ec}.red{fill:none;stroke:#ef2b2d;stroke-width:7}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#12452f}.b{font:22px Arial,sans-serif;fill:#202a25}.s{font:18px Arial,sans-serif;fill:#526159}.ok{font:700 20px Arial,sans-serif;fill:#23653a}</style><rect class="bg" width="1000" height="760"/><rect class="card" x="35" y="30" width="930" height="360" rx="18"/><rect class="head" x="35" y="30" width="930" height="72" rx="18"/><text class="h" x="70" y="76">1. Situação: Aguardando Colação de Grau</text><rect class="soft" x="70" y="125" width="860" height="220" rx="12"/><text class="b" x="100" y="170">Boletim Escolar</text><text class="b" x="100" y="217">Declaração de Conclusão — Aguardando Colação de Grau</text><text class="b" x="100" y="264">Histórico Escolar Parcial para Simples Conferência</text><text class="b" x="100" y="311">Horário do Aluno — Vertical</text><rect class="red" x="82" y="184" width="670" height="48" rx="6"/><rect class="card" x="35" y="420" width="930" height="210" rx="18"/><text class="t" x="70" y="470">2. PDF gerado</text><rect class="red" x="180" y="498" width="640" height="65"/><text class="t" x="217" y="540">DECLARAÇÃO DE CONCLUSÃO DE CURSO</text><text class="b" x="100" y="604">O texto comprova a integralização e informa que a colação ainda está pendente.</text><rect class="green" x="35" y="655" width="930" height="75" rx="14"/><text class="ok" x="70" y="688">✓ Assinatura ou autenticação eletrônica incluída — não precisa ir à CCA nem pedir via por e-mail.</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="800" viewBox="0 0 1000 800" role="img" aria-labelledby="t d">
+<title id="t">Documentos para quem aguarda colação de grau</title>
+<desc id="d">Resumo visual da lista de documentos e da Declaração de Conclusão aguardando colação.</desc>
+<style>
+.bg{fill:#f8f7f3}.card{fill:#fff;stroke:#e1d8c7;stroke-width:2}.head{fill:#7a5d2a}.soft{fill:#fbf8ef}.selected{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.titlebox{fill:#fffdf8;stroke:#e1d8c7;stroke-width:2}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#5d4824}.b{font:22px Arial,sans-serif;fill:#2f2b22}.s{font:18px Arial,sans-serif;fill:#696257}.ok{font:700 20px Arial,sans-serif;fill:#23653a}
+</style>
+<rect class="bg" width="1000" height="800"/>
+<rect class="card" x="35" y="30" width="930" height="360" rx="18"/>
+<rect class="head" x="35" y="30" width="930" height="72" rx="18"/>
+<text class="h" x="70" y="76">1. Situação: Aguardando Colação de Grau</text>
+<rect class="soft" x="70" y="125" width="860" height="220" rx="12"/>
+<text class="b" x="100" y="170">Boletim Escolar</text>
+<rect class="selected" x="88" y="185" width="680" height="43" rx="7"/>
+<text class="b" x="100" y="217">Declaração de Conclusão — Aguardando Colação de Grau</text>
+<text class="b" x="100" y="264">Histórico Escolar Parcial para Simples Conferência</text>
+<text class="b" x="100" y="311">Horário do Aluno — Vertical</text>
+<rect class="card" x="35" y="420" width="930" height="210" rx="18"/>
+<text class="t" x="70" y="470">2. PDF gerado</text>
+<rect class="titlebox" x="175" y="495" width="650" height="66" rx="8"/>
+<text class="t" x="217" y="538">DECLARAÇÃO DE CONCLUSÃO DE CURSO</text>
+<text class="b" x="100" y="604">O texto comprova a integralização e informa que a colação ainda está pendente.</text>
+<rect class="green" x="35" y="655" width="930" height="112" rx="14"/>
+<text class="ok" x="70" y="695">✓ Assinatura ou autenticação eletrônica incluída</text>
+<text class="s" x="70" y="726">O PDF já pode ser encaminhado e validado eletronicamente.</text>
+<text class="s" x="70" y="753">Não precisa ir à CCA nem pedir outra via por e-mail.</text>
+</svg>

@@ -1,1 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="920" viewBox="0 0 1000 920" role="img" aria-labelledby="t d"><title id="t">Documentos para estudante regularmente matriculado</title><desc id="d">Resumo visual da lista de documentos, da declaração de matrícula e da autenticação eletrônica.</desc><style>.bg{fill:#f7f8f6}.card{fill:#fff;stroke:#d3ddd7;stroke-width:2}.head{fill:#12452f}.soft{fill:#e8f3ec}.warn{fill:#fff3d6;stroke:#c48722;stroke-width:2}.red{fill:none;stroke:#ef2b2d;stroke-width:7}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#12452f}.b{font:22px Arial,sans-serif;fill:#202a25}.s{font:18px Arial,sans-serif;fill:#526159}.ok{font:700 21px Arial,sans-serif;fill:#23653a}.num{font:700 22px Arial,sans-serif;fill:#fff}</style><rect class="bg" width="1000" height="920"/><rect class="card" x="35" y="30" width="930" height="470" rx="18"/><rect class="head" x="35" y="30" width="930" height="72" rx="18"/><text class="h" x="70" y="76">1. Nova Solicitação — documentos disponíveis</text><rect class="soft" x="70" y="125" width="860" height="330" rx="12"/><text class="b" x="100" y="170">Boletim Escolar</text><text class="b" x="100" y="217">Declaração de Matrícula com Disciplina</text><text class="b" x="100" y="264">Declaração de Matrícula</text><text class="b" x="100" y="311">Declaração de Percentual de Conclusão</text><text class="b" x="100" y="358">Histórico Escolar Parcial para Simples Conferência</text><text class="b" x="100" y="405">Horário do Aluno — Vertical</text><rect class="red" x="82" y="231" width="470" height="48" rx="6"/><rect class="card" x="35" y="525" width="930" height="245" rx="18"/><text class="t" x="70" y="575">2. PDF gerado</text><rect class="red" x="260" y="600" width="480" height="66"/><text class="t" x="315" y="643">DECLARAÇÃO DE MATRÍCULA</text><text class="b" x="100" y="714">O arquivo apresenta vínculo, curso, período letivo e demais dados acadêmicos.</text><rect class="warn" x="35" y="795" width="930" height="92" rx="14"/><text class="ok" x="70" y="834">✓ Assinatura ou autenticação eletrônica incluída</text><text class="s" x="70" y="865">A chave ou o link de validação aparece na lateral do PDF. Não precisa de carimbo, ida à CCA ou e-mail.</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="940" viewBox="0 0 1000 940" role="img" aria-labelledby="t d">
+<title id="t">Documentos para estudante regularmente matriculado</title>
+<desc id="d">Resumo visual da lista de documentos, da declaração de matrícula e da autenticação eletrônica.</desc>
+<style>
+.bg{fill:#f8f7f3}.card{fill:#fff;stroke:#e1d8c7;stroke-width:2}.head{fill:#7a5d2a}.soft{fill:#fbf8ef}.selected{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.titlebox{fill:#fffdf8;stroke:#e1d8c7;stroke-width:2}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#5d4824}.b{font:22px Arial,sans-serif;fill:#2f2b22}.s{font:18px Arial,sans-serif;fill:#696257}.ok{font:700 20px Arial,sans-serif;fill:#23653a}
+</style>
+<rect class="bg" width="1000" height="940"/>
+<rect class="card" x="35" y="30" width="930" height="470" rx="18"/>
+<rect class="head" x="35" y="30" width="930" height="72" rx="18"/>
+<text class="h" x="70" y="76">1. Nova Solicitação — documentos disponíveis</text>
+<rect class="soft" x="70" y="125" width="860" height="330" rx="12"/>
+<text class="b" x="100" y="170">Boletim Escolar</text>
+<text class="b" x="100" y="217">Declaração de Matrícula com Disciplina</text>
+<rect class="selected" x="88" y="232" width="420" height="43" rx="7"/>
+<text class="b" x="100" y="264">Declaração de Matrícula</text>
+<text class="b" x="100" y="311">Declaração de Percentual de Conclusão</text>
+<text class="b" x="100" y="358">Histórico Escolar Parcial para Simples Conferência</text>
+<text class="b" x="100" y="405">Horário do Aluno — Vertical</text>
+<rect class="card" x="35" y="525" width="930" height="245" rx="18"/>
+<text class="t" x="70" y="575">2. PDF gerado</text>
+<rect class="titlebox" x="245" y="600" width="510" height="66" rx="8"/>
+<text class="t" x="314" y="643">DECLARAÇÃO DE MATRÍCULA</text>
+<text class="b" x="100" y="714">O arquivo apresenta vínculo, curso, período letivo e demais dados acadêmicos.</text>
+<rect class="green" x="35" y="795" width="930" height="112" rx="14"/>
+<text class="ok" x="70" y="835">✓ Assinatura ou autenticação eletrônica incluída</text>
+<text class="s" x="70" y="866">A chave ou o link de validação aparece na lateral do PDF.</text>
+<text class="s" x="70" y="893">Não precisa de carimbo, ida à CCA ou solicitação por e-mail.</text>
+</svg>
