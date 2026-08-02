@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1010" viewBox="0 0 1000 1010" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1040" viewBox="0 0 1000 1040" role="img" aria-labelledby="t d">
 <title id="t">Documentos para egresso de curso superior</title>
 <desc id="d">Resumo visual do acesso pelo módulo EGRESSO, da Certidão de Conclusão e da exceção relativa ao histórico.</desc>
 <style>
 .bg{fill:#f8f7f3}.card{fill:#fff;stroke:#e1d8c7;stroke-width:2}.head{fill:#7a5d2a}.soft{fill:#fbf8ef}.selected{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.pill{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.titlebox{fill:#fffdf8;stroke:#e1d8c7;stroke-width:2}.danger{fill:#fff1f0;stroke:#b42318;stroke-width:2}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#5d4824}.b{font:22px Arial,sans-serif;fill:#2f2b22}.s{font:18px Arial,sans-serif;fill:#696257}.alert{font:700 19px Arial,sans-serif;fill:#b42318}.ok{font:700 20px Arial,sans-serif;fill:#23653a}
 </style>
-<rect class="bg" width="1000" height="1010"/>
+<rect class="bg" width="1000" height="1040"/>
 <rect class="card" x="35" y="30" width="930" height="175" rx="18"/>
 <rect class="head" x="35" y="30" width="930" height="72" rx="18"/>
 <text class="h" x="70" y="76">1. Acesse o módulo EGRESSO</text>
@@ -30,6 +30,7 @@
 <text class="alert" x="70" y="852">Exceção: o histórico não é gerado para egresso de curso superior.</text>
 <text class="s" x="70" y="883">Mesmo aparecendo na lista, solicite o histórico por e-mail à CCA.</text>
 <text class="s" x="70" y="910">A Certidão funciona normalmente.</text>
-<rect class="green" x="35" y="945" width="930" height="52" rx="14"/>
-<text class="ok" x="70" y="978">✓ A Certidão já possui autenticação eletrônica — não envie e-mail para pedir assinatura.</text>
+<rect class="green" x="35" y="945" width="930" height="76" rx="14"/>
+<text class="ok" x="70" y="978">✓ A Certidão já possui autenticação eletrônica.</text>
+<text class="s" x="70" y="1008">Não envie e-mail para pedir assinatura, carimbo ou outra via.</text>
 </svg>
