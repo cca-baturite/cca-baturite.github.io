@@ -1,1 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="980" viewBox="0 0 1000 980" role="img" aria-labelledby="t d"><title id="t">Documentos para egresso de curso superior</title><desc id="d">Resumo visual do acesso pelo módulo EGRESSO, da Certidão de Conclusão e da exceção relativa ao histórico.</desc><style>.bg{fill:#f7f8f6}.card{fill:#fff;stroke:#d3ddd7;stroke-width:2}.head{fill:#12452f}.soft{fill:#e8f3ec}.red{fill:none;stroke:#ef2b2d;stroke-width:7}.danger{fill:#fff1f0;stroke:#b42318;stroke-width:2}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#12452f}.b{font:22px Arial,sans-serif;fill:#202a25}.s{font:18px Arial,sans-serif;fill:#526159}.alert{font:700 19px Arial,sans-serif;fill:#b42318}.ok{font:700 20px Arial,sans-serif;fill:#23653a}</style><rect class="bg" width="1000" height="980"/><rect class="card" x="35" y="30" width="930" height="175" rx="18"/><rect class="head" x="35" y="30" width="930" height="72" rx="18"/><text class="h" x="70" y="76">1. Acesse o módulo EGRESSO</text><rect class="soft" x="70" y="125" width="860" height="52" rx="10"/><text class="b" x="100" y="159">PROFESSOR · ALUNO · CLASSIFICADO · EGRESSO · VALIDAR DOCUMENTOS</text><rect class="red" x="556" y="128" width="145" height="45" rx="6"/><rect class="card" x="35" y="235" width="930" height="335" rx="18"/><text class="t" x="70" y="285">2. Nova Solicitação</text><rect class="soft" x="70" y="310" width="860" height="220" rx="12"/><text class="b" x="100" y="355">Boletim Escolar</text><text class="b" x="100" y="402">Certidão de Conclusão de Curso</text><text class="b" x="100" y="449">Histórico Escolar Parcial para Simples Conferência</text><text class="b" x="100" y="496">Horário do Aluno — Vertical</text><rect class="red" x="82" y="369" width="455" height="48" rx="6"/><rect class="card" x="35" y="600" width="930" height="190" rx="18"/><text class="t" x="70" y="650">3. Certidão gerada</text><rect class="red" x="250" y="675" width="500" height="65"/><text class="t" x="300" y="717">CERTIDÃO DE CONCLUSÃO DE CURSO</text><text class="b" x="100" y="775">O documento registra a conclusão e a data da colação de grau.</text><rect class="danger" x="35" y="815" width="930" height="100" rx="14"/><text class="alert" x="70" y="852">Exceção: o histórico não é gerado para egresso de curso superior.</text><text class="s" x="70" y="883">Mesmo aparecendo na lista, solicite o histórico por e-mail à CCA. A Certidão funciona normalmente.</text><rect class="green" x="35" y="930" width="930" height="35" rx="12"/><text class="ok" x="70" y="956">✓ A Certidão já possui autenticação eletrônica — não envie e-mail para pedir assinatura.</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1010" viewBox="0 0 1000 1010" role="img" aria-labelledby="t d">
+<title id="t">Documentos para egresso de curso superior</title>
+<desc id="d">Resumo visual do acesso pelo módulo EGRESSO, da Certidão de Conclusão e da exceção relativa ao histórico.</desc>
+<style>
+.bg{fill:#f8f7f3}.card{fill:#fff;stroke:#e1d8c7;stroke-width:2}.head{fill:#7a5d2a}.soft{fill:#fbf8ef}.selected{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.pill{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.titlebox{fill:#fffdf8;stroke:#e1d8c7;stroke-width:2}.danger{fill:#fff1f0;stroke:#b42318;stroke-width:2}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#5d4824}.b{font:22px Arial,sans-serif;fill:#2f2b22}.s{font:18px Arial,sans-serif;fill:#696257}.alert{font:700 19px Arial,sans-serif;fill:#b42318}.ok{font:700 20px Arial,sans-serif;fill:#23653a}
+</style>
+<rect class="bg" width="1000" height="1010"/>
+<rect class="card" x="35" y="30" width="930" height="175" rx="18"/>
+<rect class="head" x="35" y="30" width="930" height="72" rx="18"/>
+<text class="h" x="70" y="76">1. Acesse o módulo EGRESSO</text>
+<rect class="soft" x="70" y="125" width="860" height="52" rx="10"/>
+<text class="b" x="100" y="159">PROFESSOR · ALUNO · CLASSIFICADO ·</text>
+<rect class="pill" x="545" y="130" width="140" height="38" rx="19"/>
+<text class="b" x="567" y="158">EGRESSO</text>
+<text class="b" x="705" y="159">· VALIDAR DOCUMENTOS</text>
+<rect class="card" x="35" y="235" width="930" height="335" rx="18"/>
+<text class="t" x="70" y="285">2. Nova Solicitação</text>
+<rect class="soft" x="70" y="310" width="860" height="220" rx="12"/>
+<text class="b" x="100" y="355">Boletim Escolar</text>
+<rect class="selected" x="88" y="370" width="465" height="43" rx="7"/>
+<text class="b" x="100" y="402">Certidão de Conclusão de Curso</text>
+<text class="b" x="100" y="449">Histórico Escolar Parcial para Simples Conferência</text>
+<text class="b" x="100" y="496">Horário do Aluno — Vertical</text>
+<rect class="card" x="35" y="600" width="930" height="190" rx="18"/>
+<text class="t" x="70" y="650">3. Certidão gerada</text>
+<rect class="titlebox" x="235" y="675" width="530" height="65" rx="8"/>
+<text class="t" x="300" y="717">CERTIDÃO DE CONCLUSÃO DE CURSO</text>
+<text class="b" x="100" y="775">O documento registra a conclusão e a data da colação de grau.</text>
+<rect class="danger" x="35" y="815" width="930" height="112" rx="14"/>
+<text class="alert" x="70" y="852">Exceção: o histórico não é gerado para egresso de curso superior.</text>
+<text class="s" x="70" y="883">Mesmo aparecendo na lista, solicite o histórico por e-mail à CCA.</text>
+<text class="s" x="70" y="910">A Certidão funciona normalmente.</text>
+<rect class="green" x="35" y="945" width="930" height="52" rx="14"/>
+<text class="ok" x="70" y="978">✓ A Certidão já possui autenticação eletrônica — não envie e-mail para pedir assinatura.</text>
+</svg>
