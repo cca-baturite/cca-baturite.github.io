@@ -2,7 +2,7 @@
 <title id="t">Documentos para aluno de especialização lato sensu</title>
 <desc id="d">Resumo visual dos documentos disponíveis e da declaração de matrícula com disciplinas.</desc>
 <style>
-.bg{fill:#f8f7f3}.card{fill:#fff;stroke:#e1d8c7;stroke-width:2}.head{fill:#7a5d2a}.soft{fill:#fbf8ef}.selected{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.titlebox{fill:#fffdf8;stroke:#e1d8c7;stroke-width:2}.yellow{fill:#fff3d6;stroke:#c48722;stroke-width:2}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#5d4824}.b{font:22px Arial,sans-serif;fill:#2f2b22}.s{font:18px Arial,sans-serif;fill:#696257}.note{font:700 19px Arial,sans-serif;fill:#805412}.ok{font:700 20px Arial,sans-serif;fill:#23653a}
+.bg{fill:#f8f7f3}.card{fill:#fff;stroke:#e1d8c7;stroke-width:2}.head{fill:#7a5d2a}.soft{fill:#fbf8ef}.selected{fill:#f2ead7;stroke:#8a6a2f;stroke-width:2}.titlebox{fill:#fffdf8;stroke:#e1d8c7;stroke-width:2}.yellow{fill:#fff3d6;stroke:#c48722;stroke-width:2}.green{fill:#e9f7ed;stroke:#398651;stroke-width:2}.h{font:700 28px Arial,sans-serif;fill:#fff}.t{font:700 25px Arial,sans-serif;fill:#5d4824}.docname{font:700 23px Arial,sans-serif;fill:#5d4824;text-anchor:middle}.b{font:22px Arial,sans-serif;fill:#2f2b22}.s{font:18px Arial,sans-serif;fill:#696257}.note{font:700 19px Arial,sans-serif;fill:#805412}.ok{font:700 20px Arial,sans-serif;fill:#23653a}
 </style>
 <rect class="bg" width="1000" height="940"/>
 <rect class="card" x="35" y="30" width="930" height="405" rx="18"/>
@@ -20,8 +20,8 @@
 <text class="s" x="70" y="529">Use “Declaração de Matrícula com Disciplina” e selecione o período letivo.</text>
 <rect class="card" x="35" y="590" width="930" height="190" rx="18"/>
 <text class="t" x="70" y="640">2. PDF gerado</text>
-<rect class="titlebox" x="250" y="665" width="500" height="65" rx="8"/>
-<text class="t" x="322" y="707">DECLARAÇÃO DE MATRÍCULA</text>
+<rect class="titlebox" x="100" y="665" width="800" height="65" rx="8"/>
+<text class="docname" x="500" y="707">DECLARAÇÃO DE MATRÍCULA</text>
 <text class="b" x="100" y="765">O título do PDF é geral, mas o corpo relaciona as disciplinas da especialização.</text>
 <rect class="green" x="35" y="805" width="930" height="105" rx="14"/>
 <text class="ok" x="70" y="845">✓ Assinatura ou autenticação eletrônica incluída</text>
