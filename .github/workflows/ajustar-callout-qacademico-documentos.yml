@@ -1,0 +1,36 @@
+name: Ajustar callout do Q-Acadêmico
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+
+jobs:
+  ajustar:
+    if: github.event.issue.title == 'Ajustar callout Q-Acadêmico documentos 2026-08-02'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: qacademico-documentos-2026-08-02
+          fetch-depth: 0
+      - shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('guias/q-academico.html')
+          s=p.read_text(encoding='utf-8')
+          old='class="callout-success"><strong>Documento pronto para uso.'</n          new='class="callout callout-success"><strong>Documento pronto para uso.'</n          assert old in s, 'Callout não localizado.'
+          s=s.replace(old,new,1)
+          s=s.replace('Guias e serviços do Q-Acadêmico para estudantes do IFCE Campus Baturité.', 'Guias e serviços do Q-Acadêmico para estudantes e egressos do IFCE Campus Baturité.')
+          p.write_text(s,encoding='utf-8')
+          PY
+          grep -q 'class="callout callout-success"' guias/q-academico.html
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add guias/q-academico.html
+          git commit -m 'Refina destaque de autenticação eletrônica no Q-Acadêmico'
+          git push origin HEAD:qacademico-documentos-2026-08-02
