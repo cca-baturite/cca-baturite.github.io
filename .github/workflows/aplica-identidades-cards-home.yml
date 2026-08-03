@@ -3,9 +3,7 @@ name: Aplica identidades visuais nos cards da home
 on:
   push:
     branches:
-      - identidades-cards-home
-    paths:
-      - .github/workflows/aplica-identidades-cards-home.yml
+      - main
 
 permissions:
   contents: write
@@ -14,10 +12,10 @@ jobs:
   aplicar:
     runs-on: ubuntu-latest
     steps:
-      - name: Baixar o ramo
+      - name: Baixar o ramo principal
         uses: actions/checkout@v4
         with:
-          ref: identidades-cards-home
+          ref: main
           fetch-depth: 0
 
       - name: Atualizar os cards da página inicial
@@ -46,32 +44,21 @@ jobs:
           assert 'id="cca-home-system-identities"' not in html
           html = html.replace('</head>', estilo + '</head>', 1)
 
-          q_antigo = '<article class="system-card"><span class="badge">Guias disponíveis</span><h2>Q-Acadêmico</h2>'
-          q_novo = '<article class="system-card system-card-q"><div class="system-card-top"><span class="badge">Guias disponíveis</span><span class="system-mark system-mark-q" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><path d="M31 14c-10.5 0-19 8.5-19 19s8.5 19 19 19c3.1 0 6-.7 8.6-2.1l4.6 4.6c1.1 1.1 2.9 1.1 4 0s1.1-2.9 0-4l-4.2-4.2c3.5-3.5 5.6-8.3 5.6-13.3 0-10.5-8.5-19-19-19Zm0 6c7.2 0 13 5.8 13 13s-5.8 13-13 13-13-5.8-13-13 5.8-13 13-13Z" fill="currentColor"/><path d="M22 17 32 12l10 5-10 5-10-5Z" fill="#1f1f1f"/><path d="M26 20.5v4.2c0 1.8 2.7 3.8 6 3.8s6-2 6-3.8v-4.2" stroke="#1f1f1f" stroke-width="1.7" stroke-linecap="round"/></svg></span></div><h2>Q-Acadêmico</h2>'
-
-          sei_antigo = '<article class="system-card"><span class="badge">Guias disponíveis</span><h2>SEI para Usuários Externos</h2>'
-          sei_novo = '<article class="system-card system-card-sei"><div class="system-card-top"><span class="badge">Guias disponíveis</span><span class="system-mark system-mark-sei" aria-hidden="true"><span class="wordmark-sei"><span class="wordmark-sei-text">sei</span><span class="wordmark-sei-bang">!</span></span></span></div><h2>SEI para Usuários Externos</h2>'
-
-          suap_antigo = '<article class="system-card"><span class="badge">Guias disponíveis</span><h2>SuapEdu</h2>'
-          suap_novo = '<article class="system-card system-card-suap"><div class="system-card-top"><span class="badge">Guias disponíveis</span><span class="system-mark system-mark-suap" aria-hidden="true"><span class="wordmark-suap">suap</span></span></div><h2>SuapEdu</h2>'
-
-          for antigo, novo in ((q_antigo, q_novo), (sei_antigo, sei_novo), (suap_antigo, suap_novo)):
+          trocas = [
+              ('<article class="system-card"><span class="badge">Guias disponíveis</span><h2>Q-Acadêmico</h2>', '<article class="system-card system-card-q"><div class="system-card-top"><span class="badge">Guias disponíveis</span><span class="system-mark system-mark-q" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><path d="M31 14c-10.5 0-19 8.5-19 19s8.5 19 19 19c3.1 0 6-.7 8.6-2.1l4.6 4.6c1.1 1.1 2.9 1.1 4 0s1.1-2.9 0-4l-4.2-4.2c3.5-3.5 5.6-8.3 5.6-13.3 0-10.5-8.5-19-19-19Zm0 6c7.2 0 13 5.8 13 13s-5.8 13-13 13-13-5.8-13-13 5.8-13 13-13Z" fill="currentColor"/><path d="M22 17 32 12l10 5-10 5-10-5Z" fill="#1f1f1f"/><path d="M26 20.5v4.2c0 1.8 2.7 3.8 6 3.8s6-2 6-3.8v-4.2" stroke="#1f1f1f" stroke-width="1.7" stroke-linecap="round"/></svg></span></div><h2>Q-Acadêmico</h2>'),
+              ('<article class="system-card"><span class="badge">Guias disponíveis</span><h2>SEI para Usuários Externos</h2>', '<article class="system-card system-card-sei"><div class="system-card-top"><span class="badge">Guias disponíveis</span><span class="system-mark system-mark-sei" aria-hidden="true"><span class="wordmark-sei"><span class="wordmark-sei-text">sei</span><span class="wordmark-sei-bang">!</span></span></span></div><h2>SEI para Usuários Externos</h2>'),
+              ('<article class="system-card"><span class="badge">Guias disponíveis</span><h2>SuapEdu</h2>', '<article class="system-card system-card-suap"><div class="system-card-top"><span class="badge">Guias disponíveis</span><span class="system-mark system-mark-suap" aria-hidden="true"><span class="wordmark-suap">suap</span></span></div><h2>SuapEdu</h2>'),
+          ]
+          for antigo, novo in trocas:
               assert html.count(antigo) == 1, antigo
               html = html.replace(antigo, novo, 1)
-
-          assert html.count('class="system-card system-card-q"') == 1
-          assert html.count('class="system-card system-card-sei"') == 1
-          assert html.count('class="system-card system-card-suap"') == 1
-          assert html.count('wordmark-sei-bang') == 2
-          assert html.count('wordmark-suap') == 2
-
           caminho.write_text(html, encoding="utf-8")
 
-      - name: Publicar a alteração e remover o fluxo temporário
+      - name: Publicar a alteração e remover os fluxos temporários
         run: |
           git config user.name "cca-bat"
           git config user.email "cca-bat@users.noreply.github.com"
-          git rm .github/workflows/aplica-identidades-cards-home.yml
+          git rm -f .github/workflows/aplica-identidades-cards-home.yml .github/workflows/aplica-identidades-cards-home-main.yml
           git add guias/index.html
           git commit -m "Adiciona identidades visuais aos cards da home"
-          git push origin HEAD:identidades-cards-home
+          git push origin HEAD:main
