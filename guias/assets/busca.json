@@ -1,506 +1,506 @@
 [
-  {
-    "t": "Trancamento de Matrícula",
-    "u": "sei-solicitacoes-disponiveis.html#trancamento-de-matricula",
-    "s": "SEI",
-    "d": "Interromper temporariamente o curso inteiro, mantendo o vínculo (até 4 períodos letivos).",
-    "k": "trancar trancamento pausar parar interromper interrupcao suspender curso periodo semestre ano tempo afastar afastamento temporario vinculo veterano gravidez risco saude doenca militar trabalho biblioteca nada consta menor responsavel desistir"
-  },
-  {
-    "t": "Trancamento de Componente Curricular",
-    "u": "sei-solicitacoes-disponiveis.html#trancamento-de-componente-curricular",
-    "s": "SEI",
-    "d": "Trancar uma disciplina específica, sem trancar o curso — nos primeiros 30 dias do período.",
-    "k": "trancar trancamento disciplina materia cadeira componente curricular largar sair desistir abandonar creditos doze trinta dias"
-  },
-  {
-    "t": "Cancelamento Voluntário de Matrícula",
-    "u": "sei-solicitacoes-disponiveis.html#cancelamento-voluntario-de-matricula",
-    "s": "SEI",
-    "d": "Encerrar definitivamente o vínculo com o curso. A vaga é perdida.",
-    "k": "cancelar cancelamento desistir desistencia sair saida abandonar largar encerrar desligar desligamento desvincular excluir apagar vinculo definitivo perder vaga voluntario nao quero mais curso"
-  },
-  {
-    "t": "Reingresso ao curso",
-    "u": "sei-solicitacoes-disponiveis.html#reingresso-ao-curso",
-    "s": "SEI",
-    "d": "Voltar ao curso para quem está com situação de ABANDONO — em até 5 anos, uma única vez.",
-    "k": "reingresso reingressar voltar retornar retorno regressar abandono abandonei desisti parei sai deixei estudar vaga cinco anos reintegrar reintegracao nova matricula situacao"
-  },
-  {
-    "t": "Reabertura de curso",
-    "u": "sei-solicitacoes-disponiveis.html#reabertura-de-curso",
-    "s": "SEI",
-    "d": "Voltar ao curso para quem está com matrícula TRANCADA.",
-    "k": "reabertura reabrir destrancar voltar retornar retorno regressar trancado trancada trancamento reativar ativar matricula interromper"
-  },
-  {
-    "t": "Matrícula Especial",
-    "u": "sei-solicitacoes-disponiveis.html#matricula-especial",
-    "s": "SEI",
-    "d": "Cursar disciplina isolada como aluno especial, sem vínculo regular.",
-    "k": "aluno especial disciplina isolada avulsa ouvinte externo outra instituicao sem vinculo cadeira materia uma so somente"
-  },
-  {
-    "t": "Reajuste de Matrícula",
-    "u": "sei-reajuste-matricula.html",
-    "s": "SEI",
-    "d": "Incluir ou excluir disciplinas após o Pedido, o Ajuste e o Ajuste Extraordinário do Q-Acadêmico. Guia completo.",
-    "k": "reajuste ajuste extraordinario pedido incluir excluir adicionar tirar disciplina materia cadeira turma horario vaga rematricula matricula renovacao renovar veterano semestre"
-  },
-  {
-    "t": "Aproveitamento de Componente Curricular",
-    "u": "sei-solicitacoes-disponiveis.html#aproveitamento-de-componente-curricular",
-    "s": "SEI",
-    "d": "Aproveitar disciplina já cursada e aprovada em outro curso ou instituição.",
-    "k": "aproveitar aproveitamento dispensa dispensar equivalencia equivaler eliminar disciplina materia cadeira cursada cursei aprovado historico ementa programa outra instituicao faculdade universidade tecnico nota"
-  },
-  {
-    "t": "Validação de Conhecimentos",
-    "u": "sei-solicitacoes-disponiveis.html#validacao-de-conhecimentos",
-    "s": "SEI",
-    "d": "Comprovar por avaliação o domínio do conteúdo de uma disciplina, sem cursá-la.",
-    "k": "validacao validar conhecimento conhecimentos experiencia banca prova avaliacao suficiencia certificacao pular eliminar disciplina materia sem cursar trabalho profissional"
-  },
-  {
-    "t": "Justificativa de Falta / Segunda Chamada",
-    "u": "sei-solicitacoes-disponiveis.html#justificativa-de-falta-segunda-chamada-de-avaliacao",
-    "s": "SEI",
-    "d": "Justificar ausência (até 5 dias letivos) ou solicitar segunda chamada de avaliação perdida.",
-    "k": "falta faltas faltei faltar ausencia ausente justificar justificativa abonar abono atestado medico doente doenca obito luto falecimento morte parente militar servico trabalho religiao guarda religiosa perdi prova avaliacao teste trabalho segunda chamada reposicao repor refazer cinco dias frequencia reprovado"
-  },
-  {
-    "t": "Regime de Exercício Domiciliar — RED",
-    "u": "sei-solicitacoes-disponiveis.html#regime-de-exercicio-domiciliar-red",
-    "s": "SEI",
-    "d": "Estudar de casa por 15 dias ou mais: gestação ou doença que impeça a frequência, com laudo médico.",
-    "k": "red regime exercicio exercicios domiciliar domiciliares casa estudar distancia gravida gravidez gestante gestacao maternidade licenca doenca infectocontagiosa contagiosa internado internacao cirurgia acidente afastamento afastar atestado laudo medico cid quinze dias saude"
-  },
-  {
-    "t": "Registro de Horas Complementares",
-    "u": "sei-solicitacoes-disponiveis.html#registro-de-horas-ou-atividades-complementares",
-    "s": "SEI",
-    "d": "Registrar atividades complementares para integralização do curso.",
-    "k": "horas atividades complementares certificado certificados comprovante evento eventos palestra curso extra carga horaria integralizar integralizacao registrar lancar"
-  },
-  {
-    "t": "Colação de Grau Oficial",
-    "u": "sei-solicitacoes-disponiveis.html#colacao-de-grau-oficial",
-    "s": "SEI",
-    "d": "Participar da cerimônia oficial de colação de grau.",
-    "k": "colacao colar grau formatura formar formando formanda cerimonia solenidade juramento concluir conclusao terminei diploma certificado receber"
-  },
-  {
-    "t": "Colação de Grau Especial",
-    "u": "sei-solicitacoes-disponiveis.html#colacao-de-grau-especial",
-    "s": "SEI",
-    "d": "Colar grau em gabinete, fora da cerimônia oficial — para quem tem urgência.",
-    "k": "colacao colar grau gabinete especial antecipada antecipar urgente urgencia emprego concurso posse formatura diploma certificado receber"
-  },
-  {
-    "t": "Diploma — Técnico Subsequente",
-    "u": "sei-solicitacoes-disponiveis.html#diploma-tecnico-subsequente",
-    "s": "SEI",
-    "d": "Solicitar a emissão do diploma de curso técnico.",
-    "k": "diploma certificado tecnico subsequente emitir emissao registro registrar documento concluir conclusao formado formada segunda via retirar pronto"
-  },
-  {
-    "t": "Transferência Externa / Guia de Transferência",
-    "u": "sei-solicitacoes-disponiveis.html#transferencia-externa-ou-guia-de-transferencia",
-    "s": "SEI",
-    "d": "Desfazer o vínculo com o IFCE para se matricular em outra instituição de ensino.",
-    "k": "transferencia transferir mudar mudanca outra instituicao faculdade universidade escola guia saida sair historico externa documentos"
-  },
-  {
-    "t": "Adoção de nome social",
-    "u": "sei-solicitacoes-disponiveis.html#adocao-de-nome-social",
-    "s": "SEI",
-    "d": "Registrar o nome social nos sistemas acadêmicos.",
-    "k": "nome social trans transgenero travesti nao binario identidade genero retificar retificacao alterar mudar trocar registro"
-  },
-  {
-    "t": "Solicitação de Auxílio Acadêmico",
-    "u": "sei-solicitacoes-disponiveis.html#solicitacao-de-auxilio-academico",
-    "s": "SEI",
-    "d": "Solicitar auxílio da assistência estudantil.",
-    "k": "auxilio auxilios bolsa bolsas assistencia estudantil dinheiro financeiro financeira ajuda permanencia transporte alimentacao moradia socioeconomico vulnerabilidade edital"
-  },
-  {
-    "t": "Situações atípicas ou não previstas",
-    "u": "sei-solicitacoes-disponiveis.html#situacoes-atipicas-ou-nao-previstas-nesta-lista",
-    "s": "SEI",
-    "d": "Sua solicitação não está na lista? Veja como proceder com o Requerimento Geral.",
-    "k": "outro outra nao encontrei achei atipica atipico diferente requerimento geral duvida mudanca turno dispensa educacao fisica historico escolar ementa programa disciplina recurso revisao nota"
-  },
-  {
-    "t": "Cadastro inicial no SEI",
-    "u": "sei-cadastro-inicial.html",
-    "s": "SEI",
-    "d": "Criar sua conta de usuário externo no SEI pela primeira vez.",
-    "k": "criar conta cadastro cadastrar cadastrado cadastrei registrar registro sei primeira vez usuario externo liberar liberacao aprovar aprovacao gabinete pendente duplicidade cpf rg endereco telefone dados formulario email pessoal ficha pre matricula nunca nao tenho conta acesso ativar abrir processo peticionar peticionamento antes protocolar protocolo"
-  },
-  {
-    "t": "Recuperação de senha no SEI",
-    "u": "sei-recuperacao-de-senha.html",
-    "s": "SEI",
-    "d": "Recuperar o acesso quando você esqueceu a senha do SEI.",
-    "k": "esqueci esqueceu senha recuperar recuperacao redefinir resetar trocar alterar mudar gerar nova sei acesso bloqueado bloqueada invalida incorreta errada nao consigo entrar login logar email link codigo temporaria provisoria expirou chegou nao chega spam lixo eletronico caixa mensagem generica unico"
-  },
-  {
-    "t": "Abrir processo no SEI pelo celular",
-    "u": "sei-abrir-solicitacao-celular.html",
-    "s": "SEI",
-    "d": "Guia detalhado, tela a tela, para peticionar pelo celular.",
-    "k": "abrir abertura processo novo solicitacao peticionar peticionamento peticione protocolar protocolo requerimento geral discente celular smartphone telefone passo enviar mandar pedido assinar assinatura eletronica anexar anexo anexos pdf documento formulario preencher nivel acesso restrito salvar janela concluir gerar numero tipo solicitar pedir requerer fazer"
-  },
-  {
-    "t": "Abrir processo no SEI pelo computador",
-    "u": "sei-abrir-solicitacao-computador.html",
-    "s": "SEI",
-    "d": "Guia detalhado, tela a tela, para peticionar pelo computador.",
-    "k": "abrir abertura processo novo solicitacao peticionar peticionamento peticione protocolar protocolo requerimento geral discente computador pc notebook desktop passo enviar mandar pedido assinar assinatura eletronica anexar anexo anexos pdf documento formulario preencher nivel acesso restrito salvar janela concluir gerar numero tipo solicitar pedir requerer fazer"
-  },
-  {
-    "t": "Resumo visual — SEI no celular",
-    "u": "sei-resumo-visual-celular.html",
-    "s": "SEI",
-    "d": "Só as telas, na ordem, para quem já conhece o caminho.",
-    "k": "resumo rapido visual telas prints imagens celular relembrar revisar atalho sequencia peticionar assinar"
-  },
-  {
-    "t": "Resumo visual — SEI no computador",
-    "u": "sei-resumo-visual-computador.html",
-    "s": "SEI",
-    "d": "Só as telas, na ordem, para quem já conhece o caminho.",
-    "k": "resumo rapido visual telas prints imagens computador relembrar revisar atalho sequencia peticionar assinar"
-  },
-  {
-    "t": "O que posso solicitar pelo SEI?",
-    "u": "sei-solicitacoes-disponiveis.html",
-    "s": "SEI",
-    "d": "Lista completa das solicitações acadêmicas disponíveis, com documentos exigidos.",
-    "k": "lista solicitacoes servicos pedidos requerimentos disponiveis documentos tipos quais incluir anexar juntar exigidos necessarios precisa cada"
-  },
-  {
-    "t": "Acompanhar um processo no SEI",
-    "u": "sei.html#acompanhar",
-    "s": "SEI",
-    "d": "Consultar o andamento de um processo já protocolado.",
-    "k": "acompanhar acompanhamento andamento consulta consultar pesquisa publica processo protocolo numero recibo resultado resposta deferido indeferido aprovado negado tramitacao tramite demora demorando status situacao saiu resposta quanto tempo"
-  },
-  {
-    "t": "Primeiro acesso ao SuapEdu",
-    "u": "suapedu-primeiro-acesso.html",
-    "s": "SuapEdu",
-    "d": "Entrar no SUAP pela primeira vez — para ingressantes 2026.2.",
-    "k": "suap suapedu primeiro acesso entrar login logar usuario senha padrao inicial arroba ifce data nascimento matricula numero ingressante calouro novato 2026 administracao eventos tecnico subsequente govbr gov nao funcionou funciona erro invalida incorreta acessar"
-  },
-  {
-    "t": "Principais funções do SuapEdu",
-    "u": "suapedu-principais-funcoes.html",
-    "s": "SuapEdu",
-    "d": "Mapa das funções: boletim, horários, materiais e mais.",
-    "k": "suap suapedu funcoes boletim notas media horario aulas turma materiais frequencia faltas calendario ensino quadro avisos caracterizacao socioeconomica pendencia documentos"
-  },
-  {
-    "t": "Criar o e-mail institucional",
-    "u": "suapedu-email-institucional.html",
-    "s": "SuapEdu",
-    "d": "Criar e acessar o e-mail @aluno pelo SUAP.",
-    "k": "email institucional academico acadêmico criar ativar escolher endereco sugestao aviso quadro aluno ifce google gmail conta estudante definir senha prazo tres horas primeira vez"
-  },
-  {
-    "t": "E-mail institucional no celular",
-    "u": "suapedu-email-celular.html",
-    "s": "SuapEdu",
-    "d": "Adicionar o e-mail institucional ao Gmail do celular.",
-    "k": "email institucional gmail celular telefone adicionar configurar sincronizar conta aplicativo app google receber mensagens notificacao"
-  },
-  {
-    "t": "Esqueci a senha do e-mail institucional",
-    "u": "suapedu-email-senha.html",
-    "s": "SuapEdu",
-    "d": "Redefinir a senha do e-mail institucional.",
-    "k": "esqueci esqueceu senha email institucional academico recuperar redefinir resetar trocar alterar suap nao consigo entrar google gmail"
-  },
-  {
-    "t": "Problemas para entrar no SEI",
-    "u": "sei.html#problemas-de-acesso",
-    "s": "SEI",
-    "d": "Escolha a solução para cadastro pendente, duplicidade, liberação, senha temporária ou dificuldade de acesso.",
-    "k": "problema problemas erro erros travou deu errado nao consigo funciona entrar acesso acessar ajuda socorro duvida duvidas sei comecar inicio"
-  },
-  {
-    "t": "Emitir documentos acadêmicos no SuapEdu",
-    "u": "suapedu-principais-funcoes.html#documentos",
-    "s": "SuapEdu",
-    "d": "Emitir documentos com autenticação eletrônica diretamente no sistema.",
-    "k": "documento documentos emitir emissao baixar download pdf autenticacao declaracao comprovante matricula vinculo historico atestado suap suapedu"
-  },
-  {
-    "t": "Consultar disciplinas no SuapEdu",
-    "u": "suapedu-principais-funcoes.html#disciplinas",
-    "s": "SuapEdu",
-    "d": "Ver os componentes e diários associados ao período letivo.",
-    "k": "disciplinas componentes materias cadeiras diarios turmas periodo semestre matriculado matricula grade suap suapedu"
-  },
-  {
-    "t": "Consultar horários de aula no SuapEdu",
-    "u": "suapedu-principais-funcoes.html#horarios",
-    "s": "SuapEdu",
-    "d": "Consultar dias, horários e locais das aulas.",
-    "k": "horario horarios aula aulas dias locais salas onde quando turno grade semanal suap suapedu"
-  },
-  {
-    "t": "Consultar agenda de avaliações no SuapEdu",
-    "u": "suapedu-principais-funcoes.html#avaliacoes",
-    "s": "SuapEdu",
-    "d": "Ver provas e avaliações cadastradas pelos professores.",
-    "k": "agenda avaliacao avaliacoes prova provas trabalho trabalhos teste testes data datas calendario suap suapedu"
-  },
-  {
-    "t": "Consultar notas e boletim no SuapEdu",
-    "u": "suapedu-principais-funcoes.html#boletim",
-    "s": "SuapEdu",
-    "d": "Acompanhar notas, médias e registros acadêmicos dos componentes.",
-    "k": "nota notas media medias boletim resultado desempenho aprovacao reprovacao frequencia falta faltas suap suapedu"
-  },
-  {
-    "t": "Consultar histórico no SuapEdu",
-    "u": "suapedu-principais-funcoes.html#historico",
-    "s": "SuapEdu",
-    "d": "Acessar o percurso acadêmico registrado no sistema.",
-    "k": "historico escolar disciplinas cursadas aprovadas reprovadas carga horaria integralizacao percurso suap suapedu"
-  },
-  {
-    "t": "Consultar dados do aluno no SuapEdu",
-    "u": "suapedu-principais-funcoes.html#dados",
-    "s": "SuapEdu",
-    "d": "Consultar as informações registradas na ficha do estudante.",
-    "k": "dados aluno cadastro ficha informacoes pessoais endereco telefone documento cpf atualizar corrigir suap suapedu"
-  },
-  {
-    "t": "Preencher Caracterização Socioeconômica no SuapEdu",
-    "u": "suapedu-principais-funcoes.html#caracterizacao",
-    "s": "SuapEdu",
-    "d": "Orientação para preencher a pendência inicial de caracterização socioeconômica.",
-    "k": "caracterizacao socioeconomica socio economica pendencia preencher formulario renda familia assistencia estudantil suap suapedu"
-  },
-  {
-    "t": "Acessar o e-mail institucional",
-    "u": "suapedu-email.html",
-    "s": "SuapEdu",
-    "d": "Veja como criar, acessar no computador ou configurar no celular.",
-    "k": "email institucional academico aluno ifce gmail google acessar entrar criar configurar celular computador senha mensagens conta"
-  },
-  {
-    "t": "Emitir documentos no Q-Acadêmico",
-    "u": "q-academico-documentos.html",
-    "s": "Q-Acadêmico",
-    "d": "Declarações, certidões, boletim, histórico parcial e horário, conforme a sua situação acadêmica.",
-    "k": "documento documentos emitir emissao solicitar solicitacao tirar pegar baixar gerar imprimir declaracao certidao comprovante atestado papel pdf tutorial passo a passo como faco"
-  },
-  {
-    "t": "Documentos para quem está regularmente matriculado",
-    "u": "q-academico-documentos-aluno.html",
-    "s": "Q-Acadêmico",
-    "d": "Boletim, declarações de matrícula, percentual de conclusão, histórico parcial e horário para matrícula ativa.",
-    "k": "matriculado matriculada matricula ativa regular regularmente cursando aluno aluna estudante veterano tecnico graduacao modulo aluno tutorial pdf imprimir baixar guia passo a telas ver ler arquivo completo prefiro"
-  },
-  {
-    "t": "Documentos para quem está com a matrícula trancada",
-    "u": "q-academico-documentos-aluno.html",
-    "s": "Q-Acadêmico",
-    "d": "Declaração de matrícula trancada, boletim, histórico parcial e horário.",
-    "k": "trancada trancado trancamento tranquei suspensa suspenso interrompida parada pausei afastado afastei vinculo suspenso pedir solicitar consigo posso tutorial pdf guia passo a telas ver ler arquivo completo imprimir baixar prefiro"
-  },
-  {
-    "t": "Declaração de Conclusão — Aguardando Colação de Grau",
-    "u": "q-academico-aguardando-colacao.html",
-    "s": "Q-Acadêmico",
-    "d": "Comprove a conclusão acadêmica enquanto a colação de grau ainda está pendente.",
-    "k": "aguardando colacao grau concludente concluinte terminei acabei integralizei paguei todas as disciplinas falta colar colei nao colei ainda comprovar conclusao emprego empresa selecao concurso cerimonia formatura tutorial pdf imprimir guia passo a telas ver ler arquivo completo baixar prefiro"
-  },
-  {
-    "t": "Documentos para egresso de curso superior",
-    "u": "q-academico-egresso-superior.html",
-    "s": "Q-Acadêmico",
-    "d": "Certidão de Conclusão pelo sistema. O histórico segue orientação específica da CCA.",
-    "k": "egresso egressa formado formada colei grau graduacao licenciatura bacharelado tecnologo superior faculdade modulo egresso tutorial pdf imprimir baixar guia passo a telas ver ler arquivo completo prefiro"
-  },
-  {
-    "t": "Documentos para egresso de curso técnico subsequente",
-    "u": "q-academico-egresso-tecnico.html",
-    "s": "Q-Acadêmico",
-    "d": "Certidão de Conclusão de Curso Técnico, histórico parcial, boletim e horário.",
-    "k": "egresso tecnico subsequente concluido concluida terminei o tecnico formei modulo egresso tutorial pdf guia passo a telas ver ler arquivo completo imprimir baixar prefiro"
-  },
-  {
-    "t": "Especialização em andamento — documentos disponíveis",
-    "u": "q-academico-especializacao.html",
-    "s": "Q-Acadêmico",
-    "d": "Declaração com disciplinas, percentual de conclusão, boletim, histórico parcial e horário.",
-    "k": "especializacao lato sensu pos graduacao posgraduacao cursando andamento fazendo especializando tutorial pdf imprimir baixar guia passo a telas ver ler arquivo completo prefiro"
-  },
-  {
-    "t": "Especialização concluída — certidão e histórico",
-    "u": "q-academico-especializacao.html",
-    "s": "Q-Acadêmico",
-    "d": "Certidão de Conclusão e histórico parcial enquanto o Certificado Digital não fica disponível.",
-    "k": "especializacao lato sensu pos graduacao concluida terminei acabei formei certidao tutorial pdf guia passo a telas ver ler arquivo completo imprimir baixar prefiro"
-  },
-  {
-    "t": "Declaração de matrícula",
-    "u": "q-academico-documentos-aluno.html#matriculado",
-    "s": "Q-Acadêmico",
-    "d": "Comprova o vínculo atual. Exigida para passe estudantil, estágio e comprovação escolar em geral.",
-    "k": "declaracao matricula comprovante atestado vinculo passe estudantil meia passagem onibus transporte estagio bolsa auxilio banco plano de saude convenio desconto academia cinema comprovar que estudo que sou aluno"
-  },
-  {
-    "t": "Declaração de matrícula com disciplina",
-    "u": "q-academico-documentos-aluno.html#matriculado",
-    "s": "Q-Acadêmico",
-    "d": "Comprova o vínculo e relaciona as disciplinas em que você está matriculado no período.",
-    "k": "declaracao matricula disciplina disciplinas componentes materias cadeiras quais estou cursando lista"
-  },
-  {
-    "t": "Declaração de percentual de conclusão",
-    "u": "q-academico-documentos-aluno.html#matriculado",
-    "s": "Q-Acadêmico",
-    "d": "Atesta o percentual já cursado em relação ao total exigido pelo curso.",
-    "k": "percentual porcentagem porcento quanto ja cursei quanto falta para terminar progresso estagio requisito edital selecao"
-  },
-  {
-    "t": "Boletim escolar",
-    "u": "q-academico-documentos-aluno.html#matriculado",
-    "s": "Q-Acadêmico",
-    "d": "Notas parciais e faltas do período letivo.",
-    "k": "boletim notas nota faltas falta media medias desempenho frequencia rendimento"
-  },
-  {
-    "t": "Histórico escolar parcial",
-    "u": "q-academico-documentos-aluno.html#matriculado",
-    "s": "Q-Acadêmico",
-    "d": "Disciplinas cursadas, carga horária, notas e situação em cada componente.",
-    "k": "historico escolar parcial simples conferencia notas disciplinas cursadas carga horaria aprovado reprovado situacao"
-  },
-  {
-    "t": "Horário do aluno",
-    "u": "q-academico-documentos-aluno.html#matriculado",
-    "s": "Q-Acadêmico",
-    "d": "Grade de aulas do período letivo atual.",
-    "k": "horario horarios grade aulas quadro cronograma vertical dias semana"
-  },
-  {
-    "t": "Declaração de matrícula trancada",
-    "u": "q-academico-documentos-aluno.html#trancado",
-    "s": "Q-Acadêmico",
-    "d": "Comprova que o vínculo está temporariamente suspenso a seu pedido.",
-    "k": "declaracao matricula trancada trancamento comprovar tranquei suspenso pedir solicitar consigo emitir"
-  },
-  {
-    "t": "Certidão de Conclusão de Curso",
-    "u": "q-academico-documentos.html#egresso",
-    "s": "Q-Acadêmico",
-    "d": "Comprova a conclusão do curso enquanto o documento definitivo está em processamento.",
-    "k": "certidao conclusao curso formado egresso provisorio enquanto o diploma nao fica pronto comprovar formatura terminei"
-  },
-  {
-    "t": "Validar a autenticidade de um documento",
-    "u": "q-academico-documentos.html#autenticidade",
-    "s": "Q-Acadêmico",
-    "d": "Confira pela chave impressa no PDF, no módulo VALIDAR DOCUMENTOS do Q-Acadêmico.",
-    "k": "validar validacao autenticidade autenticar conferir verificar checar chave codigo autenticacao eletronica verificador empresa instituicao concurso banca rh legitimo verdadeiro falso fraude conferencia comprovar tutorial pdf guia passo a telas ver ler arquivo completo prefiro"
-  },
-  {
-    "t": "Não consigo emitir o histórico como egresso de curso superior",
-    "u": "q-academico-egresso-superior.html#historico",
-    "s": "Q-Acadêmico",
-    "d": "A emissão não é concluída neste módulo. Solicite o histórico à CCA por e-mail.",
-    "k": "historico nao sai nao gera nao gerou nao baixa nao funciona nao aparece nao carrega nao abre erro trava travou bug clico e nada acontece some some da tela egresso superior formado email cca solicitar pedir"
-  },
-  {
-    "t": "A certidão aparece como “Curso Técnico”, mas fiz especialização",
-    "u": "q-academico-especializacao.html#concluida",
-    "s": "Q-Acadêmico",
-    "d": "É um erro de rótulo na tela. A opção gera corretamente a certidão da especialização.",
-    "k": "rotulo errado nome errado opcao errada certidao curso tecnico especializacao lato sensu engano erro do sistema nomenclatura confuso estranho"
-  },
-  {
-    "t": "O título do PDF veio diferente do que selecionei no menu",
-    "u": "q-academico-egresso-tecnico.html#certidao",
-    "s": "Q-Acadêmico",
-    "d": "A diferença entre a opção do menu e o título do documento é esperada.",
-    "k": "titulo diferente nome diferente mudou certidao conclusao curso tecnico pdf menu tela esperado normal errado documento errado"
-  },
-  {
-    "t": "A declaração de matrícula não aparece na especialização",
-    "u": "q-academico-especializacao.html#cursando",
-    "s": "Q-Acadêmico",
-    "d": "Para lato sensu o sistema oferece apenas a Declaração de Matrícula com Disciplina.",
-    "k": "declaracao matricula nao aparece nao tem nao existe nao encontro falta opcao sumiu especializacao lato sensu com disciplina padrao comum"
-  },
-  {
-    "t": "Empresa ou instituição exige documento com carimbo",
-    "u": "q-academico-documentos.html#autenticidade",
-    "s": "Q-Acadêmico",
-    "d": "Oriente o destinatário a conferir a chave no módulo VALIDAR DOCUMENTOS.",
-    "k": "carimbo carimbado assinatura assinado assinar autenticado reconhecer firma cartorio original via original nao aceitam nao aceita exigem querem papel fisico validade legal vale comprovar autenticidade validar validacao a"
-  },
-  {
-    "t": "Guarde o histórico parcial antes da colação de grau",
-    "u": "q-academico-aguardando-colacao.html#antes",
-    "s": "Q-Acadêmico",
-    "d": "Depois da migração para EGRESSO, o histórico de curso superior deixa de ser gerado.",
-    "k": "antes da colacao salvar guardar baixar copia historico parcial perder deixa de gerar migrar egresso formatura precaucao dica"
-  },
-  {
-    "t": "O documento que preciso não aparece na lista",
-    "u": "q-academico.html#encaminhamentos",
-    "s": "Q-Acadêmico",
-    "d": "A lista varia conforme a situação registrada. Se faltar a opção, procure a CCA.",
-    "k": "nao aparece nao tem nao encontro sumiu falta opcao lista suspensa dropdown selecione um documento perfil situacao diferente vazio"
-  },
-  {
-    "t": "Esqueci a senha do Q-Acadêmico",
-    "u": "q-academico-acesso-e-senha.html#problemas",
-    "s": "Q-Acadêmico",
-    "d": "Recupere a senha pelo link de primeiro acesso e recuperação, na tela de login.",
-    "k": "esqueci esqueceu senha perdi recuperar recuperacao redefinir resetar trocar alterar nao consigo entrar logar login acesso bloqueado nao lembro"
-  },
-  {
-    "t": "Primeiro acesso ao Q-Acadêmico",
-    "u": "q-academico-acesso-e-senha.html#antes-de-comecar",
-    "s": "Q-Acadêmico",
-    "d": "Crie a sua senha e entre no módulo correto pela primeira vez.",
-    "k": "primeiro acesso criar senha cadastrar entrar logar login matricula modulo aluno egresso novato calouro nunca acessei"
-  },
-  {
-    "t": "Diploma de curso superior: quem emite e como acompanhar",
-    "u": "q-academico-egresso-superior.html#definitivos",
-    "s": "Q-Acadêmico",
-    "d": "A expedição do diploma é da Coordenadoria de Registros Acadêmicos (CRA), na Reitoria.",
-    "k": "diploma digital definitivo quando fica pronto prazo demora atraso retirar buscar receber cra reitoria registros academicos nao e a cca quem faz"
-  },
-  {
-    "t": "Certificado digital da especialização",
-    "u": "q-academico-especializacao.html#certificado",
-    "s": "Q-Acadêmico",
-    "d": "Na pós-graduação lato sensu o documento definitivo é o Certificado Digital, não o diploma.",
-    "k": "certificado digital lato sensu definitivo pos graduacao diploma da pos quando sai prazo especializacao"
-  },
-  {
-    "t": "Q-Acadêmico ou SuapEdu: qual sistema é o meu?",
-    "u": "q-academico.html#coexistencia",
-    "s": "Sistemas",
-    "d": "Entenda qual sistema corresponde ao seu vínculo acadêmico.",
-    "k": "qual sistema usar q academico qacademico suap suapedu diferenca coexistem coexistencia antigo novo ingressante veterano matriculado vinculo onde consultar dois sistemas onde entro nao sei qual usar login errado"
-  },
-  {
-    "t": "Documento automático ou pedido com análise no SEI?",
-    "u": "q-academico.html#encaminhamentos",
-    "s": "Q-Acadêmico",
-    "d": "O Q-Acadêmico emite na hora; pedidos que dependem de análise seguem pelo SEI.",
-    "k": "sei processo protocolo analise pedido requerimento diferenca quando usar cada sistema automatico imediato na hora demora deferimento"
-  }
+ {
+  "t": "Trancamento de Matrícula",
+  "u": "sei-solicitacoes-disponiveis.html#trancamento-de-matricula",
+  "s": "SEI",
+  "d": "Interromper temporariamente o curso inteiro, mantendo o vínculo (até 4 períodos letivos).",
+  "k": "trancar trancamento pausar parar interromper interrupcao suspender curso periodo semestre ano tempo afastar afastamento temporario vinculo veterano gravidez risco saude doenca militar trabalho biblioteca nada consta menor responsavel desistir"
+ },
+ {
+  "t": "Trancamento de Componente Curricular",
+  "u": "sei-solicitacoes-disponiveis.html#trancamento-de-componente-curricular",
+  "s": "SEI",
+  "d": "Trancar uma disciplina específica, sem trancar o curso — nos primeiros 30 dias do período.",
+  "k": "trancar trancamento disciplina materia cadeira componente curricular largar sair desistir abandonar creditos doze trinta dias"
+ },
+ {
+  "t": "Cancelamento Voluntário de Matrícula",
+  "u": "sei-solicitacoes-disponiveis.html#cancelamento-voluntario-de-matricula",
+  "s": "SEI",
+  "d": "Encerrar definitivamente o vínculo com o curso. A vaga é perdida.",
+  "k": "cancelar cancelamento desistir desistencia sair saida abandonar largar encerrar desligar desligamento desvincular excluir apagar vinculo definitivo perder vaga voluntario nao quero mais curso"
+ },
+ {
+  "t": "Reingresso ao curso",
+  "u": "sei-solicitacoes-disponiveis.html#reingresso-ao-curso",
+  "s": "SEI",
+  "d": "Voltar ao curso para quem está com situação de ABANDONO — em até 5 anos, uma única vez.",
+  "k": "reingresso reingressar voltar retornar retorno regressar abandono abandonei desisti parei sai deixei estudar vaga cinco anos reintegrar reintegracao nova matricula situacao"
+ },
+ {
+  "t": "Reabertura de curso",
+  "u": "sei-solicitacoes-disponiveis.html#reabertura-de-curso",
+  "s": "SEI",
+  "d": "Voltar ao curso para quem está com matrícula TRANCADA.",
+  "k": "reabertura reabrir destrancar voltar retornar retorno regressar trancado trancada trancamento reativar ativar matricula interromper"
+ },
+ {
+  "t": "Matrícula Especial",
+  "u": "sei-solicitacoes-disponiveis.html#matricula-especial",
+  "s": "SEI",
+  "d": "Cursar disciplina isolada como aluno especial, sem vínculo regular.",
+  "k": "aluno especial disciplina isolada avulsa ouvinte externo outra instituicao sem vinculo cadeira materia uma so somente"
+ },
+ {
+  "t": "Reajuste de Matrícula",
+  "u": "sei-reajuste-matricula.html",
+  "s": "SEI",
+  "d": "Incluir ou excluir disciplinas após o Pedido, o Ajuste e o Ajuste Extraordinário do Q-Acadêmico. Guia completo.",
+  "k": "reajuste ajuste extraordinario pedido incluir excluir adicionar tirar disciplina materia cadeira turma horario vaga rematricula matricula renovacao renovar veterano semestre"
+ },
+ {
+  "t": "Aproveitamento de Componente Curricular",
+  "u": "sei-solicitacoes-disponiveis.html#aproveitamento-de-componente-curricular",
+  "s": "SEI",
+  "d": "Aproveitar disciplina já cursada e aprovada em outro curso ou instituição.",
+  "k": "aproveitar aproveitamento dispensa dispensar equivalencia equivaler eliminar disciplina materia cadeira cursada cursei aprovado historico ementa programa outra instituicao faculdade universidade tecnico nota"
+ },
+ {
+  "t": "Validação de Conhecimentos",
+  "u": "sei-solicitacoes-disponiveis.html#validacao-de-conhecimentos",
+  "s": "SEI",
+  "d": "Comprovar por avaliação o domínio do conteúdo de uma disciplina, sem cursá-la.",
+  "k": "validacao validar conhecimento conhecimentos experiencia banca prova avaliacao suficiencia certificacao pular eliminar disciplina materia sem cursar trabalho profissional"
+ },
+ {
+  "t": "Justificativa de Falta / Segunda Chamada",
+  "u": "sei-solicitacoes-disponiveis.html#justificativa-de-falta-segunda-chamada-de-avaliacao",
+  "s": "SEI",
+  "d": "Justificar ausência (até 5 dias letivos) ou solicitar segunda chamada de avaliação perdida.",
+  "k": "falta faltas faltei faltar ausencia ausente justificar justificativa abonar abono atestado medico doente doenca obito luto falecimento morte parente militar servico trabalho religiao guarda religiosa perdi prova avaliacao teste trabalho segunda chamada reposicao repor refazer cinco dias frequencia reprovado"
+ },
+ {
+  "t": "Regime de Exercício Domiciliar — RED",
+  "u": "sei-solicitacoes-disponiveis.html#regime-de-exercicio-domiciliar-red",
+  "s": "SEI",
+  "d": "Estudar de casa por 15 dias ou mais: gestação ou doença que impeça a frequência, com laudo médico.",
+  "k": "red regime exercicio exercicios domiciliar domiciliares casa estudar distancia gravida gravidez gestante gestacao maternidade licenca doenca infectocontagiosa contagiosa internado internacao cirurgia acidente afastamento afastar atestado laudo medico cid quinze dias saude"
+ },
+ {
+  "t": "Registro de Horas Complementares",
+  "u": "sei-solicitacoes-disponiveis.html#registro-de-horas-ou-atividades-complementares",
+  "s": "SEI",
+  "d": "Registrar atividades complementares para integralização do curso.",
+  "k": "horas atividades complementares certificado certificados comprovante evento eventos palestra curso extra carga horaria integralizar integralizacao registrar lancar"
+ },
+ {
+  "t": "Colação de Grau Oficial",
+  "u": "sei-solicitacoes-disponiveis.html#colacao-de-grau-oficial",
+  "s": "SEI",
+  "d": "Participar da cerimônia oficial de colação de grau.",
+  "k": "colacao colar grau formatura formar formando formanda cerimonia solenidade juramento concluir conclusao terminei diploma certificado receber"
+ },
+ {
+  "t": "Colação de Grau Especial",
+  "u": "sei-solicitacoes-disponiveis.html#colacao-de-grau-especial",
+  "s": "SEI",
+  "d": "Colar grau em gabinete, fora da cerimônia oficial — para quem tem urgência.",
+  "k": "colacao colar grau gabinete especial antecipada antecipar urgente urgencia emprego concurso posse formatura diploma certificado receber"
+ },
+ {
+  "t": "Diploma — Técnico Subsequente",
+  "u": "sei-solicitacoes-disponiveis.html#diploma-tecnico-subsequente",
+  "s": "SEI",
+  "d": "Solicitar a emissão do diploma de curso técnico.",
+  "k": "diploma certificado tecnico subsequente emitir emissao registro registrar documento concluir conclusao formado formada segunda via retirar pronto"
+ },
+ {
+  "t": "Transferência Externa / Guia de Transferência",
+  "u": "sei-solicitacoes-disponiveis.html#transferencia-externa-ou-guia-de-transferencia",
+  "s": "SEI",
+  "d": "Desfazer o vínculo com o IFCE para se matricular em outra instituição de ensino.",
+  "k": "transferencia transferir mudar mudanca outra instituicao faculdade universidade escola guia saida sair historico externa documentos"
+ },
+ {
+  "t": "Adoção de nome social",
+  "u": "sei-solicitacoes-disponiveis.html#adocao-de-nome-social",
+  "s": "SEI",
+  "d": "Registrar o nome social nos sistemas acadêmicos.",
+  "k": "nome social trans transgenero travesti nao binario identidade genero retificar retificacao alterar mudar trocar registro"
+ },
+ {
+  "t": "Solicitação de Auxílio Acadêmico",
+  "u": "sei-solicitacoes-disponiveis.html#solicitacao-de-auxilio-academico",
+  "s": "SEI",
+  "d": "Solicitar auxílio da assistência estudantil.",
+  "k": "auxilio auxilios bolsa bolsas assistencia estudantil dinheiro financeiro financeira ajuda permanencia transporte alimentacao moradia socioeconomico vulnerabilidade edital"
+ },
+ {
+  "t": "Situações atípicas ou não previstas",
+  "u": "sei-solicitacoes-disponiveis.html#situacoes-atipicas-ou-nao-previstas-nesta-lista",
+  "s": "SEI",
+  "d": "Sua solicitação não está na lista? Veja como proceder com o Requerimento Geral.",
+  "k": "outro outra nao encontrei achei atipica atipico diferente requerimento geral duvida mudanca turno dispensa educacao fisica historico escolar ementa programa disciplina recurso revisao nota"
+ },
+ {
+  "t": "Cadastro inicial no SEI",
+  "u": "sei-cadastro-inicial.html",
+  "s": "SEI",
+  "d": "Criar sua conta de usuário externo no SEI pela primeira vez.",
+  "k": "criar conta cadastro cadastrar cadastrado cadastrei registrar registro sei primeira vez usuario externo liberar liberacao aprovar aprovacao gabinete pendente duplicidade cpf rg endereco telefone dados formulario email pessoal ficha pre matricula nunca nao tenho conta acesso ativar abrir processo peticionar peticionamento antes protocolar protocolo"
+ },
+ {
+  "t": "Recuperação de senha no SEI",
+  "u": "sei-recuperacao-de-senha.html",
+  "s": "SEI",
+  "d": "Recuperar o acesso quando você esqueceu a senha do SEI.",
+  "k": "esqueci esqueceu senha recuperar recuperacao redefinir resetar trocar alterar mudar gerar nova sei acesso bloqueado bloqueada invalida incorreta errada nao consigo entrar login logar email link codigo temporaria provisoria expirou chegou nao chega spam lixo eletronico caixa mensagem generica unico"
+ },
+ {
+  "t": "Abrir processo no SEI pelo celular",
+  "u": "sei-abrir-solicitacao-celular.html",
+  "s": "SEI",
+  "d": "Guia detalhado, tela a tela, para peticionar pelo celular.",
+  "k": "abrir abertura processo novo solicitacao peticionar peticionamento peticione protocolar protocolo requerimento geral discente celular smartphone telefone passo enviar mandar pedido assinar assinatura eletronica anexar anexo anexos pdf documento formulario preencher nivel acesso restrito salvar janela concluir gerar numero tipo solicitar pedir requerer fazer"
+ },
+ {
+  "t": "Abrir processo no SEI pelo computador",
+  "u": "sei-abrir-solicitacao-computador.html",
+  "s": "SEI",
+  "d": "Guia detalhado, tela a tela, para peticionar pelo computador.",
+  "k": "abrir abertura processo novo solicitacao peticionar peticionamento peticione protocolar protocolo requerimento geral discente computador pc notebook desktop passo enviar mandar pedido assinar assinatura eletronica anexar anexo anexos pdf documento formulario preencher nivel acesso restrito salvar janela concluir gerar numero tipo solicitar pedir requerer fazer"
+ },
+ {
+  "t": "Resumo visual — SEI no celular",
+  "u": "sei-resumo-visual-celular.html",
+  "s": "SEI",
+  "d": "Só as telas, na ordem, para quem já conhece o caminho.",
+  "k": "resumo rapido visual telas prints imagens celular relembrar revisar atalho sequencia peticionar assinar"
+ },
+ {
+  "t": "Resumo visual — SEI no computador",
+  "u": "sei-resumo-visual-computador.html",
+  "s": "SEI",
+  "d": "Só as telas, na ordem, para quem já conhece o caminho.",
+  "k": "resumo rapido visual telas prints imagens computador relembrar revisar atalho sequencia peticionar assinar"
+ },
+ {
+  "t": "O que posso solicitar pelo SEI?",
+  "u": "sei-solicitacoes-disponiveis.html",
+  "s": "SEI",
+  "d": "Lista completa das solicitações acadêmicas disponíveis, com documentos exigidos.",
+  "k": "lista solicitacoes servicos pedidos requerimentos disponiveis documentos tipos quais incluir anexar juntar exigidos necessarios precisa cada"
+ },
+ {
+  "t": "Acompanhar um processo no SEI",
+  "u": "sei.html#acompanhar",
+  "s": "SEI",
+  "d": "Consultar o andamento de um processo já protocolado.",
+  "k": "acompanhar acompanhamento andamento consulta consultar pesquisa publica processo protocolo numero recibo resultado resposta deferido indeferido aprovado negado tramitacao tramite demora demorando status situacao saiu resposta quanto tempo"
+ },
+ {
+  "t": "Primeiro acesso ao SuapEdu",
+  "u": "suapedu-primeiro-acesso.html",
+  "s": "SuapEdu",
+  "d": "Entrar no SUAP pela primeira vez — para ingressantes 2026.2.",
+  "k": "suap suapedu primeiro acesso entrar login logar usuario senha padrao inicial arroba ifce data nascimento matricula numero ingressante calouro novato 2026 administracao eventos tecnico subsequente govbr gov nao funcionou funciona erro invalida incorreta acessar"
+ },
+ {
+  "t": "Principais funções do SuapEdu",
+  "u": "suapedu-principais-funcoes.html",
+  "s": "SuapEdu",
+  "d": "Mapa das funções: boletim, horários, materiais e mais.",
+  "k": "suap suapedu funcoes boletim notas media horario aulas turma materiais frequencia faltas calendario ensino quadro avisos caracterizacao socioeconomica pendencia documentos"
+ },
+ {
+  "t": "Criar o e-mail institucional",
+  "u": "suapedu-email-institucional.html",
+  "s": "SuapEdu",
+  "d": "Criar e acessar o e-mail @aluno pelo SUAP.",
+  "k": "email institucional academico acadêmico criar ativar escolher endereco sugestao aviso quadro aluno ifce google gmail conta estudante definir senha prazo tres horas primeira vez"
+ },
+ {
+  "t": "E-mail institucional no celular",
+  "u": "suapedu-email-celular.html",
+  "s": "SuapEdu",
+  "d": "Adicionar o e-mail institucional ao Gmail do celular.",
+  "k": "email institucional gmail celular telefone adicionar configurar sincronizar conta aplicativo app google receber mensagens notificacao"
+ },
+ {
+  "t": "Esqueci a senha do e-mail institucional",
+  "u": "suapedu-email-senha.html",
+  "s": "SuapEdu",
+  "d": "Redefinir a senha do e-mail institucional.",
+  "k": "esqueci esqueceu senha email institucional academico recuperar redefinir resetar trocar alterar suap nao consigo entrar google gmail"
+ },
+ {
+  "t": "Problemas para entrar no SEI",
+  "u": "sei.html#problemas-de-acesso",
+  "s": "SEI",
+  "d": "Escolha a solução para cadastro pendente, duplicidade, liberação, senha temporária ou dificuldade de acesso.",
+  "k": "problema problemas erro erros travou deu errado nao consigo funciona entrar acesso acessar ajuda socorro duvida duvidas sei comecar inicio"
+ },
+ {
+  "t": "Emitir documentos acadêmicos no SuapEdu",
+  "u": "suapedu-principais-funcoes.html#documentos",
+  "s": "SuapEdu",
+  "d": "Emitir documentos com autenticação eletrônica diretamente no sistema.",
+  "k": "documento documentos emitir emissao baixar download pdf autenticacao declaracao comprovante matricula vinculo historico atestado suap suapedu comprovar escolar imprimir estagio"
+ },
+ {
+  "t": "Consultar disciplinas no SuapEdu",
+  "u": "suapedu-principais-funcoes.html#disciplinas",
+  "s": "SuapEdu",
+  "d": "Ver os componentes e diários associados ao período letivo.",
+  "k": "disciplinas componentes materias cadeiras diarios turmas periodo semestre matriculado matricula grade suap suapedu"
+ },
+ {
+  "t": "Consultar horários de aula no SuapEdu",
+  "u": "suapedu-principais-funcoes.html#horarios",
+  "s": "SuapEdu",
+  "d": "Consultar dias, horários e locais das aulas.",
+  "k": "horario horarios aula aulas dias locais salas onde quando turno grade semanal suap suapedu"
+ },
+ {
+  "t": "Consultar agenda de avaliações no SuapEdu",
+  "u": "suapedu-principais-funcoes.html#avaliacoes",
+  "s": "SuapEdu",
+  "d": "Ver provas e avaliações cadastradas pelos professores.",
+  "k": "agenda avaliacao avaliacoes prova provas trabalho trabalhos teste testes data datas calendario suap suapedu"
+ },
+ {
+  "t": "Consultar notas e boletim no SuapEdu",
+  "u": "suapedu-principais-funcoes.html#boletim",
+  "s": "SuapEdu",
+  "d": "Acompanhar notas, médias e registros acadêmicos dos componentes.",
+  "k": "nota notas media medias boletim resultado desempenho aprovacao reprovacao frequencia falta faltas suap suapedu"
+ },
+ {
+  "t": "Consultar histórico no SuapEdu",
+  "u": "suapedu-principais-funcoes.html#historico",
+  "s": "SuapEdu",
+  "d": "Acessar o percurso acadêmico registrado no sistema.",
+  "k": "historico escolar disciplinas cursadas aprovadas reprovadas carga horaria integralizacao percurso suap suapedu"
+ },
+ {
+  "t": "Consultar dados do aluno no SuapEdu",
+  "u": "suapedu-principais-funcoes.html#dados",
+  "s": "SuapEdu",
+  "d": "Consultar as informações registradas na ficha do estudante.",
+  "k": "dados aluno cadastro ficha informacoes pessoais endereco telefone documento cpf atualizar corrigir suap suapedu"
+ },
+ {
+  "t": "Preencher Caracterização Socioeconômica no SuapEdu",
+  "u": "suapedu-principais-funcoes.html#caracterizacao",
+  "s": "SuapEdu",
+  "d": "Orientação para preencher a pendência inicial de caracterização socioeconômica.",
+  "k": "caracterizacao socioeconomica socio economica pendencia preencher formulario renda familia assistencia estudantil suap suapedu"
+ },
+ {
+  "t": "Acessar o e-mail institucional",
+  "u": "suapedu-email.html",
+  "s": "SuapEdu",
+  "d": "Veja como criar, acessar no computador ou configurar no celular.",
+  "k": "email institucional academico aluno ifce gmail google acessar entrar criar configurar celular computador senha mensagens conta"
+ },
+ {
+  "t": "Emitir documentos no Q-Acadêmico",
+  "u": "q-academico-documentos.html",
+  "s": "Q-Acadêmico",
+  "d": "Declarações, certidões, boletim, histórico parcial e horário, conforme a sua situação acadêmica.",
+  "k": "documento documentos emitir emissao solicitar solicitacao tirar pegar baixar gerar imprimir declaracao certidao comprovante atestado papel pdf tutorial passo a passo como faco"
+ },
+ {
+  "t": "Documentos para quem está regularmente matriculado",
+  "u": "q-academico-documentos-aluno.html",
+  "s": "Q-Acadêmico",
+  "d": "Boletim, declarações de matrícula, percentual de conclusão, histórico parcial e horário para matrícula ativa.",
+  "k": "matriculado matriculada matricula ativa regular regularmente cursando aluno aluna estudante veterano tecnico graduacao modulo aluno tutorial pdf imprimir baixar guia passo a telas ver ler arquivo completo prefiro"
+ },
+ {
+  "t": "Documentos para quem está com a matrícula trancada",
+  "u": "q-academico-documentos-aluno.html",
+  "s": "Q-Acadêmico",
+  "d": "Declaração de matrícula trancada, boletim, histórico parcial e horário.",
+  "k": "trancada trancado trancamento tranquei suspensa suspenso interrompida parada pausei afastado afastei vinculo suspenso pedir solicitar consigo posso tutorial pdf guia passo a telas ver ler arquivo completo imprimir baixar prefiro"
+ },
+ {
+  "t": "Declaração de Conclusão — Aguardando Colação de Grau",
+  "u": "q-academico-aguardando-colacao.html",
+  "s": "Q-Acadêmico",
+  "d": "Comprove a conclusão acadêmica enquanto a colação de grau ainda está pendente.",
+  "k": "aguardando colacao grau concludente concluinte terminei acabei integralizei paguei todas as disciplinas falta colar colei nao colei ainda comprovar conclusao emprego empresa selecao concurso cerimonia formatura tutorial pdf imprimir guia passo a telas ver ler arquivo completo baixar prefiro"
+ },
+ {
+  "t": "Documentos para egresso de curso superior",
+  "u": "q-academico-egresso-superior.html",
+  "s": "Q-Acadêmico",
+  "d": "Certidão de Conclusão pelo sistema. O histórico segue orientação específica da CCA.",
+  "k": "egresso egressa formado formada colei grau graduacao licenciatura bacharelado tecnologo superior faculdade modulo egresso tutorial pdf imprimir baixar guia passo a telas ver ler arquivo completo prefiro"
+ },
+ {
+  "t": "Documentos para egresso de curso técnico subsequente",
+  "u": "q-academico-egresso-tecnico.html",
+  "s": "Q-Acadêmico",
+  "d": "Certidão de Conclusão de Curso Técnico, histórico parcial, boletim e horário.",
+  "k": "egresso tecnico subsequente concluido concluida terminei o tecnico formei modulo egresso tutorial pdf guia passo a telas ver ler arquivo completo imprimir baixar prefiro"
+ },
+ {
+  "t": "Especialização em andamento — documentos disponíveis",
+  "u": "q-academico-especializacao.html",
+  "s": "Q-Acadêmico",
+  "d": "Declaração com disciplinas, percentual de conclusão, boletim, histórico parcial e horário.",
+  "k": "especializacao lato sensu pos graduacao posgraduacao cursando andamento fazendo especializando tutorial pdf imprimir baixar guia passo a telas ver ler arquivo completo prefiro"
+ },
+ {
+  "t": "Especialização concluída — certidão e histórico",
+  "u": "q-academico-especializacao.html",
+  "s": "Q-Acadêmico",
+  "d": "Certidão de Conclusão e histórico parcial enquanto o Certificado Digital não fica disponível.",
+  "k": "especializacao lato sensu pos graduacao concluida terminei acabei formei certidao tutorial pdf guia passo a telas ver ler arquivo completo imprimir baixar prefiro"
+ },
+ {
+  "t": "Declaração de matrícula",
+  "u": "q-academico-documentos-aluno.html#matriculado",
+  "s": "Q-Acadêmico",
+  "d": "Comprova o vínculo atual. Exigida para passe estudantil, estágio e comprovação escolar em geral.",
+  "k": "declaracao matricula comprovante atestado vinculo passe estudantil meia passagem onibus transporte estagio bolsa auxilio banco plano de saude convenio desconto academia cinema comprovar que estudo que sou aluno"
+ },
+ {
+  "t": "Declaração de matrícula com disciplina",
+  "u": "q-academico-documentos-aluno.html#matriculado",
+  "s": "Q-Acadêmico",
+  "d": "Comprova o vínculo e relaciona as disciplinas em que você está matriculado no período.",
+  "k": "declaracao matricula disciplina disciplinas componentes materias cadeiras quais estou cursando lista"
+ },
+ {
+  "t": "Declaração de percentual de conclusão",
+  "u": "q-academico-documentos-aluno.html#matriculado",
+  "s": "Q-Acadêmico",
+  "d": "Atesta o percentual já cursado em relação ao total exigido pelo curso.",
+  "k": "percentual porcentagem porcento quanto ja cursei quanto falta para terminar progresso estagio requisito edital selecao"
+ },
+ {
+  "t": "Boletim escolar",
+  "u": "q-academico-documentos-aluno.html#matriculado",
+  "s": "Q-Acadêmico",
+  "d": "Notas parciais e faltas do período letivo.",
+  "k": "boletim notas nota faltas falta media medias desempenho frequencia rendimento"
+ },
+ {
+  "t": "Histórico escolar parcial",
+  "u": "q-academico-documentos-aluno.html#matriculado",
+  "s": "Q-Acadêmico",
+  "d": "Disciplinas cursadas, carga horária, notas e situação em cada componente.",
+  "k": "historico escolar parcial simples conferencia notas disciplinas cursadas carga horaria aprovado reprovado situacao"
+ },
+ {
+  "t": "Horário do aluno",
+  "u": "q-academico-documentos-aluno.html#matriculado",
+  "s": "Q-Acadêmico",
+  "d": "Grade de aulas do período letivo atual.",
+  "k": "horario horarios grade aulas quadro cronograma vertical dias semana"
+ },
+ {
+  "t": "Declaração de matrícula trancada",
+  "u": "q-academico-documentos-aluno.html#trancado",
+  "s": "Q-Acadêmico",
+  "d": "Comprova que o vínculo está temporariamente suspenso a seu pedido.",
+  "k": "declaracao matricula trancada trancamento comprovar tranquei suspenso pedir solicitar consigo emitir"
+ },
+ {
+  "t": "Certidão de Conclusão de Curso",
+  "u": "q-academico-documentos.html#egresso",
+  "s": "Q-Acadêmico",
+  "d": "Comprova a conclusão do curso enquanto o documento definitivo está em processamento.",
+  "k": "certidao conclusao curso formado egresso provisorio enquanto o diploma nao fica pronto comprovar formatura terminei declaracao concluinte concluir comprovante documento formada posse concurso emprego demorando"
+ },
+ {
+  "t": "Validar a autenticidade de um documento",
+  "u": "q-academico-documentos.html#autenticidade",
+  "s": "Q-Acadêmico",
+  "d": "Confira pela chave impressa no PDF, no módulo VALIDAR DOCUMENTOS do Q-Acadêmico.",
+  "k": "validar validacao autenticidade autenticar conferir verificar checar chave codigo autenticacao eletronica verificador empresa instituicao concurso banca rh legitimo verdadeiro falso fraude conferencia comprovar tutorial pdf guia passo a telas ver ler arquivo completo prefiro"
+ },
+ {
+  "t": "Não consigo emitir o histórico como egresso de curso superior",
+  "u": "q-academico-egresso-superior.html#historico",
+  "s": "Q-Acadêmico",
+  "d": "A emissão não é concluída neste módulo. Solicite o histórico à CCA por e-mail.",
+  "k": "historico nao sai nao gera nao gerou nao baixa nao funciona nao aparece nao carrega nao abre erro trava travou bug clico e nada acontece some some da tela egresso superior formado email cca solicitar pedir"
+ },
+ {
+  "t": "A certidão aparece como “Curso Técnico”, mas fiz especialização",
+  "u": "q-academico-especializacao.html#concluida",
+  "s": "Q-Acadêmico",
+  "d": "É um erro de rótulo na tela. A opção gera corretamente a certidão da especialização.",
+  "k": "rotulo errado nome errado opcao errada certidao curso tecnico especializacao lato sensu engano erro do sistema nomenclatura confuso estranho"
+ },
+ {
+  "t": "O título do PDF veio diferente do que selecionei no menu",
+  "u": "q-academico-egresso-tecnico.html#certidao",
+  "s": "Q-Acadêmico",
+  "d": "A diferença entre a opção do menu e o título do documento é esperada.",
+  "k": "titulo diferente nome diferente mudou certidao conclusao curso tecnico pdf menu tela esperado normal errado documento errado"
+ },
+ {
+  "t": "A declaração de matrícula não aparece na especialização",
+  "u": "q-academico-especializacao.html#cursando",
+  "s": "Q-Acadêmico",
+  "d": "Para lato sensu o sistema oferece apenas a Declaração de Matrícula com Disciplina.",
+  "k": "declaracao matricula nao aparece nao tem nao existe nao encontro falta opcao sumiu especializacao lato sensu com disciplina padrao comum"
+ },
+ {
+  "t": "Empresa ou instituição exige documento com carimbo",
+  "u": "q-academico-documentos.html#autenticidade",
+  "s": "Q-Acadêmico",
+  "d": "Oriente o destinatário a conferir a chave no módulo VALIDAR DOCUMENTOS.",
+  "k": "carimbo carimbado assinatura assinado assinar autenticado reconhecer firma cartorio original via original nao aceitam nao aceita exigem querem papel fisico validade legal vale comprovar autenticidade validar validacao a"
+ },
+ {
+  "t": "Guarde o histórico parcial antes da colação de grau",
+  "u": "q-academico-aguardando-colacao.html#antes",
+  "s": "Q-Acadêmico",
+  "d": "Depois da migração para EGRESSO, o histórico de curso superior deixa de ser gerado.",
+  "k": "antes da colacao salvar guardar baixar copia historico parcial perder deixa de gerar migrar egresso formatura precaucao dica"
+ },
+ {
+  "t": "O documento que preciso não aparece na lista",
+  "u": "q-academico.html#encaminhamentos",
+  "s": "Q-Acadêmico",
+  "d": "A lista varia conforme a situação registrada. Se faltar a opção, procure a CCA.",
+  "k": "nao aparece nao tem nao encontro sumiu falta opcao lista suspensa dropdown selecione um documento perfil situacao diferente vazio"
+ },
+ {
+  "t": "Esqueci a senha do Q-Acadêmico",
+  "u": "q-academico-acesso-e-senha.html#problemas",
+  "s": "Q-Acadêmico",
+  "d": "Recupere a senha pelo link de primeiro acesso e recuperação, na tela de login.",
+  "k": "esqueci esqueceu senha perdi recuperar recuperacao redefinir resetar trocar alterar nao consigo entrar logar login acesso bloqueado nao lembro academico qacademico link email chegou chega spam lixo expirou hora validade cadastrado errado corrigir email antigo desatualizado"
+ },
+ {
+  "t": "Primeiro acesso ao Q-Acadêmico",
+  "u": "q-academico-acesso-e-senha.html#antes-de-comecar",
+  "s": "Q-Acadêmico",
+  "d": "Crie a sua senha e entre no módulo correto pela primeira vez.",
+  "k": "primeiro acesso criar senha cadastrar entrar logar login matricula modulo aluno egresso novato calouro nunca acessei q academico qacademico perfil veterano notas boletim frequencia link email hora validade"
+ },
+ {
+  "t": "Diploma de curso superior: quem emite e como acompanhar",
+  "u": "q-academico-egresso-superior.html#definitivos",
+  "s": "Q-Acadêmico",
+  "d": "A expedição do diploma é da Coordenadoria de Registros Acadêmicos (CRA), na Reitoria.",
+  "k": "diploma digital definitivo quando fica pronto prazo demora atraso retirar buscar receber cra reitoria registros academicos nao e a cca quem faz"
+ },
+ {
+  "t": "Certificado digital da especialização",
+  "u": "q-academico-especializacao.html#certificado",
+  "s": "Q-Acadêmico",
+  "d": "Na pós-graduação lato sensu o documento definitivo é o Certificado Digital, não o diploma.",
+  "k": "certificado digital lato sensu definitivo pos graduacao diploma da pos quando sai prazo especializacao"
+ },
+ {
+  "t": "Q-Acadêmico ou SuapEdu: qual sistema é o meu?",
+  "u": "q-academico.html#coexistencia",
+  "s": "Sistemas",
+  "d": "Entenda qual sistema corresponde ao seu vínculo acadêmico.",
+  "k": "qual sistema usar q academico qacademico suap suapedu diferenca coexistem coexistencia antigo novo ingressante veterano matriculado vinculo onde consultar dois sistemas onde entro nao sei qual usar login errado"
+ },
+ {
+  "t": "Documento automático ou pedido com análise no SEI?",
+  "u": "q-academico.html#encaminhamentos",
+  "s": "Q-Acadêmico",
+  "d": "O Q-Acadêmico emite na hora; pedidos que dependem de análise seguem pelo SEI.",
+  "k": "sei processo protocolo analise pedido requerimento diferenca quando usar cada sistema automatico imediato na hora demora deferimento"
+ }
 ]
