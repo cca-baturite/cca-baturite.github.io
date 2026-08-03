@@ -1,64 +1,15 @@
-name: Aplica identidades visuais nos cards da home
+# Arquivo técnico preservado sem execução automática.
+name: Identidades dos cards main — arquivado
 
 on:
-  issues:
-    types: [opened]
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  aplicar:
-    if: github.event.issue.title == '[interno] aplicar identidades dos cards'
+  arquivo:
     runs-on: ubuntu-latest
     steps:
-      - name: Baixar o ramo principal
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-
-      - name: Atualizar os cards da página inicial
-        shell: python
-        run: |
-          from pathlib import Path
-
-          caminho = Path("guias/index.html")
-          html = caminho.read_text(encoding="utf-8")
-
-          estilo = '''<style id="cca-home-system-identities">
-.system-card-top{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin-bottom:.35rem}
-.system-card-q,.system-card-sei,.system-card-suap{position:relative;overflow:hidden}
-.system-card-q::before,.system-card-sei::before,.system-card-suap::before{content:"";position:absolute;inset:0 auto auto 0;width:100%;height:4px}
-.system-card-q::before{background:#8b6a2b}.system-card-sei::before{background:#1b84b0}.system-card-suap::before{background:#2e6f68}
-.system-mark{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;flex:0 0 auto;box-shadow:0 8px 18px rgba(0,0,0,.08)}
-.system-mark-q{background:#8f6d2d;color:#fff}.system-mark-q svg{width:38px;height:38px;display:block}
-.system-mark-sei{background:#1786af;color:#fff;padding:0 .5rem;min-width:54px;width:auto}
-.wordmark-sei{display:inline-flex;align-items:flex-end;gap:.04rem;font-weight:850;letter-spacing:-.04em;line-height:1;font-size:1.08rem}
-.wordmark-sei-text{color:#fff}.wordmark-sei-bang{color:#b3cb1b}
-.system-mark-suap{background:#2f6f69;color:#fff;padding:0 .6rem;min-width:54px;width:auto}
-.wordmark-suap{font-weight:800;font-size:1.02rem;letter-spacing:-.03em;line-height:1;text-transform:lowercase}
-.system-card-q .badge{background:#f0e6d1;color:#6a4e18}.system-card-sei .badge{background:#dff0f7;color:#165c76}.system-card-suap .badge{background:#deeeea;color:#1f5c56}
-</style>'''
-
-          assert 'id="cca-home-system-identities"' not in html
-          html = html.replace('</head>', estilo + '</head>', 1)
-
-          trocas = [
-              ('<article class="system-card"><span class="badge">Guias disponíveis</span><h2>Q-Acadêmico</h2>', '<article class="system-card system-card-q"><div class="system-card-top"><span class="badge">Guias disponíveis</span><span class="system-mark system-mark-q" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><path d="M31 14c-10.5 0-19 8.5-19 19s8.5 19 19 19c3.1 0 6-.7 8.6-2.1l4.6 4.6c1.1 1.1 2.9 1.1 4 0s1.1-2.9 0-4l-4.2-4.2c3.5-3.5 5.6-8.3 5.6-13.3 0-10.5-8.5-19-19-19Zm0 6c7.2 0 13 5.8 13 13s-5.8 13-13 13-13-5.8-13-13 5.8-13 13-13Z" fill="currentColor"/><path d="M22 17 32 12l10 5-10 5-10-5Z" fill="#1f1f1f"/><path d="M26 20.5v4.2c0 1.8 2.7 3.8 6 3.8s6-2 6-3.8v-4.2" stroke="#1f1f1f" stroke-width="1.7" stroke-linecap="round"/></svg></span></div><h2>Q-Acadêmico</h2>'),
-              ('<article class="system-card"><span class="badge">Guias disponíveis</span><h2>SEI para Usuários Externos</h2>', '<article class="system-card system-card-sei"><div class="system-card-top"><span class="badge">Guias disponíveis</span><span class="system-mark system-mark-sei" aria-hidden="true"><span class="wordmark-sei"><span class="wordmark-sei-text">sei</span><span class="wordmark-sei-bang">!</span></span></span></div><h2>SEI para Usuários Externos</h2>'),
-              ('<article class="system-card"><span class="badge">Guias disponíveis</span><h2>SuapEdu</h2>', '<article class="system-card system-card-suap"><div class="system-card-top"><span class="badge">Guias disponíveis</span><span class="system-mark system-mark-suap" aria-hidden="true"><span class="wordmark-suap">suap</span></span></div><h2>SuapEdu</h2>'),
-          ]
-          for antigo, novo in trocas:
-              assert html.count(antigo) == 1, antigo
-              html = html.replace(antigo, novo, 1)
-          caminho.write_text(html, encoding="utf-8")
-
-      - name: Publicar a alteração e remover os fluxos temporários
-        run: |
-          git config user.name "cca-bat"
-          git config user.email "cca-bat@users.noreply.github.com"
-          git rm -f .github/workflows/aplica-identidades-cards-home.yml .github/workflows/aplica-identidades-cards-home-main.yml
-          git add guias/index.html
-          git commit -m "Adiciona identidades visuais aos cards da home"
-          git push origin HEAD:main
+      - name: Informar estado
+        run: echo "Automação arquivada; nenhuma alteração será realizada."
