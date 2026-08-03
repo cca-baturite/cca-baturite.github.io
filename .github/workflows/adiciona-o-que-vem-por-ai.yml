@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: adiciona-o-que-vem-por-ai
+          ref: main
           fetch-depth: 0
 
       - name: Criar card e página
@@ -76,4 +76,4 @@ jobs:
           git rm .github/workflows/adiciona-o-que-vem-por-ai.yml
           git add guias/index.html guias/o-que-vem-por-ai.html
           git commit -m "Adiciona página O que vem por aí"
-          git push origin HEAD:adiciona-o-que-vem-por-ai
+          git push origin HEAD:main
