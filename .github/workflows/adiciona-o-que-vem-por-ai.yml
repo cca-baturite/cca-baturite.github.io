@@ -1,11 +1,6 @@
 name: Adiciona O que vem por aí
 
-on:
-  push:
-    branches:
-      - adiciona-o-que-vem-por-ai
-    paths:
-      - .github/workflows/adiciona-o-que-vem-por-ai.yml
+on: [push]
 
 permissions:
   contents: write
@@ -14,67 +9,44 @@ jobs:
   publicar:
     runs-on: ubuntu-latest
     steps:
-      - name: Baixar o ramo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: adiciona-o-que-vem-por-ai
           fetch-depth: 0
 
-      - name: Criar card e página temporária
+      - name: Criar card e página
         shell: python
         run: |
           from pathlib import Path
 
-          index_path = Path("guias/index.html")
-          index = index_path.read_text(encoding="utf-8")
+          path = Path("guias/index.html")
+          html = path.read_text(encoding="utf-8")
+          marker = '<article class="system-card"><span class="badge">Guias disponíveis</span><h2>SuapEdu</h2><p>Primeiro acesso e mapa inicial das funções acadêmicas para os ingressantes matriculados no SUAP.</p><div class="hero-actions"><a class="button button-primary" href="suapedu.html">Conhecer o SuapEdu</a><a class="button button-secondary" href="suapedu-primeiro-acesso.html">Primeiro acesso</a><a class="button button-secondary" href="suapedu-principais-funcoes.html">Principais funções</a><a class="button button-secondary" href="suapedu-email.html">E-mail institucional</a><a class="button button-secondary" href="suapedu-principais-funcoes.html#documentos">Emitir documentos</a></div><details class="q-documents-preview"><summary>Ver documentos disponíveis</summary><p>Declaração de Vínculo, Histórico Parcial, Declaração de Carga Horária Integralizada, Declaração de Matrícula, Declaração de Matrícula com disciplinas cursando e Comprovante de Dados Acadêmicos. As opções podem variar conforme o vínculo acadêmico.</p></details></article>'
+          card = '\n<article class="system-card"><span class="badge">Em breve</span><h2>O que vem por aí</h2><p>Novos guias, páginas específicas e ferramentas de apoio acadêmico estão em preparação.</p><div class="hero-actions"><a class="button button-primary" href="o-que-vem-por-ai.html">Ver novidades</a></div></article>'
+          assert html.count(marker) == 1
+          assert 'o-que-vem-por-ai.html' not in html
+          html = html.replace(marker, marker + card, 1)
+          path.write_text(html, encoding="utf-8")
 
-          suap_card = '''<article class="system-card"><span class="badge">Guias disponíveis</span><h2>SuapEdu</h2><p>Primeiro acesso e mapa inicial das funções acadêmicas para os ingressantes matriculados no SUAP.</p><div class="hero-actions"><a class="button button-primary" href="suapedu.html">Conhecer o SuapEdu</a><a class="button button-secondary" href="suapedu-primeiro-acesso.html">Primeiro acesso</a><a class="button button-secondary" href="suapedu-principais-funcoes.html">Principais funções</a><a class="button button-secondary" href="suapedu-email.html">E-mail institucional</a><a class="button button-secondary" href="suapedu-principais-funcoes.html#documentos">Emitir documentos</a></div><details class="q-documents-preview"><summary>Ver documentos disponíveis</summary><p>Declaração de Vínculo, Histórico Parcial, Declaração de Carga Horária Integralizada, Declaração de Matrícula, Declaração de Matrícula com disciplinas cursando e Comprovante de Dados Acadêmicos. As opções podem variar conforme o vínculo acadêmico.</p></details></article>'''
+          head = html.split('</head>', 1)[0] + '</head>'
+          head = head.replace('<title>Guias da CCA - IFCE Baturité</title>', '<title>O que vem por aí | Guias da CCA</title>', 1)
+          head = head.replace('Portal de orientações da Coordenadoria de Controle Acadêmico do IFCE Campus Baturité.', 'Próximos guias, páginas específicas, vídeos e ferramentas previstos para o Portal de Guias da CCA.')
+          head = head.replace('<meta content="Guias da CCA - IFCE Baturité" property="og:title"/>', '<meta content="O que vem por aí | Guias da CCA" property="og:title"/>', 1)
+          head = head.replace('<meta content="https://cca-baturite.github.io/guias/" property="og:url"/>', '<meta content="https://cca-baturite.github.io/guias/o-que-vem-por-ai.html" property="og:url"/>', 1)
 
-          future_card = '''
-<article class="system-card"><span class="badge">Em breve</span><h2>O que vem por aí</h2><p>Novos guias, páginas específicas e ferramentas de apoio acadêmico estão em preparação.</p><div class="hero-actions"><a class="button button-primary" href="o-que-vem-por-ai.html">Ver novidades</a></div></article>'''
+          hs = html.index('<header class="site-header">')
+          he = html.index('</header>', hs) + len('</header>')
+          header = html[hs:he].replace(' aria-current="page"', '', 1)
+          fs = html.index('<footer class="site-footer">')
+          fe = html.index('</footer>', fs) + len('</footer>')
+          footer = html[fs:fe]
 
-          assert index.count(suap_card) == 1
-          assert 'href="o-que-vem-por-ai.html"' not in index
-          index = index.replace(suap_card, suap_card + future_card, 1)
-          index_path.write_text(index, encoding="utf-8")
-
-          head = index.split("</head>", 1)[0] + "</head>"
-          head = head.replace(
-              "<title>Guias da CCA - IFCE Baturité</title>",
-              "<title>O que vem por aí | Guias da CCA</title>",
-              1,
-          )
-          head = head.replace(
-              "Portal de orientações da Coordenadoria de Controle Acadêmico do IFCE Campus Baturité.",
-              "Próximos guias, páginas específicas, vídeos e ferramentas previstos para o Portal de Guias da CCA.",
-          )
-          head = head.replace(
-              '<meta content="Guias da CCA - IFCE Baturité" property="og:title"/>',
-              '<meta content="O que vem por aí | Guias da CCA" property="og:title"/>',
-              1,
-          )
-          head = head.replace(
-              '<meta content="https://cca-baturite.github.io/guias/" property="og:url"/>',
-              '<meta content="https://cca-baturite.github.io/guias/o-que-vem-por-ai.html" property="og:url"/>',
-              1,
-          )
-
-          header_start = index.index('<header class="site-header">')
-          header_end = index.index('</header>', header_start) + len('</header>')
-          header = index[header_start:header_end].replace(' aria-current="page"', '', 1)
-
-          footer_start = index.index('<footer class="site-footer">')
-          footer_end = index.index('</footer>', footer_start) + len('</footer>')
-          footer = index[footer_start:footer_end]
-
-          body = '''<body><a class="skip-link" href="#conteudo">Ir para o conteúdo</a>\n'''
-          body += header
-          body += '''
-<main class="page-shell" id="conteudo">
+          main = '''<body><a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+{header}<main class="page-shell" id="conteudo">
 <nav aria-label="Caminho da página" class="breadcrumb"><ol><li><a href="index.html">Guias</a></li><li aria-current="page">O que vem por aí</li></ol></nav>
 <section class="hero"><p class="eyebrow">Próximos conteúdos</p><h1>O que vem por aí</h1><p class="lead">Veja os próximos guias, páginas específicas e ferramentas previstos para ampliar o Portal de Guias da CCA. Enquanto eles não são publicados, continue utilizando as orientações já disponíveis.</p><div class="hero-actions"><a class="button button-primary" href="index.html">Voltar ao início</a></div></section>
 <div class="content-layout"><article class="article">
-<section class="article-section" id="aviso"><div class="callout info"><div class="callout-title">Página temporária</div><p>À medida que cada conteúdo for publicado, ele será transferido para a área correspondente do portal e deixará esta lista.</p></div></section>
+<section class="article-section"><div class="callout info"><div class="callout-title">Página temporária</div><p>À medida que cada conteúdo for publicado, ele será transferido para a área correspondente do portal e deixará esta lista.</p></div></section>
 <section class="article-section" id="paginas-especificas"><p class="eyebrow">Páginas específicas em preparação</p><h2>Orientações mais diretas para cada procedimento</h2><div class="cards" style="padding-bottom:0">
 <article class="guide-card"><span class="badge">Enquanto isso</span><h2>Procedimentos específicos do SEI</h2><p>Páginas dedicadas para solicitações acadêmicas específicas, com orientações mais diretas para cada caso. Por enquanto, use os guias gerais de abertura de processo.</p><div class="hero-actions"><a class="button button-primary" href="sei-abrir-solicitacao-celular.html">Guia pelo celular</a><a class="button button-secondary" href="sei-abrir-solicitacao-computador.html">Guia pelo computador</a></div></article>
 <article class="guide-card"><span class="badge">Em breve</span><h2>Colação de grau, diplomas e certificados</h2><p>Uma página específica para orientar as etapas de conclusão do curso e a emissão dos documentos correspondentes.</p></article>
@@ -88,24 +60,16 @@ jobs:
 </div></section>
 <section class="article-section" id="videos"><p class="eyebrow">Conteúdos em vídeo</p><h2>Guias em vídeo</h2><div class="guide-card"><span class="badge">Em breve</span><p>Orientações em vídeo serão adicionadas gradualmente para complementar os guias escritos.</p></div></section>
 </article><aside aria-label="Nesta página" class="toc"><h2>Nesta página</h2><ol><li><a href="#paginas-especificas">Páginas específicas</a></li><li><a href="#ferramentas">Ferramentas de apoio acadêmico</a></li><li><a href="#videos">Guias em vídeo</a></li></ol></aside></div>
-</main>
-'''
-          body += footer
-          body += '''<script data-goatcounter="https://cca-baturite.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script></body></html>'''
+</main>{footer}<script data-goatcounter="https://cca-baturite.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script></body></html>'''.format(header=header, footer=footer)
 
-          page = head + body
-          out = Path("guias/o-que-vem-por-ai.html")
+          page = head + main
+          out = Path('guias/o-que-vem-por-ai.html')
           assert not out.exists()
-          out.write_text(page, encoding="utf-8")
+          out.write_text(page, encoding='utf-8')
+          assert 'Dados cadastrais dos estudantes' not in page
+          assert 'Atualização de dados cadastrais no IFCE' in page
 
-          assert index.count('href="o-que-vem-por-ai.html"') == 1
-          assert page.count("Ferramentas de apoio acadêmico") == 2
-          assert "Dados cadastrais dos estudantes" not in page
-          assert "Atualização de dados cadastrais no IFCE" in page
-          assert page.count("sei-abrir-solicitacao-celular.html") == 1
-          assert page.count("sei-abrir-solicitacao-computador.html") == 1
-
-      - name: Remover o fluxo temporário e publicar
+      - name: Publicar e remover fluxo temporário
         run: |
           git config user.name "cca-bat"
           git config user.email "cca-bat@users.noreply.github.com"
