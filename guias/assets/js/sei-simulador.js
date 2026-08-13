@@ -68,7 +68,7 @@
     { key: "specification", label: "Especificação", points: 8 },
     { key: "city", label: "Cidade do campus", points: 7 },
     { key: "request-kind", label: "Opção do requerimento", points: 12 },
-    { key: "request-workflow", label: "Salvar e retornar pela caixa de guias", points: 8 },
+    { key: "request-workflow", label: "Salvar e retornar pelo botão de guias", points: 8 },
     { key: "main-access", label: "Nível de acesso", points: 7 },
     { key: "main-hypothesis", label: "Hipótese legal", points: 8 },
     { key: "attachment-form", label: "Formulário de aproveitamento", points: 8 },
@@ -722,7 +722,7 @@
   function renderRequestDocument() {
     setStep(5);
     const status = state.requestSaved
-      ? '<div class="panel panel-success"><strong>Requerimento Geral Discente salvo.</strong><p>Retorne ao peticionamento pela caixa de guias do navegador.</p></div>'
+      ? '<div class="panel panel-success"><strong>Requerimento Geral Discente salvo.</strong><p>Retorne ao peticionamento pelo botão de guias do navegador.</p></div>'
       : '<p class="screen-subtitle">O documento principal abre em outra guia do navegador.</p>';
     screen.innerHTML = screenHeader("Documentos", "Peticionamento principal") + `
       <div class="screen-body">
@@ -753,7 +753,7 @@
         ${browserLeading}
         <div class="browser-address"><span aria-hidden="true">⌘</span><span>sei.ifce.edu.br/sei/controlador…</span></div>
         <span class="browser-plus" aria-hidden="true">＋</span>
-        <button aria-label="Abrir as duas guias do navegador" class="browser-tabs-button${state.requestSaved ? " is-next" : ""}" id="browser-tabs-button" type="button"><span>2</span></button>
+        <button aria-label="Abrir o botão de guias; duas guias abertas" class="browser-tabs-button${state.requestSaved ? " is-next" : ""}" id="browser-tabs-button" type="button"><span>2</span></button>
         <span class="browser-more" aria-hidden="true">⋮</span>
       </div>
       <div class="sei-editor-page">
@@ -771,7 +771,7 @@
             <span>▦</span><span>🌐</span><span>§</span><span class="editor-style-select">Texto_Alinhado_Esquerda ▾</span>
           </div>
         </div>
-        <div aria-live="polite" class="editor-save-notice" id="editor-save-notice" ${state.requestSaved ? "" : "hidden"}>Documento salvo. Toque no contador <strong>2</strong>, no canto superior direito, e escolha a guia do peticionamento.</div>
+        <div aria-live="polite" class="editor-save-notice" id="editor-save-notice" ${state.requestSaved ? "" : "hidden"}>Documento salvo. Toque no <strong>botão de guias</strong>, no canto superior direito — é o quadrado que mostra o número de guias abertas — e escolha a guia do peticionamento.</div>
         <div class="request-scroll-instruction"><strong>Deslize para o lado</strong><span>Use a barra abaixo para ver todo o formulário.</span></div>
         <div aria-label="Rolagem horizontal superior do requerimento" class="sei-document-scroll-top" id="request-scroll-top"><div></div></div>
         <div class="sei-document-scroll" id="request-scroll-main">
@@ -880,8 +880,8 @@
       saveButton.innerHTML = '<span aria-hidden="true">✓</span>Salvo';
       document.getElementById("editor-save-notice").hidden = false;
       document.getElementById("browser-tabs-button").classList.add("is-next");
-      document.getElementById("browser-tabs-button").setAttribute("aria-label", "Documento salvo. Abrir as duas guias do navegador");
-      showFeedback("Requerimento salvo. Agora toque no contador <strong>2</strong>, no canto superior direito do navegador simulado.", "success");
+      document.getElementById("browser-tabs-button").setAttribute("aria-label", "Documento salvo. Abrir o botão de guias; duas guias abertas");
+      showFeedback("Requerimento salvo. Agora toque no <strong>botão de guias</strong>, no canto superior direito — é o quadrado que mostra o número de guias abertas.", "success");
     });
   }
 
