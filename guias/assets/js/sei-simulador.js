@@ -272,18 +272,18 @@
           <label for="procedure-select">Solicitação</label>
           <select id="procedure-select">
             <option value="">Selecione…</option>
-            <option value="aproveitamento-disciplinas">Aproveitamento de disciplinas</option>
+            <option ${procedure && procedure.id === "aproveitamento-disciplinas" ? "selected" : ""} value="aproveitamento-disciplinas">Aproveitamento de disciplinas</option>
           </select>
         </div>
         <fieldset class="field">
           <legend>Como deseja treinar?</legend>
           <div class="choice-list">
             <label class="choice" for="mode-guided">
-              <input checked id="mode-guided" name="mode" type="radio" value="guiado"/>
+              <input ${state.mode === "guiado" ? "checked" : ""} id="mode-guided" name="mode" type="radio" value="guiado"/>
               <span><strong>Modo guiado</strong><span>Mostra orientações antes das decisões mais importantes.</span></span>
             </label>
             <label class="choice" for="mode-free">
-              <input id="mode-free" name="mode" type="radio" value="livre"/>
+              <input ${state.mode === "livre" ? "checked" : ""} id="mode-free" name="mode" type="radio" value="livre"/>
               <span><strong>Modo livre</strong><span>Você começa do zero e recebe um resultado ao final.</span></span>
             </label>
           </div>
@@ -292,11 +292,11 @@
           <legend>Como os programas, PUDs ou ementas serão organizados?</legend>
           <div class="choice-list">
             <label class="choice" for="package-one">
-              <input checked id="package-one" name="packaging" type="radio" value="unico"/>
+              <input ${state.packaging === "unico" ? "checked" : ""} id="package-one" name="packaging" type="radio" value="unico"/>
               <span><strong>Um único PDF — recomendado</strong><span>Facilita a conferência quando há muitos componentes. O arquivo deve permanecer com até 10 MB.</span></span>
             </label>
             <label class="choice" for="package-many">
-              <input id="package-many" name="packaging" type="radio" value="separados"/>
+              <input ${state.packaging === "separados" ? "checked" : ""} id="package-many" name="packaging" type="radio" value="separados"/>
               <span><strong>PDFs separados</strong><span>Cada programa, PUD ou ementa será adicionado individualmente.</span></span>
             </label>
           </div>
@@ -604,7 +604,9 @@
           </div>
         </div>
         <div aria-live="polite" class="editor-save-notice" id="editor-save-notice" ${state.requestSaved ? "" : "hidden"}>Documento salvo. Toque no contador <strong>2</strong>, no canto superior direito, e escolha a guia do peticionamento.</div>
-        <div class="sei-document-scroll">
+        <div class="request-scroll-instruction"><strong>Deslize para o lado</strong><span>Use a barra abaixo para ver todo o formulário.</span></div>
+        <div aria-label="Rolagem horizontal superior do requerimento" class="sei-document-scroll-top" id="request-scroll-top"><div></div></div>
+        <div class="sei-document-scroll" id="request-scroll-main">
           <div class="sei-document-sheet">
             <section class="sei-document-section" aria-labelledby="basic-data-title">
               <h3 id="basic-data-title">DADOS BÁSICOS DO INTERESSADO</h3>
@@ -644,6 +646,15 @@
           </div>
         </div>
       </div>`;
+
+    const topScroll = document.getElementById("request-scroll-top");
+    const mainScroll = document.getElementById("request-scroll-main");
+    topScroll.addEventListener("scroll", function () {
+      if (mainScroll.scrollLeft !== topScroll.scrollLeft) mainScroll.scrollLeft = topScroll.scrollLeft;
+    });
+    mainScroll.addEventListener("scroll", function () {
+      if (topScroll.scrollLeft !== mainScroll.scrollLeft) topScroll.scrollLeft = mainScroll.scrollLeft;
+    });
 
     screen.querySelectorAll('input[name="request-kind"]').forEach(function (radio) {
       radio.addEventListener("change", function () {
@@ -886,7 +897,8 @@
       const missing = docs.filter(function (doc) { return !state.docsAdded.some(function (added) { return added.id === doc.id; }); });
       if (missing.length) {
         recordIssue("Tentou peticionar antes de adicionar todos os documentos");
-        showFeedback("Ainda faltam " + missing.length + " PDF(s). O arquivo só foi incluído quando aparece na tabela.", "error");
+        const countText = missing.length === 1 ? "Ainda falta 1 PDF." : "Ainda faltam " + missing.length + " PDFs.";
+        showFeedback(countText + " Toque em <strong>Escolher arquivo</strong>, selecione outro documento e repita o preenchimento até todos aparecerem na tabela.", "error");
         return;
       }
       navigate(renderSignature);
@@ -1124,6 +1136,7 @@
           <strong>E se um documento for esquecido?</strong>
           <p>Depois que o processo real já existir, o Peticionamento Intercorrente pode ser usado para anexar documentos que faltaram ou acrescentar novos documentos. Esse fluxo receberá treinamento próprio futuramente.</p>
         </div>
+        ${state.mode === "guiado" ? '<div class="button-row"><button class="sim-button sim-button-primary" id="receipt-free-mode" type="button">Experimentar o modo livre</button></div>' : ""}
         <div class="button-row">
           <button class="sim-button sim-button-secondary" id="receipt-restart" type="button">Treinar novamente</button>
           <a class="sim-button sim-button-muted" href="sei-abrir-solicitacao-celular.html">Rever o guia do celular</a>
@@ -1133,6 +1146,21 @@
         </div>
       </div>`;
     document.getElementById("receipt-restart").addEventListener("click", reset);
+    const freeModeButton = document.getElementById("receipt-free-mode");
+    if (freeModeButton) freeModeButton.addEventListener("click", startFreeMode);
+  }
+
+  function startFreeMode() {
+    const completedProcedure = procedure;
+    state = newState();
+    state.mode = "livre";
+    procedure = completedProcedure;
+    navigationHistory = [];
+    navigationForward = [];
+    currentView = renderSetup;
+    renderSetup();
+    updateNavigationButtons();
+    document.querySelector(".simulator").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function reset() {
