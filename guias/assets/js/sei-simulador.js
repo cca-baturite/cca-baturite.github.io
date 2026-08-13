@@ -45,7 +45,19 @@
     ["Regime de exercício domiciliar", "exercicio-domiciliar"],
     ["Trancamento de disciplina(s)", "trancamento-disciplinas"],
     ["Trancamento de matrícula", "trancamento-matricula"],
-    ["Outro", "outro"]
+    ["Outro: ____", "outro"]
+  ];
+
+  const PROCESS_TYPES = [
+    ["Aluno: Requerimento Geral", "correct"],
+    ["Cidadão: Solicitação Geral", "cidadao"],
+    ["Extensão: Solicitação de Convênio de Estágio", "convenio-estagio"],
+    ["Pessoal: Diárias e Passagens - Usuário Externo", "diarias-passagens"],
+    ["Pessoal: Prestações de Contas de Viagem - Usuário Externo", "prestacao-contas"],
+    ["Pessoal: Redistribuição - Solicitação Externa", "redistribuicao"],
+    ["Pessoal: Servidor do IFCE em Exercício em Outro Órgão", "exercicio-outro-orgao"],
+    ["Transferência e Inovação Tecnológica: Registro de Propriedade Intelectual - Patente", "patente"],
+    ["Transferência e Inovação Tecnológica: Registro de Propriedade Intelectual - Software", "software"]
   ];
 
   let config = null;
@@ -106,6 +118,41 @@
     feedbackBox.className = "feedback is-" + (type || "warning");
     feedbackBox.innerHTML = message;
     feedbackBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function bindAccessGuidance(accessId, hypothesisId, scopeLabel) {
+    const access = document.getElementById(accessId);
+    const hypothesis = document.getElementById(hypothesisId);
+    const accessMessage = document.getElementById(accessId + "-message");
+    const hypothesisMessage = document.getElementById(hypothesisId + "-message");
+
+    access.addEventListener("change", function () {
+      if (state.mode !== "guiado") return;
+      if (access.value === "publico") {
+        recordIssue("Selecionou Público em " + scopeLabel);
+        accessMessage.hidden = false;
+        accessMessage.innerHTML = "<strong>Atenção:</strong> Público exporia dados pessoais. Volte ao seletor e escolha <strong>Restrito</strong>.";
+        access.classList.add("is-invalid");
+        return;
+      }
+      accessMessage.hidden = true;
+      accessMessage.textContent = "";
+      access.classList.remove("is-invalid");
+    });
+
+    hypothesis.addEventListener("change", function () {
+      if (state.mode !== "guiado") return;
+      if (hypothesis.value && hypothesis.value !== "pessoal") {
+        recordIssue("Selecionou hipótese legal incompatível em " + scopeLabel);
+        hypothesisMessage.hidden = false;
+        hypothesisMessage.innerHTML = "<strong>Essa hipótese não corresponde aos dados do requerimento.</strong> Volte ao seletor e escolha <strong>Informação Pessoal</strong>.";
+        hypothesis.classList.add("is-invalid");
+        return;
+      }
+      hypothesisMessage.hidden = true;
+      hypothesisMessage.textContent = "";
+      hypothesis.classList.remove("is-invalid");
+    });
   }
 
   function hint(title, text, href) {
@@ -290,7 +337,15 @@
           <button class="option-button" data-login="externo" type="button"><strong>Acesso para Usuários Externos</strong><small>Área destinada ao estudante cadastrado.</small></button>
         </div>
         <div class="panel fake-user">
-          <span class="avatar" aria-hidden="true">FT</span>
+          <span class="avatar student-avatar" aria-hidden="true">
+            <svg viewBox="0 0 48 48">
+              <circle cx="24" cy="18" r="9"></circle>
+              <path d="M10 43c1.5-9 6.5-14 14-14s12.5 5 14 14"></path>
+              <rect height="7" rx="2" width="10" x="13" y="15"></rect>
+              <rect height="7" rx="2" width="10" x="25" y="15"></rect>
+              <path d="M23 18.5h2M16 12l3-3 5 2 5-2 3 3"></path>
+            </svg>
+          </span>
           <div><strong>Fulano de Tal</strong><span>Identidade fictícia · nenhuma senha será solicitada</span></div>
         </div>
       </div>`;
@@ -349,23 +404,32 @@
 
   function renderType() {
     setStep(3);
-    const options = [
-      ["Servidor: Requerimento Geral", "servidor"],
-      ["Aluno: Requerimento Geral", "correct"],
-      ["Solicitação de acesso externo", "cadastro"],
-      ["Diploma: registro institucional", "diploma"]
-    ];
     screen.innerHTML = screenHeader("Peticionamento — Processo Novo", "Escolha o tipo") + `
       <div class="screen-body">
-        <h3 class="screen-title">Tipo do processo</h3>
+        <div class="field">
+          <label for="process-type-filter">Tipo do Processo:</label>
+          <input id="process-type-filter" type="text"/>
+        </div>
+        <div class="field">
+          <label for="process-type-uf">UF:</label>
+          <select id="process-type-uf"><option>Todos</option></select>
+        </div>
+        <h3 class="screen-title">Escolha o Tipo do Processo que deseja iniciar:</h3>
         <p class="screen-subtitle">Missão: ${escapeHtml(procedure.label)}.</p>
         ${hint("Tipo usado pela CCA", "Para esta solicitação, escolha Aluno: Requerimento Geral.", "sei-abrir-solicitacao-celular.html#tipo-processo")}
-        <div class="option-list">
-          ${options.map(function (item) {
-            return `<button class="option-button" data-type="${item[1]}" type="button">${escapeHtml(item[0])}</button>`;
+        <div class="sei-process-type-list" id="process-type-list">
+          ${PROCESS_TYPES.map(function (item) {
+            return `<button data-label="${escapeHtml(normalize(item[0]))}" data-type="${item[1]}" type="button">${escapeHtml(item[0])}</button>`;
           }).join("")}
         </div>
       </div>`;
+
+    document.getElementById("process-type-filter").addEventListener("input", function () {
+      const query = normalize(this.value);
+      screen.querySelectorAll("[data-type]").forEach(function (button) {
+        button.hidden = query && !button.dataset.label.includes(query);
+      });
+    });
 
     screen.querySelectorAll("[data-type]").forEach(function (button) {
       button.addEventListener("click", function () {
@@ -450,7 +514,7 @@
         <h3 class="screen-title">Requerimento Geral Discente</h3>
         ${status}
         ${hint("Dois formulários diferentes", "Este é o documento principal interno do SEI. O Formulário de Aproveitamento preenchido e assinado será anexado depois como PDF complementar.", "sei-abrir-solicitacao-celular.html#requerimento")}
-        <button class="option-button" id="open-request" type="button"><strong>Requerimento Geral Discente</strong><small>Clique aqui para editar o conteúdo</small></button>
+        <button class="option-button" id="open-request" type="button"><strong>Documento Principal - Requerimento Geral Discente</strong><small>Clique aqui para editar o conteúdo</small></button>
         ${state.requestSaved ? '<div class="button-row"><button class="sim-button sim-button-primary" id="request-continue" type="button">Definir nível de acesso</button></div>' : ""}
       </div>`;
 
@@ -490,17 +554,24 @@
           <div class="sei-document-sheet">
             <section class="sei-document-section" aria-labelledby="basic-data-title">
               <h3 id="basic-data-title">DADOS BÁSICOS DO INTERESSADO</h3>
-              <div class="sei-data-line"><strong>Nome do Discente:</strong> Fulano de Tal</div>
+              <div class="sei-data-split"><div><strong>Nome do Discente:</strong> Fulano de Tal</div><div><strong>CPF:</strong> XXX.XXX.XXX-XX</div></div>
               <div class="sei-data-line"><strong>Nome Social (opcional, identidade de gênero):</strong></div>
-              <div class="sei-data-split"><div><strong>Matrícula:</strong> 20251154000000</div><div><strong>E-mail:</strong> fulanodetal@gmail.com</div></div>
-              <div class="sei-data-line"><strong>Curso:</strong> Letras</div>
+              <div class="sei-data-grid sei-data-grid-three"><div><strong>Matrícula:</strong> 20251154000000</div><div><strong>E-mail:</strong> fulanodetal@gmail.com</div><div><strong>Telefone:</strong> (85) 9XXXX-XXXX</div></div>
+              <div class="sei-data-grid"><div><strong>Curso:</strong> Letras</div><div><strong>Campus:</strong> Baturité</div></div>
             </section>
             <fieldset class="sei-request-section">
               <legend>SOLICITO</legend>
               <div class="sei-request-options">
-                ${REQUEST_OPTIONS.map(function (item) {
-                  return `<label><input ${selectedRequest === item[1] ? "checked" : ""} name="request-kind" type="radio" value="${escapeHtml(item[1])}"/><span>${escapeHtml(item[0])}</span></label>`;
-                }).join("")}
+                <div class="sei-request-column">
+                  ${REQUEST_OPTIONS.slice(0, 6).map(function (item) {
+                    return `<label><input ${selectedRequest === item[1] ? "checked" : ""} name="request-kind" type="radio" value="${escapeHtml(item[1])}"/><span>${escapeHtml(item[0])}</span></label>`;
+                  }).join("")}
+                </div>
+                <div class="sei-request-column">
+                  ${REQUEST_OPTIONS.slice(6).map(function (item) {
+                    return `<label><input ${selectedRequest === item[1] ? "checked" : ""} name="request-kind" type="radio" value="${escapeHtml(item[1])}"/><span>${escapeHtml(item[0])}</span></label>`;
+                  }).join("")}
+                </div>
               </div>
               <div aria-live="polite" class="request-choice-feedback" id="request-choice-feedback"></div>
             </fieldset>
@@ -525,6 +596,12 @@
         state.requestKind = radio.value;
         const feedback = document.getElementById("request-choice-feedback");
         const saveButton = document.getElementById("request-save");
+        if (state.mode !== "guiado") {
+          feedback.className = "request-choice-feedback";
+          feedback.textContent = "";
+          saveButton.classList.remove("is-next");
+          return;
+        }
         if (radio.value === "aproveitamento") {
           feedback.className = "request-choice-feedback is-correct";
           feedback.innerHTML = "Opção correta. Agora toque em <strong>Salvar</strong>, no canto superior esquerdo.";
@@ -607,24 +684,28 @@
           <label for="main-access">Nível de acesso</label>
           <select id="main-access">
             <option value="">Selecione…</option>
-            <option disabled value="publico">Público — não use neste processo</option>
+            <option value="publico">Público</option>
             <option value="restrito">Restrito</option>
           </select>
+          <p class="field-error" id="main-access-message" hidden></p>
         </div>
         <div class="field">
           <label for="main-hypothesis">Hipótese legal</label>
           <select id="main-hypothesis">
             <option value="">Selecione…</option>
-            <option disabled value="direito-autoral">Direito Autoral (Art. 24, III, da Lei nº 9.610/1998)</option>
+            <option value="direito-autoral">Direito Autoral (Art. 24, III, da Lei nº 9.610/1998)</option>
             <option value="pessoal">Informação Pessoal (Art. 31 da Lei nº 12.527/2011)</option>
-            <option disabled value="software">Proteção da Propriedade Intelectual de Software (Art. 2º da Lei nº 9.609/1998)</option>
-            <option disabled value="segredo-industrial">Segredo Industrial (Art. 195, XIV, Lei nº 9.279/1996)</option>
+            <option value="software">Proteção da Propriedade Intelectual de Software (Art. 2º da Lei nº 9.609/1998)</option>
+            <option value="segredo-industrial">Segredo Industrial (Art. 195, XIV, Lei nº 9.279/1996)</option>
           </select>
+          <p class="field-error" id="main-hypothesis-message" hidden></p>
         </div>
         <div class="button-row">
           <button class="sim-button sim-button-primary" id="main-access-continue" type="button">Ir para os anexos</button>
         </div>
       </div>`;
+
+    bindAccessGuidance("main-access", "main-hypothesis", "o documento principal");
 
     document.getElementById("main-access-continue").addEventListener("click", function () {
       if (document.getElementById("main-access").value !== "restrito" || document.getElementById("main-hypothesis").value !== "pessoal") {
@@ -643,6 +724,7 @@
     const selected = docs.find(function (doc) { return doc.id === state.selectedFile; });
     const addedHtml = state.docsAdded.length ? state.docsAdded.map(function (doc) {
       return `<tr>
+        <td>${doc.order}</td>
         <td>${escapeHtml(doc.fileName)}</td>
         <td>${escapeHtml(doc.date)}</td>
         <td>${escapeHtml(doc.size)}</td>
@@ -650,8 +732,8 @@
         <td>Restrito<br/><small>Informação Pessoal</small></td>
         <td>${escapeHtml(doc.formatLabel)}</td>
       </tr>`;
-    }).join("") : '<tr class="empty-row"><td colspan="6">Nenhum documento adicionado.</td></tr>';
-    const selectedHtml = selected ? renderAttachmentForm(selected) : "";
+    }).join("") : '<tr class="empty-row"><td colspan="7">Nenhum documento adicionado.</td></tr>';
+    const selectedHtml = selected ? renderAttachmentForm(selected, docs.indexOf(selected) + 1) : "";
 
     screen.innerHTML = screenHeader("Peticionamento de Processo Novo", "Documentos Complementares") + `
       <div class="screen-body">
@@ -667,16 +749,16 @@
           <p>Para sua segurança, escolha um dos PDFs fictícios do exercício.</p>
         </div>
         <div class="file-drawer" id="fictional-file-drawer" ${state.filePickerOpen ? "" : "hidden"}>
-          ${docs.map(function (doc) {
+          ${docs.map(function (doc, index) {
             const wasAdded = state.docsAdded.some(function (added) { return added.id === doc.id; });
-            return `<button class="file-card" data-file="${escapeHtml(doc.id)}" ${wasAdded ? "disabled" : ""} type="button"><strong>${wasAdded ? "✓ " : ""}${escapeHtml(doc.fileName)}</strong><span>PDF · ${escapeHtml(doc.size)} · ${wasAdded ? "adicionado" : "toque para selecionar"}</span></button>`;
+            return `<button class="file-card" data-file="${escapeHtml(doc.id)}" ${wasAdded ? "disabled" : ""} type="button"><span class="doc-order">${index + 1}</span><span><strong>${wasAdded ? "✓ " : ""}${escapeHtml(doc.fileName)}</strong><small>PDF · ${escapeHtml(doc.size)} · ${wasAdded ? "adicionado" : "toque para selecionar"}</small></span></button>`;
           }).join("")}
         </div>
         ${selectedHtml}
         <div class="sei-table-wrap">
           <table class="sei-documents-table">
             <caption>Documentos já adicionados</caption>
-            <thead><tr><th>Nome do Arquivo</th><th>Data</th><th>Tamanho</th><th>Documento</th><th>Nível de Acesso</th><th>Formato</th></tr></thead>
+            <thead><tr><th>Nº</th><th>Nome do Arquivo</th><th>Data</th><th>Tamanho</th><th>Documento</th><th>Nível de Acesso</th><th>Formato</th></tr></thead>
             <tbody>${addedHtml}</tbody>
           </table>
         </div>
@@ -700,6 +782,7 @@
     });
     const suggestion = document.getElementById("use-complement");
     if (suggestion) {
+      bindAccessGuidance("attachment-access", "attachment-hypothesis", "um documento complementar");
       suggestion.addEventListener("click", function () {
         document.getElementById("attachment-complement").value = selected.complement;
       });
@@ -720,10 +803,10 @@
     });
   }
 
-  function renderAttachmentForm(doc) {
+  function renderAttachmentForm(doc, order) {
     return `
       <div class="panel panel-accent" id="attachment-form">
-        <h3>${escapeHtml(doc.fileName)}</h3>
+        <h3>Documento ${order} — ${escapeHtml(doc.fileName)}</h3>
         <div class="origin-story"><strong>Como este PDF foi produzido?</strong>${escapeHtml(doc.originStory)}</div>
         <div class="field">
           <label for="attachment-type">Tipo de Documento</label>
@@ -741,19 +824,21 @@
           <label for="attachment-access">Nível de acesso</label>
           <select id="attachment-access">
             <option value="">Selecione…</option>
-            <option disabled value="publico">Público — não use neste processo</option>
+            <option value="publico">Público</option>
             <option value="restrito">Restrito</option>
           </select>
+          <p class="field-error" id="attachment-access-message" hidden></p>
         </div>
         <div class="field">
           <label for="attachment-hypothesis">Hipótese legal</label>
           <select id="attachment-hypothesis">
             <option value="">Selecione…</option>
-            <option disabled value="direito-autoral">Direito Autoral (Art. 24, III, da Lei nº 9.610/1998)</option>
+            <option value="direito-autoral">Direito Autoral (Art. 24, III, da Lei nº 9.610/1998)</option>
             <option value="pessoal">Informação Pessoal (Art. 31 da Lei nº 12.527/2011)</option>
-            <option disabled value="software">Proteção da Propriedade Intelectual de Software (Art. 2º da Lei nº 9.609/1998)</option>
-            <option disabled value="segredo-industrial">Segredo Industrial (Art. 195, XIV, Lei nº 9.279/1996)</option>
+            <option value="software">Proteção da Propriedade Intelectual de Software (Art. 2º da Lei nº 9.609/1998)</option>
+            <option value="segredo-industrial">Segredo Industrial (Art. 195, XIV, Lei nº 9.279/1996)</option>
           </select>
+          <p class="field-error" id="attachment-hypothesis-message" hidden></p>
         </div>
         <fieldset class="field">
           <legend>Formato</legend>
@@ -808,6 +893,7 @@
     }
     state.docsAdded.push({
       id: doc.id,
+      order: requiredDocs().findIndex(function (item) { return item.id === doc.id; }) + 1,
       fileName: doc.fileName,
       complement: complement,
       size: doc.size,
@@ -833,14 +919,16 @@
             <p>Salvar ou adicionar documentos ainda não cria o processo.</p>
           </div>
           ${hint("Só termina após a assinatura", "Toque em Peticionar, escolha Aluno ou Aluna e conclua em Assinar.", "sei-abrir-solicitacao-celular.html#peticionar")}
-          <div class="button-row">
-            <button class="sim-button sim-button-primary" id="petition-button" type="button">Peticionar</button>
+          <div class="sei-footer-actions">
+            <button class="sei-compact-button" id="petition-button" type="button">Peticionar</button>
+            <button class="sei-compact-button" id="petition-back" type="button">Voltar</button>
           </div>
         </div>`;
       document.getElementById("petition-button").addEventListener("click", function () {
         state.petitionStarted = true;
         renderSignature();
       });
+      document.getElementById("petition-back").addEventListener("click", goBack);
       return;
     }
 
