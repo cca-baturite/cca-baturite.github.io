@@ -64,6 +64,7 @@
       requestKind: "",
       requestDetail: "",
       selectedFile: null,
+      filePickerOpen: false,
       docsAdded: [],
       petitionStarted: false,
       issues: new Set(),
@@ -665,7 +666,7 @@
           </div>
           <p>Para sua segurança, escolha um dos PDFs fictícios do exercício.</p>
         </div>
-        <div class="file-drawer" id="fictional-file-drawer" ${selected ? "hidden" : ""}>
+        <div class="file-drawer" id="fictional-file-drawer" ${state.filePickerOpen ? "" : "hidden"}>
           ${docs.map(function (doc) {
             const wasAdded = state.docsAdded.some(function (added) { return added.id === doc.id; });
             return `<button class="file-card" data-file="${escapeHtml(doc.id)}" ${wasAdded ? "disabled" : ""} type="button"><strong>${wasAdded ? "✓ " : ""}${escapeHtml(doc.fileName)}</strong><span>PDF · ${escapeHtml(doc.size)} · ${wasAdded ? "adicionado" : "toque para selecionar"}</span></button>`;
@@ -686,12 +687,14 @@
       </div>`;
 
     document.getElementById("choose-fictional-file").addEventListener("click", function () {
+      state.filePickerOpen = true;
       document.getElementById("fictional-file-drawer").hidden = false;
     });
 
     screen.querySelectorAll("[data-file]").forEach(function (button) {
       button.addEventListener("click", function () {
         state.selectedFile = button.dataset.file;
+        state.filePickerOpen = false;
         renderAttachments();
       });
     });
@@ -813,6 +816,7 @@
       conference: conference
     });
     state.selectedFile = null;
+    state.filePickerOpen = false;
     renderAttachments();
     showFeedback("<strong>Documento adicionado.</strong> Ele agora aparece na tabela.", "success");
   }
