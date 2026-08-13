@@ -79,12 +79,12 @@
   ];
 
   const GAME_AVATARS = [
-    { id: "bia-byte", name: "Bia Byte", skin: "#8d5524", hair: "#211711", shirt: "#7a4fb0", glasses: true, style: "coque" },
-    { id: "luna-loop", name: "Luna Loop", skin: "#f1c27d", hair: "#4a2415", shirt: "#0878a8", glasses: false, style: "longo" },
-    { id: "cira-click", name: "Cira Click", skin: "#c68642", hair: "#171717", shirt: "#2e7d4f", glasses: true, style: "cacheado" },
-    { id: "bento-bit", name: "Bento Bit", skin: "#e0ac69", hair: "#5b321c", shirt: "#b36b00", glasses: false, style: "curto" },
-    { id: "tino-tecla", name: "Tino Tecla", skin: "#6f3c1f", hair: "#121212", shirt: "#9c3f4f", glasses: true, style: "crespo" },
-    { id: "nando-nuvem", name: "Nando Nuvem", skin: "#ffdbac", hair: "#8a5a38", shirt: "#3e5f9b", glasses: false, style: "ondulado" }
+    { id: "bia-byte", name: "Bia Byte", col: 0, row: 0 },
+    { id: "luna-loop", name: "Luna Loop", col: 2, row: 0 },
+    { id: "cira-click", name: "Cira Click", col: 1, row: 1 },
+    { id: "bento-bit", name: "Bento Bit", col: 1, row: 0 },
+    { id: "tino-tecla", name: "Tino Tecla", col: 0, row: 1 },
+    { id: "nando-nuvem", name: "Nando Nuvem", col: 2, row: 1 }
   ];
 
   const GAME_VILLAINS = {
@@ -108,6 +108,42 @@
     { label: "Desafio final", villain: "final" },
     { label: "Aura conquistada", villain: "final" }
   ];
+
+  const GAME_ENCOUNTERS = {
+    request: {
+      title: "A emboscada do requerimento",
+      villains: ["navigation", "request"],
+      reason: "O Fantasma do Botão Voltar tenta apagar o preenchimento. O Mímico do PUD se disfarça de opção correta para desviar a solicitação.",
+      reward: "Até 180 de Aura por escolher Aproveitamento, salvar e retornar pelo botão de guias."
+    },
+    access: {
+      title: "O labirinto dos dados pessoais",
+      villains: ["access", "hypothesis"],
+      reason: "O Duende do Público quer expor dados pessoais. A Esfinge tenta esconder a hipótese legal correta entre alternativas parecidas.",
+      reward: "Até 135 de Aura por usar Restrito e Informação Pessoal."
+    },
+    attachments: {
+      title: "A Hidra dos Anexos",
+      villains: ["attachments"],
+      reason: "Cada cabeça representa um PDF ou metadado que pode ser esquecido. Cortar caminho faz a Hidra voltar mais forte.",
+      reward: "Até 270 de Aura por classificar e adicionar todos os PDFs obrigatórios."
+    },
+    final: {
+      title: "O guardião do protocolo",
+      villains: ["final"],
+      reason: "O PDFantasma se alimenta de processos que parecem prontos, mas ainda não foram peticionados e assinados.",
+      reward: "Até 190 de Aura pela assinatura correta e pela conclusão do protocolo."
+    }
+  };
+
+  const GAME_BOSS_REQUIREMENTS = {
+    navigation: ["request-workflow"],
+    request: ["request-kind"],
+    access: ["main-access"],
+    hypothesis: ["main-hypothesis"],
+    attachments: ["attachment-form", "attachment-history", "attachment-programs", "attachments-complete"],
+    final: ["signature"]
+  };
 
   let config = null;
   let procedure = null;
@@ -139,6 +175,7 @@
       gameRecoveries: 0,
       gameLastEvent: "",
       gameBossesDefeated: new Set(),
+      gameEncountersSeen: new Set(),
       gameFinished: false,
       step: 0,
       specification: "",
@@ -190,26 +227,9 @@
   }
 
   function avatarSvg(avatar, compact) {
-    const glasses = avatar.glasses
-      ? '<rect height="8" rx="3" width="13" x="14" y="25"></rect><rect height="8" rx="3" width="13" x="37" y="25"></rect><path d="M27 29h10"></path>'
-      : "";
-    const hair = avatar.style === "coque"
-      ? '<circle cx="45" cy="14" r="8"></circle><path d="M13 28c0-16 10-22 20-22 14 0 21 11 19 25-5-8-13-11-22-10-6 1-11 4-17 7z"></path>'
-      : avatar.style === "longo"
-        ? '<path d="M11 31C9 13 19 5 32 5s23 9 21 27l-4 18H15z"></path>'
-        : avatar.style === "cacheado" || avatar.style === "crespo"
-          ? '<path d="M12 25c-5-5-1-12 5-13-1-7 8-10 12-6 4-7 14-2 13 4 8-1 13 9 7 14 5 5 0 12-5 12H17c-8 0-11-8-5-12z"></path>'
-          : avatar.style === "ondulado"
-            ? '<path d="M11 28C9 13 18 5 31 5c13 0 23 8 22 24-7-8-15-10-23-7-8 3-12 7-19 6z"></path>'
-            : '<path d="M13 27C12 12 21 6 32 6s20 7 20 21c-8-6-14-8-21-7-7 1-12 4-18 7z"></path>';
-    return `<svg aria-hidden="true" class="game-avatar-svg${compact ? " is-compact" : ""}" viewBox="0 0 64 64">
-      <path d="M8 64c2-15 10-23 24-23s22 8 24 23z" fill="${avatar.shirt}"></path>
-      <g fill="${avatar.hair}">${hair}</g>
-      <circle cx="32" cy="29" fill="${avatar.skin}" r="18"></circle>
-      <path d="M25 36c4 3 10 3 14 0" fill="none" stroke="#44271b" stroke-linecap="round" stroke-width="2"></path>
-      <circle cx="25" cy="29" fill="#202020" r="1.5"></circle><circle cx="39" cy="29" fill="#202020" r="1.5"></circle>
-      <g fill="none" stroke="#27343b" stroke-width="2">${glasses}</g>
-    </svg>`;
+    const x = avatar.col === 0 ? "0%" : avatar.col === 1 ? "50%" : "100%";
+    const y = avatar.row === 0 ? "0%" : "100%";
+    return `<span aria-hidden="true" class="game-avatar-portrait${compact ? " is-compact" : ""}" style="--avatar-x:${x};--avatar-y:${y}"></span>`;
   }
 
   function villainForKey(key) {
@@ -248,8 +268,41 @@
     return PROOF_ITEMS.find(function (item) { return item.key === key; });
   }
 
-  function gameAudio(kind) {
+  function gameSpokenLine(text, villainKey) {
+    if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) return false;
+    const utterance = new window.SpeechSynthesisUtterance(text);
+    utterance.lang = "pt-BR";
+    utterance.rate = villainKey === "attachments" ? 0.94 : 1.08;
+    utterance.pitch = villainKey === "final" ? 0.75 : villainKey === "request" ? 1.3 : 1.08;
+    utterance.volume = 0.72;
+    const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+    const portugueseVoice = voices.find(function (voice) { return /^pt(-|_)/i.test(voice.lang); });
+    if (portugueseVoice) utterance.voice = portugueseVoice;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+    return true;
+  }
+
+  function gameErrorLine(key, attempt) {
+    const lines = key === "browser-back"
+      ? ["Socorro! Não volta!", "Aí não! Usa as guias!"]
+      : key === "request-kind"
+        ? ["Não! Essa não!", "Ai! Olha a missão!"]
+        : key === "main-access"
+          ? ["Não! Público não!", "Ai! Protege os dados!"]
+          : key === "main-hypothesis"
+            ? ["Não! Informação pessoal!", "Ai! Lê a hipótese!"]
+            : key.indexOf("attachment") === 0
+              ? ["Ai! Confere o PDF!", "Não! Falta um documento!"]
+              : key === "signature"
+                ? ["Não! Falta assinar!", "Ai! Escolhe aluno ou aluna!"]
+                : ["Ai! Tenta de novo!", "Não! Revisa essa escolha!"];
+    return lines[(attempt - 1) % lines.length];
+  }
+
+  function gameAudio(kind, spokenText, villainKey) {
     if (!isGame() || !state.gameSound) return;
+    const voiceStarted = kind === "error" && spokenText ? gameSpokenLine(spokenText, villainKey) : false;
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
     if (!AudioContextClass) return;
     if (!gameAudio.context) gameAudio.context = new AudioContextClass();
@@ -259,12 +312,12 @@
     const gain = context.createGain();
     gain.connect(context.destination);
     gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(kind === "error" ? 0.11 : 0.08, now + 0.015);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + (kind === "win" ? 0.75 : 0.38));
-    const notes = kind === "success" ? [523, 659, 784] : kind === "win" ? [392, 523, 659, 784] : [760, 360, 620];
+    gain.gain.exponentialRampToValueAtTime(kind === "error" ? (voiceStarted ? 0.035 : 0.09) : 0.08, now + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + (kind === "win" || kind === "boss" ? 0.75 : 0.38));
+    const notes = kind === "success" ? [523, 659, 784] : kind === "win" ? [392, 523, 659, 784] : kind === "boss" ? [147, 196, 147] : [520, 260];
     notes.forEach(function (frequency, index) {
       const oscillator = context.createOscillator();
-      oscillator.type = kind === "error" ? "sawtooth" : "sine";
+      oscillator.type = kind === "error" || kind === "boss" ? "triangle" : "sine";
       oscillator.frequency.setValueAtTime(frequency, now + (index * 0.09));
       if (kind === "error") oscillator.frequency.exponentialRampToValueAtTime(Math.max(120, frequency * 0.55), now + 0.16 + (index * 0.06));
       oscillator.connect(gain);
@@ -293,19 +346,27 @@
     const reward = base;
     state.gameAura = Math.min(900, state.gameAura + reward);
     state.gameCompleted.add(key);
-    state.gameBossesDefeated.add(villainForKey(key).name);
-    state.gameLastEvent = "+" + reward + " de Aura · Combo ×" + state.gameCombo;
-    gameAudio("success");
+    const newlyDefeated = Object.keys(GAME_BOSS_REQUIREMENTS).filter(function (villainKey) {
+      const villain = GAME_VILLAINS[villainKey];
+      return !state.gameBossesDefeated.has(villain.name) && GAME_BOSS_REQUIREMENTS[villainKey].every(function (requiredKey) {
+        return state.gameCompleted.has(requiredKey);
+      });
+    });
+    newlyDefeated.forEach(function (villainKey) { state.gameBossesDefeated.add(GAME_VILLAINS[villainKey].name); });
+    state.gameLastEvent = newlyDefeated.length
+      ? GAME_VILLAINS[newlyDefeated[0]].name + " derrotado! +" + reward + " de Aura"
+      : "+" + reward + " de Aura · Combo ×" + state.gameCombo;
+    gameAudio(newlyDefeated.length ? "win" : "success");
     refreshGameHud();
   }
 
   function gameMistake(key, correctAnswer) {
     const villain = villainForKey(key);
     state.gameMistakes[key] = (state.gameMistakes[key] || 0) + 1;
-    const shriek = key === "browser-back" ? "Socorro!" : state.gameMistakes[key] % 2 === 0 ? "Nããão!" : "Aaaai!";
+    const spokenLine = gameErrorLine(key, state.gameMistakes[key]);
     state.gameCombo = 0;
     state.gameEnergy -= 1;
-    gameAudio("error");
+    gameAudio("error", spokenLine, Object.keys(GAME_VILLAINS).find(function (villainKey) { return GAME_VILLAINS[villainKey] === villain; }) || "navigation");
     let recovery = "";
     if (state.gameEnergy <= 0) {
       state.gameRecoveries += 1;
@@ -313,7 +374,15 @@
       recovery = '<p><strong>Recuperação pedagógica ativada:</strong> você recebeu 1 coração para continuar. A missão não termina aqui.</p>';
     }
     state.gameLastEvent = "Combo quebrado pelo " + villain.name;
-    showFeedback(`<span class="game-villain-card">${villainSvg(villain.icon)}<span><strong>${escapeHtml(villain.name)} atacou!</strong><span class="game-shriek" aria-label="Gritinho cartunesco">${escapeHtml(shriek)}</span></span></span><p>${correctAnswer}</p>${recovery}`, "error");
+    const phone = document.querySelector(".phone-frame");
+    if (phone) {
+      phone.classList.remove("is-game-hit");
+      window.requestAnimationFrame(function () {
+        phone.classList.add("is-game-hit");
+        window.setTimeout(function () { phone.classList.remove("is-game-hit"); }, 620);
+      });
+    }
+    showFeedback(`<span class="game-villain-card">${villainSvg(villain.icon)}<span><strong>${escapeHtml(villain.name)} atacou!</strong><span class="game-impact-label">−1 coração · combo perdido</span></span></span><p>${correctAnswer}</p>${recovery}`, "error");
     refreshGameHud();
   }
 
@@ -536,6 +605,46 @@
     currentView = renderFunction;
     renderFunction();
     updateNavigationButtons();
+  }
+
+  function renderGameEncounter(encounterKey, destination) {
+    const encounter = GAME_ENCOUNTERS[encounterKey];
+    const villains = encounter.villains.map(function (villainKey) { return GAME_VILLAINS[villainKey]; });
+    gameAudio("boss");
+    screen.innerHTML = screenHeader("Alerta de vilão", "Novo desafio da missão") + `
+      <div class="screen-body game-encounter-screen">
+        <div class="game-encounter-kicker">BATALHA À FRENTE</div>
+        <section aria-labelledby="game-encounter-title" class="game-encounter-card">
+          <div class="game-encounter-villains">
+            ${villains.map(function (villain) {
+              return `<div class="game-encounter-villain">${villainSvg(villain.icon)}<strong>${escapeHtml(villain.name)}</strong></div>`;
+            }).join("")}
+          </div>
+          <h3 id="game-encounter-title">${escapeHtml(encounter.title)}</h3>
+          <div class="game-encounter-brief"><strong>Por que é um vilão?</strong><p>${escapeHtml(encounter.reason)}</p></div>
+          <div class="game-encounter-reward"><span aria-hidden="true">✦</span><div><strong>Recompensa da fase</strong><p>${escapeHtml(encounter.reward)}</p></div></div>
+          <button class="sim-button sim-button-primary" id="game-encounter-continue" type="button">Enfrentar ${villains.length > 1 ? "os vilões" : "o vilão"}</button>
+        </section>
+      </div>`;
+    window.requestAnimationFrame(function () {
+      const card = document.querySelector(".game-encounter-card");
+      if (card) card.classList.add("is-visible");
+    });
+    document.getElementById("game-encounter-continue").addEventListener("click", function () {
+      state.gameEncountersSeen.add(encounterKey);
+      currentView = destination;
+      destination();
+      updateNavigationButtons();
+    });
+  }
+
+  function navigateGame(destination, encounterKey) {
+    if (!isGame() || state.gameEncountersSeen.has(encounterKey)) {
+      navigate(destination);
+      return;
+    }
+    const encounterView = function () { renderGameEncounter(encounterKey, destination); };
+    navigate(encounterView);
   }
 
   function goBack() {
@@ -955,11 +1064,11 @@
         ${state.requestSaved ? '<div class="button-row"><button class="sim-button sim-button-primary" id="request-continue" type="button">Definir nível de acesso</button></div>' : ""}
       </div>`;
 
-    document.getElementById("open-request").addEventListener("click", function () { navigate(renderRequestTab); });
+    document.getElementById("open-request").addEventListener("click", function () { navigateGame(renderRequestTab, "request"); });
     const continueButton = document.getElementById("request-continue");
     if (continueButton) continueButton.addEventListener("click", function () {
       markProofComplete("request-workflow");
-      navigate(renderMainAccess);
+      navigateGame(renderMainAccess, "access");
     });
   }
 
@@ -1224,7 +1333,7 @@
         return;
       }
       markProofComplete("main-hypothesis");
-      navigate(renderAttachments);
+      navigateGame(renderAttachments, "attachments");
     });
   }
 
@@ -1352,7 +1461,7 @@
         return;
       }
       markProofComplete("attachments-complete");
-      navigate(renderSignature);
+      navigateGame(renderSignature, "final");
     });
   }
 

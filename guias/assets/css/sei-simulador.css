@@ -329,8 +329,9 @@ fieldset.field{padding:0;border:0}
 .game-avatar-choice>span{display:flex;min-height:108px;align-items:center;justify-content:center;flex-direction:column;gap:.25rem;padding:.55rem;border:2px solid #c8d5db;border-radius:12px;background:#fff;color:#28454f;text-align:center}
 .game-avatar-choice input:checked+span{border-color:var(--training-700);background:var(--training-050);box-shadow:0 0 0 3px rgba(107,74,160,.18)}
 .game-avatar-choice input:focus-visible+span{outline:3px solid #ffbf47;outline-offset:2px}
-.game-avatar-svg{display:block;width:64px;height:64px}
-.game-avatar-svg.is-compact{width:34px;height:34px}
+.game-avatar-portrait{display:block;width:72px;aspect-ratio:1/1;border:2px solid rgba(255,255,255,.72);border-radius:18px;background-image:url("../img/sei-game-avatars.webp");background-position:var(--avatar-x) var(--avatar-y);background-size:300% 200%;box-shadow:0 5px 12px rgba(27,18,49,.24)}
+.game-avatar-choice .game-avatar-portrait{width:82px}
+.game-avatar-portrait.is-compact{width:34px;border-width:0;border-radius:50%;box-shadow:none}
 .game-hud{display:flex;align-items:center;justify-content:flex-end;gap:.35rem;color:#fff;font-size:.64rem;line-height:1.15}
 .game-hud-avatar{display:grid;flex:0 0 auto;width:36px;height:36px;overflow:hidden;place-items:center;border:1px solid rgba(255,255,255,.55);border-radius:50%;background:#fff}
 .game-hud-stats{display:flex;align-items:flex-end;flex-direction:column;white-space:nowrap}
@@ -345,7 +346,27 @@ fieldset.field{padding:0;border:0}
 .game-villain-card{display:grid;grid-template-columns:58px minmax(0,1fr);align-items:center;gap:.55rem}
 .game-villain-card>span,.game-villain-card strong,.game-villain-card .game-shriek{display:block}
 .game-villain-svg{width:56px;height:56px;color:#8f221a}
-.game-shriek{margin-top:.12rem;color:#b42318;font-size:1.05rem;font-weight:900;letter-spacing:.04em}
+.game-impact-label{display:block;margin-top:.2rem;color:#b42318;font-size:.82rem;font-weight:900;text-transform:uppercase}
+.feedback.is-error .game-villain-card .game-villain-svg{animation:game-villain-attack .5s cubic-bezier(.2,.9,.25,1.4)}
+.phone-frame.is-game-hit{animation:game-phone-hit .55s ease}
+.game-encounter-screen{overflow:hidden;background:radial-gradient(circle at 50% 8%,#7250a8 0,#342050 42%,#171126 100%);color:#fff}
+.game-encounter-kicker{margin:.15rem 0 .55rem;color:#ffe27a;font-size:.72rem;font-weight:900;letter-spacing:.14em;text-align:center}
+.game-encounter-card{transform:translateY(18px) scale(.97);padding:1rem;border:2px solid #d9bc55;border-radius:16px;background:linear-gradient(155deg,rgba(30,21,50,.96),rgba(78,43,100,.96));box-shadow:0 18px 38px rgba(0,0,0,.38);opacity:0;transition:transform .34s ease,opacity .34s ease}
+.game-encounter-card.is-visible{transform:translateY(0) scale(1);opacity:1}
+.game-encounter-card h3{margin:.7rem 0;color:#fff;text-align:center}
+.game-encounter-villains{display:flex;align-items:flex-start;justify-content:center;gap:.8rem}
+.game-encounter-villain{display:grid;max-width:132px;justify-items:center;gap:.25rem;color:#ffe8a2;text-align:center}
+.game-encounter-villain .game-villain-svg{width:82px;height:82px;padding:.55rem;border:2px solid #ffd96b;border-radius:50%;background:radial-gradient(circle,#8f315f,#311a4c 72%);color:#fff4c9;filter:drop-shadow(0 0 10px rgba(255,208,85,.5));animation:game-villain-arrival .75s cubic-bezier(.18,.9,.25,1.3)}
+.game-encounter-villain strong{font-size:.75rem;line-height:1.15}
+.game-encounter-brief,.game-encounter-reward{margin:.65rem 0;padding:.7rem;border-radius:10px;background:rgba(255,255,255,.1)}
+.game-encounter-brief strong,.game-encounter-reward strong{display:block;color:#ffe99d}
+.game-encounter-brief p,.game-encounter-reward p{margin:.2rem 0 0;font-size:.82rem}
+.game-encounter-reward{display:grid;grid-template-columns:34px minmax(0,1fr);align-items:center;background:rgba(255,214,78,.14)}
+.game-encounter-reward>span{color:#ffe06b;font-size:1.7rem;text-align:center}
+.game-encounter-card .sim-button{margin-top:.35rem;border-color:#e2bf48;background:linear-gradient(135deg,#f1c84d,#d98917);color:#2e1a00;box-shadow:0 5px 0 #8b5107}
+@keyframes game-villain-arrival{0%{transform:translateY(-35px) scale(.55) rotate(-9deg);opacity:0}70%{transform:translateY(4px) scale(1.08) rotate(3deg);opacity:1}100%{transform:none;opacity:1}}
+@keyframes game-villain-attack{0%{transform:translateX(0) scale(1)}45%{transform:translateX(16px) scale(1.18) rotate(8deg)}100%{transform:translateX(0) scale(1)}}
+@keyframes game-phone-hit{0%,100%{transform:translateX(0)}18%{transform:translateX(-7px) rotate(-.5deg);box-shadow:0 0 0 4px rgba(192,39,45,.22)}36%{transform:translateX(7px) rotate(.5deg)}54%{transform:translateX(-4px)}72%{transform:translateX(3px)}}
 .game-result{margin:.8rem 0;padding:1rem;border:2px solid #d7b73f;border-radius:14px;background:linear-gradient(145deg,#fff9d8,#f8f2ff);color:#2c2840}
 .game-result-hero{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:center;gap:.7rem}
 .game-result-hero span,.game-result-hero strong{display:block}
@@ -388,6 +409,7 @@ fieldset.field{padding:0;border:0}
 }
 @media(prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;transition:none!important}
+  .game-encounter-card,.game-encounter-villain .game-villain-svg,.feedback.is-error .game-villain-card .game-villain-svg,.phone-frame.is-game-hit{animation:none!important;transform:none!important;opacity:1!important}
 }
 @media print{
   .training-strip,.site-header,.breadcrumb,.hero,.simulator-head,.progress-wrap,.privacy-note,.site-footer,.button-row{display:none!important}
