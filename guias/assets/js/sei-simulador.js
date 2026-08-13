@@ -61,17 +61,42 @@
     ["Transferência e Inovação Tecnológica: Registro de Propriedade Intelectual - Software", "software"]
   ];
 
+  const PROOF_ITEMS = [
+    { key: "login", label: "Acesso para Usuários Externos", points: 3 },
+    { key: "petition", label: "Abertura de Processo Novo", points: 3 },
+    { key: "process-type", label: "Tipo do processo", points: 4 },
+    { key: "specification", label: "Especificação", points: 8 },
+    { key: "city", label: "Cidade do campus", points: 7 },
+    { key: "request-kind", label: "Opção do requerimento", points: 12 },
+    { key: "request-workflow", label: "Salvar e retornar pela caixa de guias", points: 8 },
+    { key: "main-access", label: "Nível de acesso", points: 7 },
+    { key: "main-hypothesis", label: "Hipótese legal", points: 8 },
+    { key: "attachment-form", label: "Formulário de aproveitamento", points: 8 },
+    { key: "attachment-history", label: "Histórico escolar", points: 8 },
+    { key: "attachment-programs", label: "Programas, PUDs ou ementas", points: 8 },
+    { key: "attachments-complete", label: "Conferência de todos os anexos", points: 6 },
+    { key: "signature", label: "Peticionamento e assinatura", points: 10 }
+  ];
+
   let config = null;
   let procedure = null;
   let state = null;
   let currentView = null;
   let navigationHistory = [];
   let navigationForward = [];
+  let proofTimerInterval = null;
 
   function newState() {
     return {
       mode: "guiado",
       packaging: "unico",
+      proofMinutes: 0,
+      proofStartedAt: 0,
+      proofEndedAt: 0,
+      proofAttempts: {},
+      proofCompleted: new Set(),
+      proofEndReason: "",
+      proofCriticalDetail: "",
       step: 0,
       specification: "",
       requestSaved: false,
@@ -107,6 +132,96 @@
 
   function recordIssue(message) {
     state.issues.add(message);
+  }
+
+  function isProof() {
+    return state && state.mode === "prova";
+  }
+
+  function proofItemKeyForDocument(doc) {
+    if (doc.id.includes("historico")) return "attachment-history";
+    if (doc.id.includes("programa") || doc.id.includes("pud") || doc.id.includes("ementa")) return "attachment-programs";
+    return "attachment-form";
+  }
+
+  function markProofComplete(key) {
+    if (isProof()) state.proofCompleted.add(key);
+  }
+
+  function proofMistake(key, firstHint, correctAnswer, guidedMessage, type) {
+    if (!isProof()) {
+      recordIssue(guidedMessage.replace(/<[^>]+>/g, ""));
+      showFeedback(guidedMessage, type || "error");
+      return;
+    }
+    state.proofAttempts[key] = (state.proofAttempts[key] || 0) + 1;
+    const attempt = state.proofAttempts[key];
+    if (attempt === 1) {
+      showFeedback("<strong>Primeira tentativa incorreta.</strong> " + firstHint, type || "error");
+      return;
+    }
+    showFeedback("<strong>Correção:</strong> " + correctAnswer, type || "error");
+  }
+
+  function formatDuration(milliseconds) {
+    const totalSeconds = Math.max(0, Math.floor(milliseconds / 1000));
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
+  }
+
+  function proofElapsedMs() {
+    if (!state.proofStartedAt) return 0;
+    return (state.proofEndedAt || Date.now()) - state.proofStartedAt;
+  }
+
+  function proofRemainingMs() {
+    if (!state.proofMinutes || !state.proofStartedAt) return 0;
+    return Math.max(0, (state.proofMinutes * 60000) - proofElapsedMs());
+  }
+
+  function proofTimerText() {
+    if (!isProof()) return "";
+    if (state.proofEndReason) return "Tempo: " + formatDuration(proofElapsedMs());
+    return state.proofMinutes ? formatDuration(proofRemainingMs()) : "Sem cronômetro";
+  }
+
+  function proofStatusHtml() {
+    if (!isProof()) return '<span class="screen-header-mark">CCA · TREINO</span>';
+    return '<span class="proof-status"><strong>MODO PROVA</strong><span data-proof-timer>' + proofTimerText() + '</span></span>';
+  }
+
+  function updateProofTimerDisplays() {
+    if (!isProof() || state.proofEndReason) return;
+    document.querySelectorAll("[data-proof-timer]").forEach(function (element) {
+      element.textContent = proofTimerText();
+    });
+    if (state.proofMinutes && proofRemainingMs() <= 0) endProof("tempo", "O tempo escolhido terminou antes da conclusão do peticionamento.");
+  }
+
+  function startProofClock() {
+    if (!isProof() || state.proofStartedAt) return;
+    state.proofStartedAt = Date.now();
+    if (proofTimerInterval) window.clearInterval(proofTimerInterval);
+    proofTimerInterval = window.setInterval(updateProofTimerDisplays, 1000);
+  }
+
+  function stopProofClock() {
+    if (isProof() && state.proofStartedAt && !state.proofEndedAt) state.proofEndedAt = Date.now();
+    if (proofTimerInterval) window.clearInterval(proofTimerInterval);
+    proofTimerInterval = null;
+  }
+
+  function endProof(reason, detail) {
+    if (!isProof() || state.proofEndReason) return;
+    state.proofEndReason = reason;
+    state.proofCriticalDetail = detail || "";
+    stopProofClock();
+    navigationHistory = [];
+    navigationForward = [];
+    currentView = renderProofResult;
+    renderProofResult();
+    updateNavigationButtons();
   }
 
   function clearFeedback() {
@@ -249,8 +364,9 @@
   }
 
   function screenHeader(title, subtitle, actionHtml) {
-    const action = actionHtml || '<span class="screen-header-mark">CCA · TREINO</span>';
-    return `<div class="screen-header"><div class="screen-header-copy"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(subtitle || "Ambiente simulado")}</span></div><div class="screen-header-action">${action}</div></div>`;
+    const action = actionHtml || proofStatusHtml();
+    const proofWithAction = actionHtml && isProof() ? proofStatusHtml() : "";
+    return `<div class="screen-header"><div class="screen-header-copy"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(subtitle || "Ambiente simulado")}</span></div><div class="screen-header-action">${proofWithAction}${action}</div></div>`;
   }
 
   function requiredDocs() {
@@ -282,11 +398,21 @@
               <input ${state.mode === "guiado" ? "checked" : ""} id="mode-guided" name="mode" type="radio" value="guiado"/>
               <span><strong>Modo guiado</strong><span>Mostra orientações antes das decisões mais importantes.</span></span>
             </label>
-            <label class="choice" for="mode-free">
-              <input ${state.mode === "livre" ? "checked" : ""} id="mode-free" name="mode" type="radio" value="livre"/>
-              <span><strong>Modo livre</strong><span>Você começa do zero e recebe um resultado ao final.</span></span>
+            <label class="choice" for="mode-proof">
+              <input ${state.mode === "prova" ? "checked" : ""} id="mode-proof" name="mode" type="radio" value="prova"/>
+              <span><strong>Modo prova</strong><span>Primeiro erro: uma pista. Segundo erro: a correção. Você recebe nota e diagnóstico ao final.</span></span>
             </label>
           </div>
+        </fieldset>
+        <fieldset class="field" id="proof-time-field" ${state.mode === "prova" ? "" : "hidden"}>
+          <legend>Tempo da prova</legend>
+          <div class="choice-list">
+            <label class="choice" for="proof-time-none"><input ${state.proofMinutes === 0 ? "checked" : ""} id="proof-time-none" name="proof-time" type="radio" value="0"/><span><strong>Sem cronômetro</strong><span>O tempo será registrado, mas não alterará a nota.</span></span></label>
+            <label class="choice" for="proof-time-10"><input ${state.proofMinutes === 10 ? "checked" : ""} id="proof-time-10" name="proof-time" type="radio" value="10"/><span><strong>10 minutos — desafio</strong><span>O bônus depende da rapidez da conclusão.</span></span></label>
+            <label class="choice" for="proof-time-15"><input ${state.proofMinutes === 15 ? "checked" : ""} id="proof-time-15" name="proof-time" type="radio" value="15"/><span><strong>15 minutos — recomendado</strong><span>Equilíbrio entre atenção e agilidade.</span></span></label>
+            <label class="choice" for="proof-time-20"><input ${state.proofMinutes === 20 ? "checked" : ""} id="proof-time-20" name="proof-time" type="radio" value="20"/><span><strong>20 minutos — tranquilo</strong><span>Mais tempo para conferir cada etapa.</span></span></label>
+          </div>
+          <p class="field-help">O cronômetro começa somente depois da preparação dos documentos.</p>
         </fieldset>
         <fieldset class="field">
           <legend>Como os programas, PUDs ou ementas serão organizados?</legend>
@@ -306,6 +432,12 @@
         </div>
       </div>`;
 
+    document.querySelectorAll('input[name="mode"]').forEach(function (radio) {
+      radio.addEventListener("change", function () {
+        document.getElementById("proof-time-field").hidden = radio.value !== "prova";
+      });
+    });
+
     document.getElementById("setup-continue").addEventListener("click", function () {
       const selected = document.getElementById("procedure-select").value;
       if (!selected) {
@@ -315,6 +447,7 @@
       procedure = config.procedures.find(function (item) { return item.id === selected; });
       state.mode = document.querySelector('input[name="mode"]:checked').value;
       state.packaging = document.querySelector('input[name="packaging"]:checked').value;
+      state.proofMinutes = state.mode === "prova" ? Number(document.querySelector('input[name="proof-time"]:checked').value) : 0;
       restartButton.hidden = false;
       navigate(renderPreflight);
     });
@@ -370,7 +503,7 @@
           <span><strong>Entendi e preparei os documentos obrigatórios</strong><span>Nenhum arquivo real será selecionado neste site.</span></span>
         </label>
         <div class="button-row">
-          <button class="sim-button sim-button-primary" id="preflight-start" type="button">Iniciar treinamento</button>
+          <button class="sim-button sim-button-primary" id="preflight-start" type="button">${isProof() ? "Iniciar prova" : "Iniciar treinamento"}</button>
         </div>
       </div>`;
 
@@ -380,6 +513,7 @@
         showFeedback("Confirme a preparação antes de entrar no SEI simulado.", "error");
         return;
       }
+      startProofClock();
       navigate(renderLogin);
     });
   }
@@ -412,11 +546,16 @@
     screen.querySelectorAll("[data-login]").forEach(function (button) {
       button.addEventListener("click", function () {
         if (button.dataset.login === "externo") {
+          markProofComplete("login");
           navigate(renderHome);
           return;
         }
-        recordIssue("Escolheu a área de servidores");
-        showFeedback("Essa área é destinada a servidores. Para esta missão, escolha <strong>Acesso para Usuários Externos</strong>.", "error");
+        proofMistake(
+          "login",
+          "Fulano de Tal é estudante e não servidor. Compare a descrição das duas áreas.",
+          "Escolha <strong>Acesso para Usuários Externos</strong>.",
+          "Essa área é destinada a servidores. Para esta missão, escolha <strong>Acesso para Usuários Externos</strong>."
+        );
       });
     });
   }
@@ -452,11 +591,17 @@
     screen.querySelectorAll("[data-petition]").forEach(function (button) {
       button.addEventListener("click", function () {
         if (button.dataset.petition === "new") {
+          markProofComplete("petition");
           navigate(renderType);
           return;
         }
-        recordIssue("Escolheu Peticionamento Intercorrente para abrir um processo novo");
-        showFeedback("<strong>Peticionamento Intercorrente é uma opção válida, mas não para esta missão.</strong> Ele serve para anexar documentos a um processo que já foi criado, inclusive documentos esquecidos ou complementares. Para começar do zero, use <strong>Processo Novo</strong>.", "warning");
+        proofMistake(
+          "petition",
+          "A missão começa do zero; ainda não existe número de processo.",
+          "Escolha <strong>Processo Novo</strong>. Peticionamento Intercorrente serve para acrescentar documentos a processo já existente.",
+          "<strong>Peticionamento Intercorrente é uma opção válida, mas não para esta missão.</strong> Ele serve para anexar documentos a um processo que já foi criado, inclusive documentos esquecidos ou complementares. Para começar do zero, use <strong>Processo Novo</strong>.",
+          "warning"
+        );
       });
     });
   }
@@ -487,11 +632,16 @@
     screen.querySelectorAll("[data-type]").forEach(function (button) {
       button.addEventListener("click", function () {
         if (button.dataset.type === "correct") {
+          markProofComplete("process-type");
           navigate(renderInitialData);
           return;
         }
-        recordIssue("Escolheu um tipo de processo incompatível");
-        showFeedback("Esse tipo não corresponde à solicitação de um estudante. Procure <strong>Aluno: Requerimento Geral</strong>.", "error");
+        proofMistake(
+          "process-type",
+          "A solicitação é acadêmica e feita por um estudante. Procure um tipo iniciado por “Aluno”.",
+          "Escolha <strong>Aluno: Requerimento Geral</strong>.",
+          "Esse tipo não corresponde à solicitação de um estudante. Procure <strong>Aluno: Requerimento Geral</strong>."
+        );
       });
     });
   }
@@ -539,15 +689,26 @@
       const accepted = procedure.acceptedSpecifications.map(normalize).includes(normalize(value));
       const city = document.getElementById("city").value;
       if (!accepted) {
-        recordIssue("Preencheu a especificação com texto vago ou incompatível");
-        showFeedback("Use somente o nome da solicitação. Recomendação: <strong>Aproveitamento de disciplinas</strong>.", "error");
+        proofMistake(
+          "specification",
+          "Use uma identificação curta da solicitação, sem justificativas ou explicações.",
+          "Use <strong>Aproveitamento de disciplinas</strong> ou uma das variações aceitas pela CCA.",
+          "Use somente o nome da solicitação. Recomendação: <strong>Aproveitamento de disciplinas</strong>."
+        );
         return;
       }
       if (city !== procedure.city) {
-        recordIssue("Selecionou cidade diferente de Baturité");
-        showFeedback("Selecione <strong>Baturité</strong>, cidade do campus responsável pelo processo.", "error");
+        markProofComplete("specification");
+        proofMistake(
+          "city",
+          "A cidade corresponde ao campus responsável pelo processo, não ao município onde o estudante mora.",
+          "Selecione <strong>Baturité</strong>.",
+          "Selecione <strong>Baturité</strong>, cidade do campus responsável pelo processo."
+        );
         return;
       }
+      markProofComplete("specification");
+      markProofComplete("city");
       state.specification = value;
       if (normalize(value) !== normalize(procedure.recommendedSpecification)) {
         showFeedback("A variação informada é aceita pela CCA. A forma recomendada continua sendo <strong>Aproveitamento de disciplinas</strong>.", "success");
@@ -574,15 +735,22 @@
 
     document.getElementById("open-request").addEventListener("click", function () { navigate(renderRequestTab); });
     const continueButton = document.getElementById("request-continue");
-    if (continueButton) continueButton.addEventListener("click", function () { navigate(renderMainAccess); });
+    if (continueButton) continueButton.addEventListener("click", function () {
+      markProofComplete("request-workflow");
+      navigate(renderMainAccess);
+    });
   }
 
   function renderRequestTab() {
     setStep(5);
     const selectedRequest = state.requestKind;
+    const browserLeading = isProof()
+      ? '<button aria-label="Voltar do navegador" class="browser-back-button" id="browser-back-button" type="button">‹</button>'
+      : '<span class="browser-home" aria-hidden="true">⌂</span>';
     screen.innerHTML = `
+      ${isProof() ? '<div class="proof-exam-strip"><strong>MODO PROVA</strong><span data-proof-timer>' + proofTimerText() + '</span></div>' : ""}
       <div class="mobile-browser-bar" aria-label="Barra simulada do navegador do celular">
-        <span class="browser-home" aria-hidden="true">⌂</span>
+        ${browserLeading}
         <div class="browser-address"><span aria-hidden="true">⌘</span><span>sei.ifce.edu.br/sei/controlador…</span></div>
         <span class="browser-plus" aria-hidden="true">＋</span>
         <button aria-label="Abrir as duas guias do navegador" class="browser-tabs-button${state.requestSaved ? " is-next" : ""}" id="browser-tabs-button" type="button"><span>2</span></button>
@@ -647,6 +815,9 @@
         </div>
       </div>`;
 
+    const browserBackButton = document.getElementById("browser-back-button");
+    if (browserBackButton) browserBackButton.addEventListener("click", showBrowserBackConfirmation);
+
     const topScroll = document.getElementById("request-scroll-top");
     const mainScroll = document.getElementById("request-scroll-main");
     topScroll.addEventListener("scroll", function () {
@@ -691,10 +862,15 @@
       const kind = selected ? selected.value : "";
       const detail = document.getElementById("request-detail").value.trim();
       if (kind !== "aproveitamento") {
-        recordIssue("Não selecionou Aproveitamento de disciplina(s) em Solicito");
-        showFeedback("Em <strong>Solicito</strong>, escolha <strong>Aproveitamento de disciplina(s)</strong>.", "error");
+        proofMistake(
+          "request-kind",
+          "A opção deve corresponder à missão informada no início da prova.",
+          "Em <strong>Solicito</strong>, escolha <strong>Aproveitamento de disciplina(s)</strong>.",
+          "Em <strong>Solicito</strong>, escolha <strong>Aproveitamento de disciplina(s)</strong>."
+        );
         return;
       }
+      markProofComplete("request-kind");
       state.requestKind = kind;
       state.requestDetail = detail;
       state.requestSaved = true;
@@ -707,6 +883,33 @@
       document.getElementById("browser-tabs-button").setAttribute("aria-label", "Documento salvo. Abrir as duas guias do navegador");
       showFeedback("Requerimento salvo. Agora toque no contador <strong>2</strong>, no canto superior direito do navegador simulado.", "success");
     });
+  }
+
+  function showBrowserBackConfirmation() {
+    const existing = document.getElementById("browser-back-confirmation");
+    if (existing) return;
+    const confirmation = document.createElement("div");
+    confirmation.id = "browser-back-confirmation";
+    confirmation.innerHTML = `
+      <div class="critical-backdrop" aria-hidden="true"></div>
+      <section aria-labelledby="critical-back-title" aria-modal="true" class="critical-back-modal" role="dialog">
+        <h3 id="critical-back-title">Usar o Voltar do navegador?</h3>
+        <p>No SEI real, esta ação pode fazer você perder o preenchimento do requerimento.</p>
+        <p><strong>Cancelar</strong> preserva a prova. Confirmar <strong>Usar Voltar</strong> encerra esta tentativa como erro crítico.</p>
+        <div class="critical-back-actions">
+          <button id="cancel-browser-back" type="button">Cancelar</button>
+          <button id="confirm-browser-back" type="button">Usar Voltar</button>
+        </div>
+      </section>`;
+    screen.appendChild(confirmation);
+    document.getElementById("cancel-browser-back").addEventListener("click", function () {
+      confirmation.remove();
+      document.getElementById("browser-back-button").focus();
+    });
+    document.getElementById("confirm-browser-back").addEventListener("click", function () {
+      endProof("critico", "Foi usado o botão Voltar do navegador na tela do Requerimento Geral Discente.");
+    });
+    document.getElementById("cancel-browser-back").focus();
   }
 
   function renderBrowserTabs() {
@@ -773,11 +976,26 @@
     bindAccessGuidance("main-access", "main-hypothesis", "o documento principal");
 
     document.getElementById("main-access-continue").addEventListener("click", function () {
-      if (document.getElementById("main-access").value !== "restrito" || document.getElementById("main-hypothesis").value !== "pessoal") {
-        recordIssue("Configurou incorretamente o acesso do documento principal");
-        showFeedback("Use <strong>Restrito</strong> e <strong>Informação Pessoal</strong> no documento principal.", "error");
+      if (document.getElementById("main-access").value !== "restrito") {
+        proofMistake(
+          "main-access",
+          "O requerimento contém dados pessoais do estudante e não deve ficar disponível publicamente.",
+          "Selecione o nível de acesso <strong>Restrito</strong>.",
+          "Use <strong>Restrito</strong> e <strong>Informação Pessoal</strong> no documento principal."
+        );
         return;
       }
+      markProofComplete("main-access");
+      if (document.getElementById("main-hypothesis").value !== "pessoal") {
+        proofMistake(
+          "main-hypothesis",
+          "Procure a hipótese relacionada aos dados de uma pessoa física.",
+          "Selecione <strong>Informação Pessoal</strong>.",
+          "Use <strong>Restrito</strong> e <strong>Informação Pessoal</strong> no documento principal."
+        );
+        return;
+      }
+      markProofComplete("main-hypothesis");
       navigate(renderAttachments);
     });
   }
@@ -896,11 +1114,16 @@
     document.getElementById("finish-attachments").addEventListener("click", function () {
       const missing = docs.filter(function (doc) { return !state.docsAdded.some(function (added) { return added.id === doc.id; }); });
       if (missing.length) {
-        recordIssue("Tentou peticionar antes de adicionar todos os documentos");
         const countText = missing.length === 1 ? "Ainda falta 1 PDF." : "Ainda faltam " + missing.length + " PDFs.";
-        showFeedback(countText + " Toque em <strong>Escolher arquivo</strong>, selecione outro documento e repita o preenchimento até todos aparecerem na tabela.", "error");
+        proofMistake(
+          "attachments-complete",
+          countText + " Confira a tabela e a lista de documentos obrigatórios.",
+          countText + " Toque em <strong>Escolher arquivo</strong>, selecione outro documento e repita o preenchimento até todos aparecerem na tabela.",
+          countText + " Toque em <strong>Escolher arquivo</strong>, selecione outro documento e repita o preenchimento até todos aparecerem na tabela."
+        );
         return;
       }
+      markProofComplete("attachments-complete");
       navigate(renderSignature);
     });
   }
@@ -991,8 +1214,12 @@
     }
     if (format === "digitalizado" && conference !== "copia-simples") errors.push("Conferência = Cópia simples");
     if (errors.length) {
-      recordIssue("Preencheu incorretamente os metadados de um anexo");
-      showFeedback("Revise: <strong>" + errors.join("; ") + "</strong>.", "error");
+      proofMistake(
+        proofItemKeyForDocument(doc),
+        "Há metadados incompatíveis neste documento. Revise tipo, complemento, acesso, hipótese legal, formato e, quando houver, conferência.",
+        "Revise: <strong>" + errors.join("; ") + "</strong>.",
+        "Revise: <strong>" + errors.join("; ") + "</strong>."
+      );
       return;
     }
     state.docsAdded.push({
@@ -1005,6 +1232,11 @@
       formatLabel: format === "digitalizado" ? "Digitalizado — Cópia simples" : "Nato-digital",
       conference: conference
     });
+    const proofDocumentKey = proofItemKeyForDocument(doc);
+    const sameGroupPending = requiredDocs().filter(function (required) {
+      return proofItemKeyForDocument(required) === proofDocumentKey && !state.docsAdded.some(function (added) { return added.id === required.id; });
+    });
+    if (!sameGroupPending.length) markProofComplete(proofDocumentKey);
     state.selectedFile = null;
     state.filePickerOpen = false;
     renderAttachments();
@@ -1072,10 +1304,17 @@
     document.getElementById("sign-button").addEventListener("click", function () {
       const role = document.getElementById("signature-role").value;
       if (role !== "aluno" && role !== "aluna") {
-        recordIssue("Não escolheu Aluno ou Aluna em Cargo/Função");
-        showFeedback("Escolha <strong>Aluna</strong> ou <strong>Aluno</strong> em Cargo/Função.", "error");
+        proofMistake(
+          "signature",
+          "O signatário fictício é estudante. Revise o campo Cargo/Função.",
+          "Escolha <strong>Aluna</strong> ou <strong>Aluno</strong> em Cargo/Função.",
+          "Escolha <strong>Aluna</strong> ou <strong>Aluno</strong> em Cargo/Função."
+        );
         return;
       }
+      markProofComplete("signature");
+      stopProofClock();
+      if (isProof()) state.proofEndReason = "concluida";
       navigate(renderReceipt);
     });
   }
@@ -1093,6 +1332,87 @@
     return "23484." + sequence + "/" + new Date().getFullYear() + "-" + suffix;
   }
 
+  function calculateProofResult() {
+    let technical = 0;
+    let direct = 0;
+    let corrected = 0;
+    let repeated = 0;
+    PROOF_ITEMS.forEach(function (item) {
+      if (!state.proofCompleted.has(item.key)) return;
+      const attempts = state.proofAttempts[item.key] || 0;
+      const factor = attempts === 0 ? 1 : attempts === 1 ? 0.75 : 0.25;
+      technical += item.points * factor;
+      if (attempts === 0) direct += 1;
+      else if (attempts === 1) corrected += 1;
+      else repeated += 1;
+    });
+    technical = Math.round(technical);
+    const elapsed = proofElapsedMs();
+    let bonus = 0;
+    if (state.proofEndReason === "concluida" && state.proofMinutes) {
+      const ratio = elapsed / (state.proofMinutes * 60000);
+      if (ratio <= (2 / 3)) bonus = 5;
+      else if (ratio <= (5 / 6)) bonus = 3;
+      else if (ratio <= 1) bonus = 1;
+    }
+    const finalScore = Math.min(100, technical + bonus);
+    const status = state.proofEndReason === "critico"
+      ? "Não concluída por erro crítico"
+      : state.proofEndReason === "tempo"
+        ? "Tempo esgotado — prova não concluída"
+        : finalScore >= 70
+          ? "Aprovado"
+          : "Recomenda-se novo treinamento";
+    const review = PROOF_ITEMS.filter(function (item) {
+      return (state.proofAttempts[item.key] || 0) > 0 || !state.proofCompleted.has(item.key);
+    }).slice(0, 5);
+    return { technical: technical, bonus: bonus, finalScore: finalScore, status: status, direct: direct, corrected: corrected, repeated: repeated, elapsed: elapsed, review: review };
+  }
+
+  function proofSummaryHtml(result) {
+    const reviewHtml = result.review.length
+      ? `<div class="proof-review"><strong>O que revisar</strong><ul>${result.review.map(function (item) { return `<li>${escapeHtml(item.label)}</li>`; }).join("")}</ul></div>`
+      : '<div class="panel panel-success"><strong>Nenhum item precisa de revisão.</strong></div>';
+    const criticalHtml = state.proofCriticalDetail ? `<div class="panel panel-danger"><strong>Motivo do encerramento</strong><p>${escapeHtml(state.proofCriticalDetail)}</p></div>` : "";
+    return `
+      <div class="proof-result" data-proof-status="${escapeHtml(state.proofEndReason)}">
+        <div class="proof-result-status"><span>Situação</span><strong>${escapeHtml(result.status)}</strong></div>
+        <div class="proof-score-grid">
+          <div><span>Desempenho técnico</span><strong>${result.technical}/100</strong></div>
+          <div><span>Bônus de tempo</span><strong>+${result.bonus}</strong></div>
+          <div><span>Nota final</span><strong>${result.finalScore}/100</strong></div>
+          <div><span>Percentual</span><strong>${result.finalScore}%</strong></div>
+        </div>
+        <div class="proof-detail-grid">
+          <div><span>Acertos diretos</span><strong>${result.direct}</strong></div>
+          <div><span>Após uma pista</span><strong>${result.corrected}</strong></div>
+          <div><span>Após correção</span><strong>${result.repeated}</strong></div>
+          <div><span>Tempo utilizado</span><strong>${formatDuration(result.elapsed)}</strong></div>
+        </div>
+        ${criticalHtml}
+        ${reviewHtml}
+      </div>`;
+  }
+
+  function bindProofResultActions() {
+    document.getElementById("proof-restart").addEventListener("click", restartProof);
+    document.getElementById("proof-guided").addEventListener("click", switchToGuidedMode);
+  }
+
+  function proofResultActionsHtml() {
+    return `<div class="button-row"><button class="sim-button sim-button-primary" id="proof-restart" type="button">Refazer a prova</button><button class="sim-button sim-button-secondary" id="proof-guided" type="button">Voltar ao modo guiado</button></div>`;
+  }
+
+  function renderProofResult() {
+    setStep(9);
+    previousButton.hidden = true;
+    nextButton.hidden = true;
+    restartButton.hidden = true;
+    const result = calculateProofResult();
+    screen.innerHTML = screenHeader("Resultado da prova", "Avaliação encerrada") + `<div class="screen-body"><h3 class="screen-title">${escapeHtml(result.status)}</h3>${proofSummaryHtml(result)}${proofResultActionsHtml()}</div>`;
+    bindProofResultActions();
+  }
+
   function renderReceipt() {
     setStep(9);
     if (!state.processNumber) state.processNumber = generateProcessNumber();
@@ -1104,9 +1424,8 @@
     const docItems = state.docsAdded.map(function (doc) {
       return `<li>Anexo ${escapeHtml(doc.complement)} — <strong>XXXXXXX</strong></li>`;
     }).join("");
-    const score = Math.max(0, 100 - (state.issues.size * 10));
-    const result = state.mode === "livre"
-      ? `<div class="score"><span>Resultado do modo livre</span><strong>${score}%</strong></div><p>${state.issues.size ? "Você concluiu após corrigir " + state.issues.size + " ponto(s)." : "Você concluiu sem precisar corrigir nenhuma etapa."}</p>`
+    const result = isProof()
+      ? proofSummaryHtml(calculateProofResult())
       : '<div class="panel panel-success"><strong>Treinamento guiado concluído.</strong><p>Você percorreu o fluxo completo com orientações imediatas.</p></div>';
 
     screen.innerHTML = screenHeader("Treinamento concluído", "Recibo fictício") + `
@@ -1136,7 +1455,7 @@
           <strong>E se um documento for esquecido?</strong>
           <p>Depois que o processo real já existir, o Peticionamento Intercorrente pode ser usado para anexar documentos que faltaram ou acrescentar novos documentos. Esse fluxo receberá treinamento próprio futuramente.</p>
         </div>
-        ${state.mode === "guiado" ? '<div class="button-row"><button class="sim-button sim-button-primary" id="receipt-free-mode" type="button">Experimentar o modo livre</button></div>' : ""}
+        ${isProof() ? proofResultActionsHtml() : '<div class="button-row"><button class="sim-button sim-button-primary" id="receipt-proof-mode" type="button">Fazer o modo prova</button></div>'}
         <div class="button-row">
           <button class="sim-button sim-button-secondary" id="receipt-restart" type="button">Treinar novamente</button>
           <a class="sim-button sim-button-muted" href="sei-abrir-solicitacao-celular.html">Rever o guia do celular</a>
@@ -1146,14 +1465,15 @@
         </div>
       </div>`;
     document.getElementById("receipt-restart").addEventListener("click", reset);
-    const freeModeButton = document.getElementById("receipt-free-mode");
-    if (freeModeButton) freeModeButton.addEventListener("click", startFreeMode);
+    if (isProof()) bindProofResultActions();
+    const proofModeButton = document.getElementById("receipt-proof-mode");
+    if (proofModeButton) proofModeButton.addEventListener("click", startProofMode);
   }
 
-  function startFreeMode() {
+  function startProofMode() {
     const completedProcedure = procedure;
     state = newState();
-    state.mode = "livre";
+    state.mode = "prova";
     procedure = completedProcedure;
     navigationHistory = [];
     navigationForward = [];
@@ -1163,7 +1483,38 @@
     document.querySelector(".simulator").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  function restartProof() {
+    const completedProcedure = procedure;
+    const packaging = state.packaging;
+    const proofMinutes = state.proofMinutes;
+    stopProofClock();
+    state = newState();
+    state.mode = "prova";
+    state.packaging = packaging;
+    state.proofMinutes = proofMinutes;
+    procedure = completedProcedure;
+    navigationHistory = [];
+    navigationForward = [];
+    currentView = renderPreflight;
+    renderPreflight();
+    updateNavigationButtons();
+  }
+
+  function switchToGuidedMode() {
+    const completedProcedure = procedure;
+    stopProofClock();
+    state = newState();
+    state.mode = "guiado";
+    procedure = completedProcedure;
+    navigationHistory = [];
+    navigationForward = [];
+    currentView = renderSetup;
+    renderSetup();
+    updateNavigationButtons();
+  }
+
   function reset() {
+    stopProofClock();
     state = newState();
     procedure = null;
     navigationHistory = [];
