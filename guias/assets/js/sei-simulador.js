@@ -501,6 +501,7 @@
                   return `<label><input ${selectedRequest === item[1] ? "checked" : ""} name="request-kind" type="radio" value="${escapeHtml(item[1])}"/><span>${escapeHtml(item[0])}</span></label>`;
                 }).join("")}
               </div>
+              <div aria-live="polite" class="request-choice-feedback" id="request-choice-feedback"></div>
             </fieldset>
             <div class="sei-detail-section">
               <label for="request-detail"><strong>Especificação detalhada da solicitação:</strong> <span class="optional-label">(opcional)</span></label>
@@ -517,6 +518,24 @@
           </div>
         </div>
       </div>`;
+
+    screen.querySelectorAll('input[name="request-kind"]').forEach(function (radio) {
+      radio.addEventListener("change", function () {
+        state.requestKind = radio.value;
+        const feedback = document.getElementById("request-choice-feedback");
+        const saveButton = document.getElementById("request-save");
+        if (radio.value === "aproveitamento") {
+          feedback.className = "request-choice-feedback is-correct";
+          feedback.innerHTML = "Opção correta. Agora toque em <strong>Salvar</strong>, no canto superior esquerdo.";
+          saveButton.classList.add("is-next");
+          saveButton.setAttribute("aria-label", "Opção correta selecionada. Salvar documento");
+        } else {
+          feedback.className = "request-choice-feedback is-question";
+          feedback.innerHTML = "<strong>É essa opção mesmo?</strong> Para solicitar aproveitamento, reveja a opção marcada.";
+          saveButton.classList.remove("is-next");
+        }
+      });
+    });
 
     document.getElementById("browser-tabs-button").addEventListener("click", function () {
       const selected = screen.querySelector('input[name="request-kind"]:checked');
@@ -537,6 +556,7 @@
       state.requestDetail = detail;
       state.requestSaved = true;
       const saveButton = document.getElementById("request-save");
+      saveButton.classList.remove("is-next");
       saveButton.classList.add("is-saved");
       saveButton.innerHTML = '<span aria-hidden="true">✓</span>Salvo';
       document.getElementById("editor-save-notice").hidden = false;
@@ -586,7 +606,7 @@
           <label for="main-access">Nível de acesso</label>
           <select id="main-access">
             <option value="">Selecione…</option>
-            <option value="publico">Público</option>
+            <option disabled value="publico">Público — não use neste processo</option>
             <option value="restrito">Restrito</option>
           </select>
         </div>
@@ -594,8 +614,10 @@
           <label for="main-hypothesis">Hipótese legal</label>
           <select id="main-hypothesis">
             <option value="">Selecione…</option>
+            <option disabled value="direito-autoral">Direito Autoral (Art. 24, III, da Lei nº 9.610/1998)</option>
             <option value="pessoal">Informação Pessoal (Art. 31 da Lei nº 12.527/2011)</option>
-            <option value="sigilo">Sigilo de empresa</option>
+            <option disabled value="software">Proteção da Propriedade Intelectual de Software (Art. 2º da Lei nº 9.609/1998)</option>
+            <option disabled value="segredo-industrial">Segredo Industrial (Art. 195, XIV, Lei nº 9.279/1996)</option>
           </select>
         </div>
         <div class="button-row">
@@ -618,33 +640,54 @@
     const docs = requiredDocs();
     const pending = docs.filter(function (doc) { return !state.docsAdded.some(function (added) { return added.id === doc.id; }); });
     const selected = docs.find(function (doc) { return doc.id === state.selectedFile; });
-    const addedHtml = state.docsAdded.length
-      ? `<ul class="added-files">${state.docsAdded.map(function (doc) { return `<li><span><strong>${escapeHtml(doc.fileName)}</strong><br/><small>${escapeHtml(doc.complement)} · ${escapeHtml(doc.formatLabel)}</small></span></li>`; }).join("")}</ul>`
-      : '<p class="field-help">Nenhum documento adicionado. Escolher um PDF não basta: ele precisa aparecer nesta lista.</p>';
+    const addedHtml = state.docsAdded.length ? state.docsAdded.map(function (doc) {
+      return `<tr>
+        <td>${escapeHtml(doc.fileName)}</td>
+        <td>${escapeHtml(doc.date)}</td>
+        <td>${escapeHtml(doc.size)}</td>
+        <td>Anexo ${escapeHtml(doc.complement)}</td>
+        <td>Restrito<br/><small>Informação Pessoal</small></td>
+        <td>${escapeHtml(doc.formatLabel)}</td>
+      </tr>`;
+    }).join("") : '<tr class="empty-row"><td colspan="6">Nenhum documento adicionado.</td></tr>';
     const selectedHtml = selected ? renderAttachmentForm(selected) : "";
 
-    screen.innerHTML = screenHeader("Documentos complementares", "Gaveta fictícia") + `
+    screen.innerHTML = screenHeader("Peticionamento de Processo Novo", "Documentos Complementares") + `
       <div class="screen-body">
-        <h3 class="screen-title">Adicione os PDFs obrigatórios</h3>
-        <p class="screen-subtitle">Os arquivos abaixo são fictícios. Leia como cada PDF foi produzido antes de classificá-lo.</p>
+        <h3 class="screen-title">Documentos Complementares (10 Mb)</h3>
+        <p class="screen-subtitle">Repita o procedimento para cada PDF obrigatório.</p>
         ${hint("Repita para cada PDF", "Tipo Anexo, complemento descritivo, Restrito, Informação Pessoal e formato conforme a origem. Se for digitalizado, use Cópia simples. Finalize em Adicionar.", "sei-abrir-solicitacao-celular.html#adicionar-documento")}
-        <div class="file-drawer">
+        <div class="sei-upload-field">
+          <span class="sei-upload-label">Documento</span>
+          <div class="sei-upload-control">
+            <button class="sei-file-button" id="choose-fictional-file" type="button">Escolher arquivo</button>
+            <span>${selected ? escapeHtml(selected.fileName) : "Nenhum arquivo escolhido"}</span>
+          </div>
+          <p>Para sua segurança, escolha um dos PDFs fictícios do exercício.</p>
+        </div>
+        <div class="file-drawer" id="fictional-file-drawer" ${selected ? "hidden" : ""}>
           ${docs.map(function (doc) {
             const wasAdded = state.docsAdded.some(function (added) { return added.id === doc.id; });
-            const selectedClass = selected && selected.id === doc.id ? " is-selected" : "";
-            return `<button class="file-card${selectedClass}" data-file="${escapeHtml(doc.id)}" ${wasAdded ? "disabled" : ""} type="button"><strong>${wasAdded ? "✓ " : ""}${escapeHtml(doc.fileName)}</strong><span>PDF · ${escapeHtml(doc.size)} · ${wasAdded ? "adicionado" : "toque para selecionar"}</span></button>`;
+            return `<button class="file-card" data-file="${escapeHtml(doc.id)}" ${wasAdded ? "disabled" : ""} type="button"><strong>${wasAdded ? "✓ " : ""}${escapeHtml(doc.fileName)}</strong><span>PDF · ${escapeHtml(doc.size)} · ${wasAdded ? "adicionado" : "toque para selecionar"}</span></button>`;
           }).join("")}
         </div>
         ${selectedHtml}
-        <div class="panel">
-          <h3>Documentos que já aparecem na tabela</h3>
-          ${addedHtml}
+        <div class="sei-table-wrap">
+          <table class="sei-documents-table">
+            <caption>Documentos já adicionados</caption>
+            <thead><tr><th>Nome do Arquivo</th><th>Data</th><th>Tamanho</th><th>Documento</th><th>Nível de Acesso</th><th>Formato</th></tr></thead>
+            <tbody>${addedHtml}</tbody>
+          </table>
         </div>
         <div class="button-row">
           <button class="sim-button sim-button-primary" id="finish-attachments" type="button">Conferir anexos e peticionar</button>
         </div>
         <p class="field-help">${pending.length} documento(s) ainda não adicionado(s).</p>
       </div>`;
+
+    document.getElementById("choose-fictional-file").addEventListener("click", function () {
+      document.getElementById("fictional-file-drawer").hidden = false;
+    });
 
     screen.querySelectorAll("[data-file]").forEach(function (button) {
       button.addEventListener("click", function () {
@@ -677,15 +720,13 @@
   function renderAttachmentForm(doc) {
     return `
       <div class="panel panel-accent" id="attachment-form">
-        <h3>Classificar ${escapeHtml(doc.fileName)}</h3>
+        <h3>${escapeHtml(doc.fileName)}</h3>
         <div class="origin-story"><strong>Como este PDF foi produzido?</strong>${escapeHtml(doc.originStory)}</div>
         <div class="field">
           <label for="attachment-type">Tipo de Documento</label>
           <select id="attachment-type">
             <option value="">Selecione…</option>
             <option value="anexo">Anexo</option>
-            <option value="oficio">Ofício</option>
-            <option value="certidao">Certidão</option>
           </select>
         </div>
         <div class="field">
@@ -697,7 +738,7 @@
           <label for="attachment-access">Nível de acesso</label>
           <select id="attachment-access">
             <option value="">Selecione…</option>
-            <option value="publico">Público</option>
+            <option disabled value="publico">Público — não use neste processo</option>
             <option value="restrito">Restrito</option>
           </select>
         </div>
@@ -705,8 +746,10 @@
           <label for="attachment-hypothesis">Hipótese legal</label>
           <select id="attachment-hypothesis">
             <option value="">Selecione…</option>
-            <option value="pessoal">Informação Pessoal</option>
-            <option value="sigilo">Sigilo de empresa</option>
+            <option disabled value="direito-autoral">Direito Autoral (Art. 24, III, da Lei nº 9.610/1998)</option>
+            <option value="pessoal">Informação Pessoal (Art. 31 da Lei nº 12.527/2011)</option>
+            <option disabled value="software">Proteção da Propriedade Intelectual de Software (Art. 2º da Lei nº 9.609/1998)</option>
+            <option disabled value="segredo-industrial">Segredo Industrial (Art. 195, XIV, Lei nº 9.279/1996)</option>
           </select>
         </div>
         <fieldset class="field">
@@ -717,11 +760,13 @@
           </div>
         </fieldset>
         <div class="field" id="conference-field" hidden>
-          <label for="attachment-conference">Conferência</label>
+          <label for="attachment-conference">Conferência com o documento digitalizado</label>
           <select id="attachment-conference">
             <option value="">Selecione…</option>
+            <option disabled value="copia-administrativa">Cópia autenticada administrativamente</option>
+            <option disabled value="copia-cartorio">Cópia autenticada por cartório</option>
             <option value="copia-simples">Cópia simples</option>
-            <option value="original">Documento original</option>
+            <option disabled value="original">Documento original</option>
           </select>
         </div>
         <button class="sim-button sim-button-primary" id="add-attachment" type="button">Adicionar</button>
@@ -762,7 +807,10 @@
       id: doc.id,
       fileName: doc.fileName,
       complement: complement,
-      formatLabel: format === "digitalizado" ? "Digitalizado · Cópia simples" : "Nato-digital"
+      size: doc.size,
+      date: new Intl.DateTimeFormat("pt-BR", { timeZone: "America/Fortaleza" }).format(new Date()),
+      formatLabel: format === "digitalizado" ? "Digitalizado — Cópia simples" : "Nato-digital",
+      conference: conference
     });
     state.selectedFile = null;
     renderAttachments();
@@ -792,41 +840,44 @@
       return;
     }
 
-    screen.innerHTML = screenHeader("Assinatura Eletrônica", "Concluir peticionamento") + `
-      <div class="screen-body">
-        <h3 class="screen-title">Assine a simulação</h3>
-        <div class="panel fake-user">
-          <span class="avatar" aria-hidden="true">FT</span>
-          <div><strong>Fulano de Tal</strong><span>Usuário externo fictício</span></div>
+    screen.innerHTML = `
+      <div class="signature-backdrop" aria-hidden="true"></div>
+      <section aria-labelledby="signature-title" aria-modal="true" class="signature-modal" role="dialog">
+        <div class="signature-titlebar"><strong id="signature-title">Concluir Peticionamento - Assinatura Eletrônica</strong><span aria-hidden="true">□ ×</span></div>
+        <div class="signature-actions">
+          <button class="signature-action-primary" id="sign-button" type="button">✓ Assinar</button>
+          <button id="close-signature" type="button">× Fechar</button>
         </div>
-        <div class="field">
-          <label for="signature-role">Cargo/Função</label>
-          <select id="signature-role">
-            <option value="">Selecione…</option>
-            <option value="aluno">Aluno</option>
-            <option value="servidor">Servidor</option>
-            <option value="representante">Representante legal</option>
-          </select>
+        <div class="signature-content">
+          <p>Ao assinar eletronicamente, você declara que os dados e documentos apresentados são verdadeiros e assume responsabilidade pelo peticionamento.</p>
+          <div class="signature-field"><span>Usuário Externo:</span><strong>Fulano de Tal</strong></div>
+          <div class="field">
+            <label for="signature-role">Cargo/Função:</label>
+            <select id="signature-role">
+              <option value="">Selecione…</option>
+              <option value="aluna">Aluna</option>
+              <option value="aluno">Aluno</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="signature-password">Senha de acesso ao SEI:</label>
+            <input aria-describedby="signature-password-help" id="signature-password" readonly type="password" value="treino123"/>
+            <p class="field-help" id="signature-password-help">Campo fictício e não editável. No SEI real, digite sua senha apenas em sei.ifce.edu.br.</p>
+          </div>
+          <div class="signature-training-note"><strong>AMBIENTE DE TREINAMENTO</strong> — nenhuma assinatura real será criada.</div>
         </div>
-        <div class="data-row"><span>Senha de treinamento</span><strong>•••••••• — campo não editável</strong></div>
-        <p class="field-help">Este site nunca pede sua senha. No SEI real, digite-a somente em sei.ifce.edu.br.</p>
-        <label class="choice" for="signature-confirm">
-          <input id="signature-confirm" type="checkbox"/>
-          <span><strong>Reconheço que esta assinatura é apenas simulada</strong><span>Ela não produz efeito administrativo ou jurídico.</span></span>
-        </label>
-        <div class="button-row">
-          <button class="sim-button sim-button-primary" id="sign-button" type="button">Assinar simulação</button>
-        </div>
-      </div>`;
+      </section>`;
+
+    document.getElementById("close-signature").addEventListener("click", function () {
+      state.petitionStarted = false;
+      renderSignature();
+    });
 
     document.getElementById("sign-button").addEventListener("click", function () {
-      if (document.getElementById("signature-role").value !== "aluno") {
-        recordIssue("Escolheu Cargo/Função diferente de Aluno");
-        showFeedback("Escolha <strong>Aluno</strong> em Cargo/Função.", "error");
-        return;
-      }
-      if (!document.getElementById("signature-confirm").checked) {
-        showFeedback("Confirme que a assinatura é apenas simulada.", "error");
+      const role = document.getElementById("signature-role").value;
+      if (role !== "aluno" && role !== "aluna") {
+        recordIssue("Não escolheu Aluno ou Aluna em Cargo/Função");
+        showFeedback("Escolha <strong>Aluna</strong> ou <strong>Aluno</strong> em Cargo/Função.", "error");
         return;
       }
       navigate(renderReceipt);
