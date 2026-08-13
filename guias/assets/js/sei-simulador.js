@@ -7,6 +7,7 @@
   const progressLabel = document.getElementById("progress-label");
   const progressName = document.getElementById("progress-name");
   const progressValue = document.getElementById("progress-value");
+  const previousButton = document.getElementById("previous-button");
   const restartButton = document.getElementById("restart-button");
   const announcer = document.getElementById("screen-announcer");
   const configPath = screen.dataset.config;
@@ -24,9 +25,34 @@
     "Recibo"
   ];
 
+  const CAMPUS_CITIES = [
+    "Acaraú", "Acopiara", "Aracati", "Baturité", "Boa Viagem", "Camocim",
+    "Canindé", "Caucaia", "Cedro", "Crateús", "Crato", "Fortaleza",
+    "Guaramiranga", "Horizonte", "Iguatu", "Itapipoca", "Jaguaribe",
+    "Jaguaruana", "Juazeiro do Norte", "Limoeiro do Norte", "Maracanaú",
+    "Maranguape", "Mombaça", "Morada Nova", "Paracuru", "Pecém", "Quixadá",
+    "Sobral", "Tabuleiro do Norte", "Tauá", "Tianguá", "Ubajara", "Umirim"
+  ];
+
+  const REQUEST_OPTIONS = [
+    ["Aproveitamento de disciplina(s)", "aproveitamento"],
+    ["Cancelamento de matrícula", "cancelamento-matricula"],
+    ["Certificado/Diploma de conclusão", "certificado-diploma"],
+    ["Justificativa de falta / 2ª chamada de prova(s)", "segunda-chamada"],
+    ["Programa de disciplina - PUD da(s) disciplina(s)", "pud"],
+    ["Solicitação de colação de grau", "colacao-grau"],
+    ["Quebra de pré-requisito para cursar disciplina(s)", "quebra-pre-requisito"],
+    ["Regime de exercício domiciliar", "exercicio-domiciliar"],
+    ["Trancamento de disciplina(s)", "trancamento-disciplinas"],
+    ["Trancamento de matrícula", "trancamento-matricula"],
+    ["Outro", "outro"]
+  ];
+
   let config = null;
   let procedure = null;
   let state = null;
+  let currentView = null;
+  let navigationHistory = [];
 
   function newState() {
     return {
@@ -35,9 +61,7 @@
       step: 0,
       specification: "",
       requestSaved: false,
-      requestCategory: "",
       requestKind: "",
-      requestOther: "",
       requestDetail: "",
       selectedFile: null,
       docsAdded: [],
@@ -99,8 +123,27 @@
     clearFeedback();
   }
 
-  function screenHeader(title, subtitle) {
-    return `<div class="screen-header"><div><strong>${escapeHtml(title)}</strong><span>${escapeHtml(subtitle || "Ambiente simulado")}</span></div><span>CCA · TREINO</span></div>`;
+  function updateNavigationButtons() {
+    previousButton.hidden = navigationHistory.length === 0;
+  }
+
+  function navigate(renderFunction) {
+    if (currentView && currentView !== renderFunction) navigationHistory.push(currentView);
+    currentView = renderFunction;
+    renderFunction();
+    updateNavigationButtons();
+  }
+
+  function goBack() {
+    if (!navigationHistory.length) return;
+    currentView = navigationHistory.pop();
+    currentView();
+    updateNavigationButtons();
+  }
+
+  function screenHeader(title, subtitle, actionHtml) {
+    const action = actionHtml || '<span class="screen-header-mark">CCA · TREINO</span>';
+    return `<div class="screen-header"><div class="screen-header-copy"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(subtitle || "Ambiente simulado")}</span></div><div class="screen-header-action">${action}</div></div>`;
   }
 
   function requiredDocs() {
@@ -111,6 +154,7 @@
 
   function renderSetup() {
     progressWrap.hidden = true;
+    previousButton.hidden = true;
     restartButton.hidden = true;
     clearFeedback();
     screen.innerHTML = screenHeader("Preparar treinamento", "Nada será enviado") + `
@@ -165,7 +209,7 @@
       state.mode = document.querySelector('input[name="mode"]:checked').value;
       state.packaging = document.querySelector('input[name="packaging"]:checked').value;
       restartButton.hidden = false;
-      renderPreflight();
+      navigate(renderPreflight);
     });
   }
 
@@ -181,14 +225,18 @@
         <div class="panel panel-accent">
           <h3>Documentos obrigatórios</h3>
           <ol class="document-list">
-            <li>Formulário de Solicitação de Aproveitamento de Componente Curricular <strong>preenchido e assinado</strong>.</li>
+            <li><a href="https://docs.google.com/document/d/1y7Uy13fz6Au-0lteWyyS2EddRcB7ekpo/edit#heading=h.gjdgxs" rel="noopener noreferrer" target="_blank">Formulário de Solicitação de Aproveitamento de Componente Curricular</a> <strong>preenchido e assinado</strong>.</li>
             <li>Histórico escolar, com a carga horária dos componentes curriculares, <strong>autenticado pela instituição de origem</strong>.</li>
             <li>Programas dos componentes curriculares, <strong>devidamente autenticados pela instituição de origem</strong>.</li>
           </ol>
           <p><strong>Nesta simulação:</strong> você escolheu ${escapeHtml(programsText)}. Somente os programas, PUDs ou ementas podem ser reunidos; o formulário e o histórico continuam separados.</p>
         </div>
+        <div class="resource-links" aria-label="Formulários de apoio">
+          <a class="sim-button sim-button-secondary" href="https://docs.google.com/document/d/1y7Uy13fz6Au-0lteWyyS2EddRcB7ekpo/edit#heading=h.gjdgxs" rel="noopener noreferrer" target="_blank">Abrir formulário real — nova guia</a>
+          <a class="sim-button sim-button-muted" href="assets/sei-simulador/formulario-aproveitamento-ficticio.pdf" rel="noopener noreferrer" target="_blank">Ver formulário fictício preenchido</a>
+        </div>
         <details class="panel">
-          <summary><strong>Ver o formulário fictício preenchido e assinado</strong></summary>
+          <summary><strong>Conferir os dados usados no formulário fictício</strong></summary>
           <div class="data-grid">
             <div class="data-row"><span>Situação</span><strong>Aluno veterano</strong></div>
             <div class="data-row"><span>Aluno</span><strong>Fulano de Tal</strong></div>
@@ -197,12 +245,13 @@
             <div class="data-row"><span>CPF</span><strong>XXX.XXX.XXX-XX</strong></div>
             <div class="data-row"><span>Data de nascimento</span><strong>DD/MM/AAAA</strong></div>
             <div class="data-row"><span>Telefone</span><strong>(85) 9XXXX-XXXX</strong></div>
-            <div class="data-row"><span>E-mail</span><strong>fulanodetal@gm•••.com</strong></div>
+            <div class="data-row"><span>E-mail</span><strong>fulanodetal@gmail.com</strong></div>
             <div class="data-row"><span>Assinatura fictícia</span><strong>Fulano de Tal</strong></div>
           </div>
           <div class="panel panel-accent">
-            <strong>Componentes fictícios relacionados no formulário</strong>
-            <p>Disciplina de Origem A — 60 h → Componente IFCE A — 60 h<br/>Disciplina de Origem B — 60 h → Componente IFCE B — 60 h</p>
+            <strong>Critérios acadêmicos do ROD</strong>
+            <p>A carga horária do componente apresentado deve corresponder a, no mínimo, <strong>75%</strong> da carga horária do componente a ser aproveitado. O conteúdo também deve apresentar, no mínimo, <strong>75% de compatibilidade</strong>.</p>
+            <p>A equivalência não precisa ser exata. A análise e a decisão cabem ao setor acadêmico competente.</p>
             <p><strong>Instituição de origem:</strong> Instituição de Ensino Fictícia<br/><strong>Curso de origem:</strong> Licenciatura em Letras</p>
             <p><strong>Observação:</strong> solicito o aproveitamento dos componentes relacionados, conforme a documentação anexa.</p>
           </div>
@@ -224,7 +273,7 @@
         showFeedback("Confirme a preparação antes de entrar no SEI simulado.", "error");
         return;
       }
-      renderLogin();
+      navigate(renderLogin);
     });
   }
 
@@ -248,7 +297,7 @@
     screen.querySelectorAll("[data-login]").forEach(function (button) {
       button.addEventListener("click", function () {
         if (button.dataset.login === "externo") {
-          renderHome();
+          navigate(renderHome);
           return;
         }
         recordIssue("Escolheu a área de servidores");
@@ -259,14 +308,13 @@
 
   function renderHome() {
     setStep(2);
-    screen.innerHTML = screenHeader("SEI — Usuário Externo", "Fulano de Tal") + `
+    screen.innerHTML = screenHeader("SEI — Usuário Externo", "Fulano de Tal", '<button aria-controls="mobile-menu" aria-expanded="false" class="screen-menu-button" id="open-menu" type="button"><span>Menu</span><span aria-hidden="true">⋮</span></button>') + `
       <div class="screen-body">
         <h3 class="screen-title">Página inicial</h3>
-        <p class="screen-subtitle">Abra o menu para iniciar uma solicitação do zero.</p>
-        ${hint("Caminho correto", "Abra Menu, depois Peticionamento e, por fim, Processo Novo.", "sei-abrir-solicitacao-celular.html#processo-novo")}
-        <button class="sim-button sim-button-primary" id="open-menu" type="button">☰ Menu</button>
+        <p class="screen-subtitle">Abra <strong>Menu (lado superior direito)</strong> para iniciar uma solicitação do zero.</p>
+        ${hint("Caminho correto", "Abra Menu (lado superior direito), depois Peticionamento e, por fim, Processo Novo.", "sei-abrir-solicitacao-celular.html#processo-novo")}
         <div class="mobile-menu" id="mobile-menu" hidden>
-          <button id="open-petition-menu" type="button">Peticionamento</button>
+          <button aria-controls="petition-submenu" aria-expanded="false" id="open-petition-menu" type="button"><span>Peticionamento</span><span class="menu-arrow" aria-hidden="true">▾</span></button>
           <div class="submenu" id="petition-submenu" hidden>
             <button data-petition="new" type="button">Processo Novo</button>
             <button data-petition="intercurrent" type="button">Peticionamento Intercorrente</button>
@@ -275,15 +323,21 @@
       </div>`;
 
     document.getElementById("open-menu").addEventListener("click", function () {
-      document.getElementById("mobile-menu").hidden = false;
+      const menu = document.getElementById("mobile-menu");
+      const expanded = this.getAttribute("aria-expanded") !== "true";
+      menu.hidden = !expanded;
+      this.setAttribute("aria-expanded", String(expanded));
     });
     document.getElementById("open-petition-menu").addEventListener("click", function () {
-      document.getElementById("petition-submenu").hidden = false;
+      const submenu = document.getElementById("petition-submenu");
+      const expanded = this.getAttribute("aria-expanded") !== "true";
+      submenu.hidden = !expanded;
+      this.setAttribute("aria-expanded", String(expanded));
     });
     screen.querySelectorAll("[data-petition]").forEach(function (button) {
       button.addEventListener("click", function () {
         if (button.dataset.petition === "new") {
-          renderType();
+          navigate(renderType);
           return;
         }
         recordIssue("Escolheu Peticionamento Intercorrente para abrir um processo novo");
@@ -315,7 +369,7 @@
     screen.querySelectorAll("[data-type]").forEach(function (button) {
       button.addEventListener("click", function () {
         if (button.dataset.type === "correct") {
-          renderInitialData();
+          navigate(renderInitialData);
           return;
         }
         recordIssue("Escolheu um tipo de processo incompatível");
@@ -340,12 +394,9 @@
           <label for="city">Cidade <span aria-hidden="true">*</span></label>
           <select id="city">
             <option value="">Selecione…</option>
-            <option>Aracati</option>
-            <option>Baturité</option>
-            <option>Fortaleza</option>
-            <option>Redenção</option>
+            ${CAMPUS_CITIES.map(function (city) { return `<option>${escapeHtml(city)}</option>`; }).join("")}
           </select>
-          <span class="field-help">A cidade é a do campus responsável, não a cidade onde o estudante mora.</span>
+          <span class="field-help">Lista institucional simulada com as cidades dos 33 campi. Escolha a cidade do campus responsável, não a cidade onde o estudante mora.</span>
         </div>
         <div class="button-row">
           <button class="sim-button sim-button-primary" id="initial-continue" type="button">Continuar</button>
@@ -381,10 +432,10 @@
       state.specification = value;
       if (normalize(value) !== normalize(procedure.recommendedSpecification)) {
         showFeedback("A variação informada é aceita pela CCA. A forma recomendada continua sendo <strong>Aproveitamento de disciplinas</strong>.", "success");
-        window.setTimeout(renderRequestDocument, 900);
+        window.setTimeout(function () { navigate(renderRequestDocument); }, 900);
         return;
       }
-      renderRequestDocument();
+      navigate(renderRequestDocument);
     });
   }
 
@@ -402,9 +453,9 @@
         ${state.requestSaved ? '<div class="button-row"><button class="sim-button sim-button-primary" id="request-continue" type="button">Definir nível de acesso</button></div>' : ""}
       </div>`;
 
-    document.getElementById("open-request").addEventListener("click", renderRequestTab);
+    document.getElementById("open-request").addEventListener("click", function () { navigate(renderRequestTab); });
     const continueButton = document.getElementById("request-continue");
-    if (continueButton) continueButton.addEventListener("click", renderMainAccess);
+    if (continueButton) continueButton.addEventListener("click", function () { navigate(renderMainAccess); });
   }
 
   function renderRequestTab() {
@@ -416,6 +467,17 @@
       </div>
       ${screenHeader("Requerimento Geral Discente", "Guia 2 de 2")}
       <div class="screen-body">
+        <div class="editor-toolbar" aria-label="Faixa ilustrativa de opções de edição; os botões não funcionam neste treinamento">
+          <span class="editor-command editor-save" aria-hidden="true">▣ Salvar</span>
+          <span class="editor-command" aria-hidden="true">↶</span>
+          <span class="editor-command" aria-hidden="true">↷</span>
+          <strong class="editor-command" aria-hidden="true">N</strong>
+          <em class="editor-command" aria-hidden="true">I</em>
+          <span class="editor-command editor-underline" aria-hidden="true">S</span>
+          <span class="editor-command" aria-hidden="true">≡</span>
+          <span class="editor-command" aria-hidden="true">☷</span>
+        </div>
+        <p class="field-help toolbar-help">Faixa de edição fictícia, apenas ilustrativa.</p>
         <p class="screen-subtitle">Os dados abaixo são fictícios e não podem ser editados.</p>
         <div class="data-grid">
           <div class="data-row"><span>Nome</span><strong>Fulano de Tal</strong></div>
@@ -423,35 +485,20 @@
           <div class="data-row"><span>Data de nascimento</span><strong>DD/MM/AAAA</strong></div>
           <div class="data-row"><span>Matrícula</span><strong>20251154000000</strong></div>
           <div class="data-row"><span>Curso</span><strong>Letras</strong></div>
-          <div class="data-row"><span>E-mail</span><strong>fulanodetal@gm•••.com</strong></div>
+          <div class="data-row"><span>E-mail</span><strong>fulanodetal@gmail.com</strong></div>
           <div class="data-row"><span>Telefone</span><strong>(85) 9XXXX-XXXX</strong></div>
-        </div>
-        <div class="field">
-          <label for="request-category">Situação do aluno</label>
-          <select id="request-category">
-            <option value="">Selecione…</option>
-            <option value="ingressante">Aluno ingressante</option>
-            <option value="transferido">Aluno transferido ou diplomado</option>
-            <option value="veterano">Aluno veterano</option>
-          </select>
         </div>
         <div class="field">
           <label for="request-kind">Solicito</label>
           <select id="request-kind">
             <option value="">Selecione…</option>
-            <option value="trancamento">Trancamento</option>
-            <option value="segunda-chamada">Segunda chamada</option>
-            <option value="outro">Outro</option>
+            ${REQUEST_OPTIONS.map(function (item) { return `<option value="${escapeHtml(item[1])}">${escapeHtml(item[0])}</option>`; }).join("")}
           </select>
         </div>
         <div class="field">
-          <label for="request-other">Outro — especifique</label>
-          <input id="request-other" value="${escapeHtml(state.requestOther)}"/>
-        </div>
-        <div class="field">
-          <label for="request-detail">Especificação detalhada da solicitação</label>
+          <label for="request-detail">Especificação detalhada da solicitação <span class="optional-label">(opcional)</span></label>
           <textarea id="request-detail">${escapeHtml(state.requestDetail)}</textarea>
-          <span class="field-help">Exemplo: informe os componentes cursados e os componentes do IFCE cujo aproveitamento solicita.</span>
+          <span class="field-help">Se desejar, informe os componentes cursados e os componentes do IFCE cujo aproveitamento solicita. Este campo pode ficar em branco.</span>
         </div>
         ${hint("Salve e troque de guia", "Depois de salvar, não use Voltar. Abra a caixa de guias do navegador e retorne à guia do peticionamento.", "sei-abrir-solicitacao-celular.html#salvar-voltar")}
         <div class="button-row">
@@ -461,31 +508,16 @@
         <div id="tab-picker-wrap"></div>
       </div>`;
 
-    document.getElementById("request-category").value = state.requestCategory;
     document.getElementById("request-kind").value = state.requestKind;
     document.getElementById("request-save").addEventListener("click", function () {
-      const category = document.getElementById("request-category").value;
       const kind = document.getElementById("request-kind").value;
-      const other = document.getElementById("request-other").value.trim();
       const detail = document.getElementById("request-detail").value.trim();
-      if (category !== "veterano") {
-        recordIssue("Não identificou Fulano de Tal como aluno veterano");
-        showFeedback("Neste caso fictício, marque <strong>Aluno veterano</strong>.", "error");
+      if (kind !== "aproveitamento") {
+        recordIssue("Não selecionou Aproveitamento de disciplina(s) em Solicito");
+        showFeedback("Em <strong>Solicito</strong>, escolha <strong>Aproveitamento de disciplina(s)</strong>.", "error");
         return;
       }
-      if (kind !== "outro" || !normalize(other).includes("aproveitamento")) {
-        recordIssue("Não marcou Outro no Requerimento Geral Discente");
-        showFeedback("Marque <strong>Outro</strong> e escreva Aproveitamento de disciplinas.", "error");
-        return;
-      }
-      if (detail.length < 30 || !normalize(detail).includes("aproveitamento")) {
-        recordIssue("Não detalhou suficientemente a solicitação");
-        showFeedback("Explique o pedido com clareza, indicando que solicita aproveitamento e mencionando os componentes envolvidos.", "error");
-        return;
-      }
-      state.requestCategory = category;
       state.requestKind = kind;
-      state.requestOther = other;
       state.requestDetail = detail;
       state.requestSaved = true;
       document.getElementById("tab-picker-wrap").innerHTML = `
@@ -498,14 +530,12 @@
       document.getElementById("open-tabs").addEventListener("click", function () {
         document.getElementById("tab-picker").hidden = false;
       });
-      document.getElementById("choose-petition-tab").addEventListener("click", renderRequestDocument);
+      document.getElementById("choose-petition-tab").addEventListener("click", function () { navigate(renderRequestDocument); });
       showFeedback("Requerimento salvo. Retorne pela caixa de guias.", "success");
     });
     document.getElementById("request-back").addEventListener("click", function () {
       recordIssue("Usou Voltar no lugar da caixa de guias");
-      state.requestCategory = "";
       state.requestKind = "";
-      state.requestOther = "";
       state.requestDetail = "";
       state.requestSaved = false;
       renderRequestTab();
@@ -546,7 +576,7 @@
         showFeedback("Use <strong>Restrito</strong> e <strong>Informação Pessoal</strong> no documento principal.", "error");
         return;
       }
-      renderAttachments();
+      navigate(renderAttachments);
     });
   }
 
@@ -607,7 +637,7 @@
         showFeedback("Ainda faltam " + missing.length + " PDF(s). O arquivo só foi incluído quando aparece na tabela.", "error");
         return;
       }
-      renderSignature();
+      navigate(renderSignature);
     });
   }
 
@@ -766,7 +796,7 @@
         showFeedback("Confirme que a assinatura é apenas simulada.", "error");
         return;
       }
-      renderReceipt();
+      navigate(renderReceipt);
     });
   }
 
@@ -836,11 +866,15 @@
   function reset() {
     state = newState();
     procedure = null;
+    navigationHistory = [];
+    currentView = renderSetup;
     renderSetup();
+    updateNavigationButtons();
     document.querySelector(".simulator").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   restartButton.addEventListener("click", reset);
+  previousButton.addEventListener("click", goBack);
 
   fetch(configPath)
     .then(function (response) {
@@ -850,7 +884,9 @@
     .then(function (data) {
       config = data;
       state = newState();
+      currentView = renderSetup;
       renderSetup();
+      updateNavigationButtons();
     })
     .catch(function () {
       screen.innerHTML = '<div class="screen-body"><div class="panel panel-danger"><strong>O treinamento não pôde ser carregado.</strong><p>Atualize a página. Se o problema continuar, avise a CCA.</p></div></div>';
