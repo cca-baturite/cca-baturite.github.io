@@ -242,6 +242,12 @@
     updateNavigationButtons();
   }
 
+  function invalidateForwardNavigation() {
+    if (!navigationForward.length) return;
+    navigationForward = [];
+    updateNavigationButtons();
+  }
+
   function screenHeader(title, subtitle, actionHtml) {
     const action = actionHtml || '<span class="screen-header-mark">CCA · TREINO</span>';
     return `<div class="screen-header"><div class="screen-header-copy"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(subtitle || "Ambiente simulado")}</span></div><div class="screen-header-action">${action}</div></div>`;
@@ -1111,6 +1117,8 @@
   restartButton.addEventListener("click", reset);
   previousButton.addEventListener("click", goBack);
   nextButton.addEventListener("click", goForward);
+  screen.addEventListener("input", invalidateForwardNavigation);
+  screen.addEventListener("change", invalidateForwardNavigation);
 
   fetch(configPath)
     .then(function (response) {
