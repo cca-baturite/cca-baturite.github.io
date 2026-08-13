@@ -776,6 +776,30 @@
     const docs = requiredDocs();
     const pending = docs.filter(function (doc) { return !state.docsAdded.some(function (added) { return added.id === doc.id; }); });
     const selected = docs.find(function (doc) { return doc.id === state.selectedFile; });
+    const filePickerHtml = state.filePickerOpen ? `
+      <div class="training-file-picker-backdrop" aria-hidden="true"></div>
+      <section aria-labelledby="training-file-picker-title" aria-modal="true" class="training-file-picker" id="training-file-picker" role="dialog">
+        <div class="training-file-picker-titlebar">
+          <span aria-hidden="true" class="training-folder-icon">▰</span>
+          <span><strong id="training-file-picker-title">Arquivos de treinamento</strong><small>Selecione um PDF fictício</small></span>
+          <button aria-label="Fechar seleção de arquivos" id="close-training-file-picker" type="button">×</button>
+        </div>
+        <div class="training-file-picker-path"><span aria-hidden="true">‹</span><strong>Documentos obrigatórios</strong></div>
+        <div class="training-file-list">
+          ${docs.map(function (doc, index) {
+            const wasAdded = state.docsAdded.some(function (added) { return added.id === doc.id; });
+            return `<button class="training-file-option" data-file="${escapeHtml(doc.id)}" ${wasAdded ? "disabled" : ""} type="button">
+              <span class="training-file-number">${index + 1}</span>
+              <span aria-hidden="true" class="training-pdf-icon">PDF</span>
+              <span class="training-file-copy"><strong>${escapeHtml(doc.fileName)}</strong><small>Documento ${index + 1} · ${escapeHtml(doc.size)}</small></span>
+              <span class="training-file-status">${wasAdded ? "Adicionado" : "Selecionar"}</span>
+            </button>`;
+          }).join("")}
+        </div>
+        <div class="training-file-picker-actions">
+          <button id="cancel-training-file-picker" type="button">Cancelar</button>
+        </div>
+      </section>` : "";
     const addedHtml = state.docsAdded.length ? state.docsAdded.map(function (doc) {
       return `<tr>
         <td>${doc.order}</td>
@@ -798,15 +822,9 @@
           <span class="sei-upload-label">Documento</span>
           <div class="sei-upload-control">
             <button class="sei-file-button" id="choose-fictional-file" type="button">Escolher arquivo</button>
-            <span>${selected ? "Documento " + (docs.indexOf(selected) + 1) + " — " + escapeHtml(selected.fileName) : "Nenhum arquivo escolhido"}</span>
+            <span aria-live="polite">${selected ? "Documento " + (docs.indexOf(selected) + 1) + " — " + escapeHtml(selected.fileName) : "Nenhum arquivo escolhido"}</span>
           </div>
           <p>Para sua segurança, escolha um dos PDFs fictícios do exercício.</p>
-        </div>
-        <div class="file-drawer" id="fictional-file-drawer" ${state.filePickerOpen ? "" : "hidden"}>
-          ${docs.map(function (doc, index) {
-            const wasAdded = state.docsAdded.some(function (added) { return added.id === doc.id; });
-            return `<button class="file-card" data-file="${escapeHtml(doc.id)}" ${wasAdded ? "disabled" : ""} type="button"><span class="doc-order">${index + 1}</span><span><strong>${wasAdded ? "✓ " : ""}${escapeHtml(doc.fileName)}</strong><small>PDF · ${escapeHtml(doc.size)} · ${wasAdded ? "adicionado" : "toque para selecionar"}</small></span></button>`;
-          }).join("")}
         </div>
         ${selectedHtml}
         <div class="sei-table-wrap">
@@ -820,11 +838,13 @@
           <button class="sim-button sim-button-primary" id="finish-attachments" type="button">Conferir anexos e peticionar</button>
         </div>
         <p class="field-help">${pending.length} documento(s) ainda não adicionado(s).</p>
-      </div>`;
+      </div>
+      ${filePickerHtml}`;
 
     document.getElementById("choose-fictional-file").addEventListener("click", function () {
       state.filePickerOpen = true;
-      document.getElementById("fictional-file-drawer").hidden = false;
+      renderAttachments();
+      document.getElementById("close-training-file-picker").focus();
     });
 
     screen.querySelectorAll("[data-file]").forEach(function (button) {
@@ -834,6 +854,18 @@
         renderAttachments();
       });
     });
+    if (state.filePickerOpen) {
+      const closeFilePicker = function () {
+        state.filePickerOpen = false;
+        renderAttachments();
+        document.getElementById("choose-fictional-file").focus();
+      };
+      document.getElementById("close-training-file-picker").addEventListener("click", closeFilePicker);
+      document.getElementById("cancel-training-file-picker").addEventListener("click", closeFilePicker);
+      document.getElementById("training-file-picker").addEventListener("keydown", function (event) {
+        if (event.key === "Escape") closeFilePicker();
+      });
+    }
     const suggestion = document.getElementById("use-complement");
     if (suggestion) {
       bindAccessGuidance("attachment-access", "attachment-hypothesis", "um documento complementar");
