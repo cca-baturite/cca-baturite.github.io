@@ -8,6 +8,7 @@
   const progressName = document.getElementById("progress-name");
   const progressValue = document.getElementById("progress-value");
   const previousButton = document.getElementById("previous-button");
+  const nextButton = document.getElementById("next-button");
   const restartButton = document.getElementById("restart-button");
   const announcer = document.getElementById("screen-announcer");
   const configPath = screen.dataset.config;
@@ -65,6 +66,7 @@
   let state = null;
   let currentView = null;
   let navigationHistory = [];
+  let navigationForward = [];
 
   function newState() {
     return {
@@ -213,10 +215,12 @@
 
   function updateNavigationButtons() {
     previousButton.hidden = navigationHistory.length === 0;
+    nextButton.hidden = navigationForward.length === 0;
   }
 
   function navigate(renderFunction) {
     if (currentView && currentView !== renderFunction) navigationHistory.push(currentView);
+    navigationForward = [];
     currentView = renderFunction;
     renderFunction();
     updateNavigationButtons();
@@ -224,7 +228,16 @@
 
   function goBack() {
     if (!navigationHistory.length) return;
+    if (currentView) navigationForward.push(currentView);
     currentView = navigationHistory.pop();
+    currentView();
+    updateNavigationButtons();
+  }
+
+  function goForward() {
+    if (!navigationForward.length) return;
+    if (currentView) navigationHistory.push(currentView);
+    currentView = navigationForward.pop();
     currentView();
     updateNavigationButtons();
   }
@@ -348,7 +361,7 @@
         ${hint("Regra prática", "No exercício, todos os arquivos estão em uma gaveta fictícia. No SEI real, abra cada PDF e confira páginas, legibilidade, autenticação e tamanho antes de começar.", "sei-abrir-solicitacao-celular.html#antes")}
         <label class="choice" for="preflight-confirm">
           <input id="preflight-confirm" type="checkbox"/>
-          <span><strong>Entendi e preparei os documentos fictícios</strong><span>Nenhum arquivo real será selecionado neste site.</span></span>
+          <span><strong>Entendi e preparei os documentos obrigatórios</strong><span>Nenhum arquivo real será selecionado neste site.</span></span>
         </label>
         <div class="button-row">
           <button class="sim-button sim-button-primary" id="preflight-start" type="button">Iniciar treinamento</button>
@@ -779,7 +792,7 @@
           <span class="sei-upload-label">Documento</span>
           <div class="sei-upload-control">
             <button class="sei-file-button" id="choose-fictional-file" type="button">Escolher arquivo</button>
-            <span>${selected ? escapeHtml(selected.fileName) : "Nenhum arquivo escolhido"}</span>
+            <span>${selected ? "Documento " + (docs.indexOf(selected) + 1) + " — " + escapeHtml(selected.fileName) : "Nenhum arquivo escolhido"}</span>
           </div>
           <p>Para sua segurança, escolha um dos PDFs fictícios do exercício.</p>
         </div>
@@ -1088,6 +1101,7 @@
     state = newState();
     procedure = null;
     navigationHistory = [];
+    navigationForward = [];
     currentView = renderSetup;
     renderSetup();
     updateNavigationButtons();
@@ -1096,6 +1110,7 @@
 
   restartButton.addEventListener("click", reset);
   previousButton.addEventListener("click", goBack);
+  nextButton.addEventListener("click", goForward);
 
   fetch(configPath)
     .then(function (response) {
