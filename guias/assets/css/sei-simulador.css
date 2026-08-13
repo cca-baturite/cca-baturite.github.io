@@ -138,6 +138,8 @@ fieldset.field{padding:0;border:0}
 .mobile-menu button:hover{background:rgba(255,255,255,.18)}
 .mobile-menu .submenu{margin-left:.8rem;padding-left:.7rem;border-left:2px solid rgba(255,255,255,.35)}
 .spec-suggestion{display:inline-flex;min-height:42px;align-items:center;margin:.15rem 0 .55rem;padding:.45rem .65rem;border:1px solid #baa7d1;border-radius:8px;background:var(--training-050);color:var(--training-800);font-weight:750;cursor:pointer}
+.sei-interested-field{display:grid;grid-template-columns:max-content 1fr;gap:.5rem;margin:.8rem 0;padding:.65rem .72rem;border:1.5px solid #afc1ca;border-radius:8px;background:#f8fafb;color:var(--ink)}
+.protocol-email-note{margin-top:1rem}
 .mobile-browser-bar{display:grid;grid-template-columns:32px minmax(0,1fr) 30px 42px 26px;gap:.3rem;align-items:center;padding:.5rem .55rem;border-bottom:1px solid #c5c8cb;background:#f6f7f9;color:#17191c}
 .browser-home,.browser-plus,.browser-more{display:grid;height:38px;place-items:center;font-size:1.35rem}
 .browser-address{display:flex;min-width:0;height:38px;align-items:center;gap:.35rem;padding:0 .65rem;border-radius:999px;background:#e7e9ec;color:#34383d;font-size:.76rem}

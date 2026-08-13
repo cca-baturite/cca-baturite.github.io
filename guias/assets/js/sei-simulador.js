@@ -155,6 +155,46 @@
     });
   }
 
+  function updateFormatGuidance(doc) {
+    const format = screen.querySelector('input[name="attachment-format"]:checked');
+    const message = document.getElementById("attachment-format-message");
+    if (!format || state.mode !== "guiado") {
+      message.hidden = true;
+      message.textContent = "";
+      return;
+    }
+    if (format.value !== doc.correctFormat) {
+      const expected = doc.correctFormat === "digitalizado" ? "Digitalizado" : "Nato-digital";
+      const explanation = doc.correctFormat === "digitalizado"
+        ? "A descrição informa que o original existia em papel e foi escaneado."
+        : "A descrição informa que o arquivo foi emitido diretamente em PDF e não passou por scanner.";
+      recordIssue("Selecionou formato incongruente para " + doc.fileName);
+      message.hidden = false;
+      message.innerHTML = "<strong>A escolha ficou incongruente.</strong> " + explanation + " Volte e selecione <strong>" + expected + "</strong>.";
+      return;
+    }
+    message.hidden = true;
+    message.textContent = "";
+  }
+
+  function bindConferenceGuidance() {
+    const conference = document.getElementById("attachment-conference");
+    const message = document.getElementById("attachment-conference-message");
+    conference.addEventListener("change", function () {
+      if (state.mode !== "guiado") return;
+      if (conference.value && conference.value !== "copia-simples") {
+        recordIssue("Selecionou conferência diferente de Cópia simples");
+        message.hidden = false;
+        message.innerHTML = "<strong>Essa conferência não corresponde ao exercício.</strong> Volte ao seletor e escolha <strong>Cópia simples</strong>.";
+        conference.classList.add("is-invalid");
+        return;
+      }
+      message.hidden = true;
+      message.textContent = "";
+      conference.classList.remove("is-invalid");
+    });
+  }
+
   function hint(title, text, href) {
     if (state.mode !== "guiado") return "";
     const link = href ? ` <a href="${href}">Ver no guia detalhado</a>.` : "";
@@ -408,7 +448,8 @@
       <div class="screen-body">
         <div class="field">
           <label for="process-type-filter">Tipo do Processo:</label>
-          <input id="process-type-filter" type="text"/>
+          <input aria-describedby="process-type-filter-help" id="process-type-filter" readonly type="text"/>
+          <span class="field-help" id="process-type-filter-help">Neste treinamento, não digite neste campo: escolha uma opção na lista abaixo.</span>
         </div>
         <div class="field">
           <label for="process-type-uf">UF:</label>
@@ -423,13 +464,6 @@
           }).join("")}
         </div>
       </div>`;
-
-    document.getElementById("process-type-filter").addEventListener("input", function () {
-      const query = normalize(this.value);
-      screen.querySelectorAll("[data-type]").forEach(function (button) {
-        button.hidden = query && !button.dataset.label.includes(query);
-      });
-    });
 
     screen.querySelectorAll("[data-type]").forEach(function (button) {
       button.addEventListener("click", function () {
@@ -463,6 +497,7 @@
           </select>
           <span class="field-help">Lista institucional simulada com as cidades dos 33 campi. Escolha a cidade do campus responsável, não a cidade onde o estudante mora.</span>
         </div>
+        <div class="sei-interested-field"><strong>Interessado:</strong><span>Fulano de Tal</span></div>
         <div class="button-row">
           <button class="sim-button sim-button-primary" id="initial-continue" type="button">Continuar</button>
         </div>
@@ -788,8 +823,12 @@
       });
     }
     screen.querySelectorAll('input[name="attachment-format"]').forEach(function (radio) {
-      radio.addEventListener("change", toggleConference);
+      radio.addEventListener("change", function () {
+        toggleConference();
+        updateFormatGuidance(selected);
+      });
     });
+    if (document.getElementById("attachment-conference")) bindConferenceGuidance();
     const addButton = document.getElementById("add-attachment");
     if (addButton) addButton.addEventListener("click", function () { addAttachment(selected); });
     document.getElementById("finish-attachments").addEventListener("click", function () {
@@ -846,16 +885,18 @@
             <label class="choice" for="format-native"><input id="format-native" name="attachment-format" type="radio" value="nato-digital"/><span><strong>Nato-digital</strong><span>O documento já nasceu eletrônico.</span></span></label>
             <label class="choice" for="format-scanned"><input id="format-scanned" name="attachment-format" type="radio" value="digitalizado"/><span><strong>Digitalizado</strong><span>Um original em papel virou PDF.</span></span></label>
           </div>
+          <p class="field-error" id="attachment-format-message" hidden></p>
         </fieldset>
         <div class="field" id="conference-field" hidden>
           <label for="attachment-conference">Conferência com o documento digitalizado</label>
           <select id="attachment-conference">
             <option value="">Selecione…</option>
-            <option disabled value="copia-administrativa">Cópia autenticada administrativamente</option>
-            <option disabled value="copia-cartorio">Cópia autenticada por cartório</option>
+            <option value="copia-administrativa">Cópia autenticada administrativamente</option>
+            <option value="copia-cartorio">Cópia autenticada por cartório</option>
             <option value="copia-simples">Cópia simples</option>
-            <option disabled value="original">Documento original</option>
+            <option value="original">Documento original</option>
           </select>
+          <p class="field-error" id="attachment-conference-message" hidden></p>
         </div>
         <button class="sim-button sim-button-primary" id="add-attachment" type="button">Adicionar</button>
       </div>`;
@@ -882,7 +923,7 @@
     if (hypothesis !== "pessoal") errors.push("Hipótese legal = Informação Pessoal");
     if (!format) errors.push("Formato informado");
     if (format && format !== doc.correctFormat) {
-      errors.push("Formato coerente com a origem descrita");
+      errors.push("Formato = " + (doc.correctFormat === "digitalizado" ? "Digitalizado" : "Nato-digital") + ", conforme a origem descrita");
       recordIssue("Classificou incorretamente a origem de " + doc.fileName);
     }
     if (format === "digitalizado" && conference !== "copia-simples") errors.push("Conferência = Cópia simples");
@@ -1022,6 +1063,10 @@
           <p><strong>Documentos Complementares</strong></p>
           <ul class="receipt-docs">${docItems}</ul>
           <p><strong>SEM VALIDADE:</strong> este recibo, o número do processo e os números SEI foram gerados apenas para treinamento.</p>
+        </div>
+        <div class="panel panel-success protocol-email-note">
+          <strong>No processo real, confira seu e-mail.</strong>
+          <p>Depois que o processo é criado, o <strong>PROTOCOLO-BAT</strong> envia ao e-mail cadastrado uma mensagem de disponibilização de acesso integral ao processo, permitindo acompanhar sua tramitação.</p>
         </div>
         ${result}
         <div class="panel panel-warning">
