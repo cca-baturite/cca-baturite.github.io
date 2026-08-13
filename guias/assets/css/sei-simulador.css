@@ -322,6 +322,42 @@ fieldset.field{padding:0;border:0}
 .proof-review{margin:.8rem 0;padding:.8rem;border-left:5px solid #bd7d08;border-radius:8px;background:#fffaf0}
 .proof-review ul{margin:.4rem 0 0;padding-left:1.25rem}
 .proof-review li{margin:.25rem 0}
+.game-sublegend{margin:1rem 0 .35rem;color:#28454f;font-weight:750}
+.game-avatar-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}
+.game-avatar-choice{position:relative;cursor:pointer}
+.game-avatar-choice>input{position:absolute;opacity:0;pointer-events:none}
+.game-avatar-choice>span{display:flex;min-height:108px;align-items:center;justify-content:center;flex-direction:column;gap:.25rem;padding:.55rem;border:2px solid #c8d5db;border-radius:12px;background:#fff;color:#28454f;text-align:center}
+.game-avatar-choice input:checked+span{border-color:var(--training-700);background:var(--training-050);box-shadow:0 0 0 3px rgba(107,74,160,.18)}
+.game-avatar-choice input:focus-visible+span{outline:3px solid #ffbf47;outline-offset:2px}
+.game-avatar-svg{display:block;width:64px;height:64px}
+.game-avatar-svg.is-compact{width:34px;height:34px}
+.game-hud{display:flex;align-items:center;justify-content:flex-end;gap:.35rem;color:#fff;font-size:.64rem;line-height:1.15}
+.game-hud-avatar{display:grid;flex:0 0 auto;width:36px;height:36px;overflow:hidden;place-items:center;border:1px solid rgba(255,255,255,.55);border-radius:50%;background:#fff}
+.game-hud-stats{display:flex;align-items:flex-end;flex-direction:column;white-space:nowrap}
+.game-hud-stats strong,.game-hud-stats span{display:block}
+.game-hud-stats b{font-weight:900}
+.game-hud-stats span:nth-child(2){color:#ffe78a}
+.game-hud-stats span:nth-child(3){opacity:.88}
+.game-hud button{display:grid;width:34px;height:34px;place-items:center;border:1px solid rgba(255,255,255,.5);border-radius:8px;background:rgba(255,255,255,.12);color:#fff;cursor:pointer}
+.game-phase-strip{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.35rem .65rem;border-bottom:1px solid #d0b858;background:#fff0a8;color:#503b00;font-size:.68rem}
+.game-phase-strip span:last-child{text-align:right}
+.game-standalone-strip{padding:.35rem .55rem;background:var(--training-800)}
+.game-villain-card{display:grid;grid-template-columns:58px minmax(0,1fr);align-items:center;gap:.55rem}
+.game-villain-card>span,.game-villain-card strong,.game-villain-card .game-shriek{display:block}
+.game-villain-svg{width:56px;height:56px;color:#8f221a}
+.game-shriek{margin-top:.12rem;color:#b42318;font-size:1.05rem;font-weight:900;letter-spacing:.04em}
+.game-result{margin:.8rem 0;padding:1rem;border:2px solid #d7b73f;border-radius:14px;background:linear-gradient(145deg,#fff9d8,#f8f2ff);color:#2c2840}
+.game-result-hero{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:center;gap:.7rem}
+.game-result-hero span,.game-result-hero strong{display:block}
+.game-result-hero span{color:#6a590b;font-size:.78rem;font-weight:800;text-transform:uppercase}
+.game-result-hero h3{margin:.12rem 0;color:#31214f}
+.game-stars{margin:.55rem 0;color:#9b6500;font-size:2rem;letter-spacing:.1em;text-align:center}
+.game-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.game-result-grid>div{padding:.55rem;border:1px solid #d6c987;border-radius:8px;background:rgba(255,255,255,.72)}
+.game-result-grid span,.game-result-grid strong{display:block}
+.game-result-grid span{color:#655e49;font-size:.72rem}
+.game-result-grid strong{color:#31214f;font-size:1.05rem}
+.game-result>p{margin:.8rem 0 0;font-size:.82rem}
 .privacy-note{margin:1.25rem 0 3rem;padding:1.1rem;border-left:6px solid #bd7d08;border-radius:12px;background:var(--amber-soft)}
 .privacy-note h2{font-size:1.2rem}
 .privacy-note p{margin-bottom:0}
@@ -333,6 +369,9 @@ fieldset.field{padding:0;border:0}
 @media(max-width:390px){
   .training-file-option{grid-template-columns:28px 38px minmax(0,1fr)}
   .training-file-status{grid-column:2/4}
+  .game-hud-stats>strong{display:none}
+  .game-phase-strip{align-items:flex-start;flex-direction:column;gap:.1rem}
+  .game-phase-strip span:last-child{text-align:left}
 }
 @media(min-width:720px){
   body{font-size:17px}

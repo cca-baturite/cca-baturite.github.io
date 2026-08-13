@@ -78,6 +78,37 @@
     { key: "signature", label: "Peticionamento e assinatura", points: 10 }
   ];
 
+  const GAME_AVATARS = [
+    { id: "bia-byte", name: "Bia Byte", skin: "#8d5524", hair: "#211711", shirt: "#7a4fb0", glasses: true, style: "coque" },
+    { id: "luna-loop", name: "Luna Loop", skin: "#f1c27d", hair: "#4a2415", shirt: "#0878a8", glasses: false, style: "longo" },
+    { id: "cira-click", name: "Cira Click", skin: "#c68642", hair: "#171717", shirt: "#2e7d4f", glasses: true, style: "cacheado" },
+    { id: "bento-bit", name: "Bento Bit", skin: "#e0ac69", hair: "#5b321c", shirt: "#b36b00", glasses: false, style: "curto" },
+    { id: "tino-tecla", name: "Tino Tecla", skin: "#6f3c1f", hair: "#121212", shirt: "#9c3f4f", glasses: true, style: "crespo" },
+    { id: "nando-nuvem", name: "Nando Nuvem", skin: "#ffdbac", hair: "#8a5a38", shirt: "#3e5f9b", glasses: false, style: "ondulado" }
+  ];
+
+  const GAME_VILLAINS = {
+    navigation: { name: "Fantasma do Botão Voltar", icon: "ghost" },
+    request: { name: "Mímico do PUD", icon: "mimic" },
+    access: { name: "Duende do Público", icon: "goblin" },
+    hypothesis: { name: "Esfinge da Informação Pessoal", icon: "sphinx" },
+    attachments: { name: "Hidra dos Anexos", icon: "hydra" },
+    final: { name: "PDFantasma", icon: "pdf" }
+  };
+
+  const GAME_PHASES = [
+    { label: "Prepare a mochila", villain: "navigation" },
+    { label: "Entre pelo portal correto", villain: "navigation" },
+    { label: "Abra a missão", villain: "navigation" },
+    { label: "Escolha o processo", villain: "request" },
+    { label: "Identifique o pedido", villain: "request" },
+    { label: "Preencha o requerimento", villain: "request" },
+    { label: "Proteja os dados", villain: "access" },
+    { label: "Monte o processo", villain: "attachments" },
+    { label: "Desafio final", villain: "final" },
+    { label: "Aura conquistada", villain: "final" }
+  ];
+
   let config = null;
   let procedure = null;
   let state = null;
@@ -97,6 +128,18 @@
       proofCompleted: new Set(),
       proofEndReason: "",
       proofCriticalDetail: "",
+      gameAvatar: "bia-byte",
+      gameSound: true,
+      gameAura: 0,
+      gameEnergy: 3,
+      gameCombo: 0,
+      gameBestCombo: 0,
+      gameMistakes: {},
+      gameCompleted: new Set(),
+      gameRecoveries: 0,
+      gameLastEvent: "",
+      gameBossesDefeated: new Set(),
+      gameFinished: false,
       step: 0,
       specification: "",
       requestSaved: false,
@@ -138,6 +181,58 @@
     return state && state.mode === "prova";
   }
 
+  function isGame() {
+    return state && state.mode === "jogo";
+  }
+
+  function avatarById(id) {
+    return GAME_AVATARS.find(function (avatar) { return avatar.id === id; }) || GAME_AVATARS[0];
+  }
+
+  function avatarSvg(avatar, compact) {
+    const glasses = avatar.glasses
+      ? '<rect height="8" rx="3" width="13" x="14" y="25"></rect><rect height="8" rx="3" width="13" x="37" y="25"></rect><path d="M27 29h10"></path>'
+      : "";
+    const hair = avatar.style === "coque"
+      ? '<circle cx="45" cy="14" r="8"></circle><path d="M13 28c0-16 10-22 20-22 14 0 21 11 19 25-5-8-13-11-22-10-6 1-11 4-17 7z"></path>'
+      : avatar.style === "longo"
+        ? '<path d="M11 31C9 13 19 5 32 5s23 9 21 27l-4 18H15z"></path>'
+        : avatar.style === "cacheado" || avatar.style === "crespo"
+          ? '<path d="M12 25c-5-5-1-12 5-13-1-7 8-10 12-6 4-7 14-2 13 4 8-1 13 9 7 14 5 5 0 12-5 12H17c-8 0-11-8-5-12z"></path>'
+          : avatar.style === "ondulado"
+            ? '<path d="M11 28C9 13 18 5 31 5c13 0 23 8 22 24-7-8-15-10-23-7-8 3-12 7-19 6z"></path>'
+            : '<path d="M13 27C12 12 21 6 32 6s20 7 20 21c-8-6-14-8-21-7-7 1-12 4-18 7z"></path>';
+    return `<svg aria-hidden="true" class="game-avatar-svg${compact ? " is-compact" : ""}" viewBox="0 0 64 64">
+      <path d="M8 64c2-15 10-23 24-23s22 8 24 23z" fill="${avatar.shirt}"></path>
+      <g fill="${avatar.hair}">${hair}</g>
+      <circle cx="32" cy="29" fill="${avatar.skin}" r="18"></circle>
+      <path d="M25 36c4 3 10 3 14 0" fill="none" stroke="#44271b" stroke-linecap="round" stroke-width="2"></path>
+      <circle cx="25" cy="29" fill="#202020" r="1.5"></circle><circle cx="39" cy="29" fill="#202020" r="1.5"></circle>
+      <g fill="none" stroke="#27343b" stroke-width="2">${glasses}</g>
+    </svg>`;
+  }
+
+  function villainForKey(key) {
+    if (key === "main-hypothesis") return GAME_VILLAINS.hypothesis;
+    if (key === "main-access") return GAME_VILLAINS.access;
+    if (key.indexOf("attachment") === 0 || key === "attachments-complete") return GAME_VILLAINS.attachments;
+    if (key === "signature") return GAME_VILLAINS.final;
+    if (key === "process-type" || key === "specification" || key === "city" || key === "request-kind" || key === "request-workflow") return GAME_VILLAINS.request;
+    return GAME_VILLAINS.navigation;
+  }
+
+  function villainSvg(icon) {
+    const faces = {
+      ghost: '<path d="M15 50V26a17 17 0 0134 0v24l-7-5-6 5-5-5-6 5-5-5z"></path><circle cx="26" cy="28" r="2"></circle><circle cx="38" cy="28" r="2"></circle><path d="M27 37c3-3 7-3 10 0"></path>',
+      mimic: '<path d="M10 24h44v28H10z"></path><path d="M10 24l7-10h30l7 10"></path><path d="M18 39l6-5 6 5 6-5 6 5 6-5"></path><circle cx="24" cy="29" r="2"></circle><circle cx="40" cy="29" r="2"></circle>',
+      goblin: '<path d="M13 22l-7-8 15 3c7-8 15-8 22 0l15-3-7 9c6 17-2 31-19 31S7 40 13 22z"></path><path d="M25 31l-7-3M39 31l7-3M27 42h10"></path>',
+      sphinx: '<path d="M13 49c4-12 10-18 19-18s15 6 19 18"></path><circle cx="32" cy="20" r="12"></circle><path d="M25 18l5 2-5 2M39 18l-5 2 5 2M28 27h8"></path><path d="M16 50h32"></path>',
+      hydra: '<path d="M18 51c2-12 7-18 14-18s12 6 14 18"></path><path d="M22 35c-8-3-10-10-6-16 5-6 13-2 13 5M42 35c8-3 10-10 6-16-5-6-13-2-13 5M32 34V16"></path><circle cx="16" cy="18" r="5"></circle><circle cx="48" cy="18" r="5"></circle><circle cx="32" cy="13" r="5"></circle>',
+      pdf: '<path d="M17 7h22l9 9v41H17z"></path><path d="M39 7v10h9"></path><path d="M22 42c5-6 15-6 20 0M25 29h2M38 29h2"></path><path d="M12 49l7-5M52 49l-7-5"></path>'
+    };
+    return `<svg aria-hidden="true" class="game-villain-svg" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">${faces[icon] || faces.ghost}</g></svg>`;
+  }
+
   function proofItemKeyForDocument(doc) {
     if (doc.id.includes("historico")) return "attachment-history";
     if (doc.id.includes("programa") || doc.id.includes("pud") || doc.id.includes("ementa")) return "attachment-programs";
@@ -146,9 +241,111 @@
 
   function markProofComplete(key) {
     if (isProof()) state.proofCompleted.add(key);
+    if (isGame()) markGameComplete(key);
+  }
+
+  function gameItemByKey(key) {
+    return PROOF_ITEMS.find(function (item) { return item.key === key; });
+  }
+
+  function gameAudio(kind) {
+    if (!isGame() || !state.gameSound) return;
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+    if (!gameAudio.context) gameAudio.context = new AudioContextClass();
+    const context = gameAudio.context;
+    if (context.state === "suspended" && context.resume) context.resume();
+    const now = context.currentTime;
+    const gain = context.createGain();
+    gain.connect(context.destination);
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(kind === "error" ? 0.11 : 0.08, now + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + (kind === "win" ? 0.75 : 0.38));
+    const notes = kind === "success" ? [523, 659, 784] : kind === "win" ? [392, 523, 659, 784] : [760, 360, 620];
+    notes.forEach(function (frequency, index) {
+      const oscillator = context.createOscillator();
+      oscillator.type = kind === "error" ? "sawtooth" : "sine";
+      oscillator.frequency.setValueAtTime(frequency, now + (index * 0.09));
+      if (kind === "error") oscillator.frequency.exponentialRampToValueAtTime(Math.max(120, frequency * 0.55), now + 0.16 + (index * 0.06));
+      oscillator.connect(gain);
+      oscillator.start(now + (index * 0.09));
+      oscillator.stop(now + 0.22 + (index * 0.09));
+    });
+  }
+
+  function gameRank(aura) {
+    if (aura >= 1000) return "Aura máxima";
+    if (aura >= 850) return "Aura lendária";
+    if (aura >= 600) return "Aura elevada";
+    if (aura >= 400) return "Aura crescente";
+    return "Aura em construção";
+  }
+
+  function markGameComplete(key) {
+    if (state.gameCompleted.has(key)) return;
+    const item = gameItemByKey(key);
+    if (!item) return;
+    const mistakes = state.gameMistakes[key] || 0;
+    const factor = mistakes === 0 ? 1 : mistakes === 1 ? 0.7 : 0.4;
+    const base = Math.round(item.points * 9 * factor);
+    state.gameCombo += 1;
+    state.gameBestCombo = Math.max(state.gameBestCombo, state.gameCombo);
+    const reward = base;
+    state.gameAura = Math.min(900, state.gameAura + reward);
+    state.gameCompleted.add(key);
+    state.gameBossesDefeated.add(villainForKey(key).name);
+    state.gameLastEvent = "+" + reward + " de Aura · Combo ×" + state.gameCombo;
+    gameAudio("success");
+    refreshGameHud();
+  }
+
+  function gameMistake(key, correctAnswer) {
+    const villain = villainForKey(key);
+    state.gameMistakes[key] = (state.gameMistakes[key] || 0) + 1;
+    const shriek = key === "browser-back" ? "Socorro!" : state.gameMistakes[key] % 2 === 0 ? "Nããão!" : "Aaaai!";
+    state.gameCombo = 0;
+    state.gameEnergy -= 1;
+    gameAudio("error");
+    let recovery = "";
+    if (state.gameEnergy <= 0) {
+      state.gameRecoveries += 1;
+      state.gameEnergy = 1;
+      recovery = '<p><strong>Recuperação pedagógica ativada:</strong> você recebeu 1 coração para continuar. A missão não termina aqui.</p>';
+    }
+    state.gameLastEvent = "Combo quebrado pelo " + villain.name;
+    showFeedback(`<span class="game-villain-card">${villainSvg(villain.icon)}<span><strong>${escapeHtml(villain.name)} atacou!</strong><span class="game-shriek" aria-label="Gritinho cartunesco">${escapeHtml(shriek)}</span></span></span><p>${correctAnswer}</p>${recovery}`, "error");
+    refreshGameHud();
+  }
+
+  function gameHudHtml() {
+    if (!isGame()) return "";
+    const avatar = avatarById(state.gameAvatar);
+    const hearts = "♥".repeat(state.gameEnergy) + "♡".repeat(Math.max(0, 3 - state.gameEnergy));
+    return `<span class="game-hud"><span class="game-hud-avatar">${avatarSvg(avatar, true)}</span><span class="game-hud-stats"><strong>${escapeHtml(avatar.name)}</strong><span><b data-game-aura>${state.gameAura}</b> Aura · <b data-game-energy>${hearts}</b></span><span>Combo ×<b data-game-combo>${state.gameCombo}</b></span></span><button aria-label="${state.gameSound ? "Desligar" : "Ligar"} sons do jogo" data-game-sound-toggle type="button">${state.gameSound ? "🔊" : "🔇"}</button></span>`;
+  }
+
+  function gamePhaseHtml() {
+    if (!isGame()) return "";
+    const phase = GAME_PHASES[state.step] || GAME_PHASES[0];
+    const villain = GAME_VILLAINS[phase.villain];
+    const event = state.gameLastEvent ? `<strong>${escapeHtml(state.gameLastEvent)}</strong>` : "";
+    state.gameLastEvent = "";
+    return `<div class="game-phase-strip"><span>Fase ${state.step + 1}: ${escapeHtml(phase.label)}</span><span>${event || escapeHtml(villain.name + " à espreita")}</span></div>`;
+  }
+
+  function refreshGameHud() {
+    if (!isGame()) return;
+    const hearts = "♥".repeat(state.gameEnergy) + "♡".repeat(Math.max(0, 3 - state.gameEnergy));
+    document.querySelectorAll("[data-game-aura]").forEach(function (element) { element.textContent = state.gameAura; });
+    document.querySelectorAll("[data-game-energy]").forEach(function (element) { element.textContent = hearts; });
+    document.querySelectorAll("[data-game-combo]").forEach(function (element) { element.textContent = state.gameCombo; });
   }
 
   function proofMistake(key, firstHint, correctAnswer, guidedMessage, type) {
+    if (isGame()) {
+      gameMistake(key, correctAnswer);
+      return;
+    }
     if (!isProof()) {
       recordIssue(guidedMessage.replace(/<[^>]+>/g, ""));
       showFeedback(guidedMessage, type || "error");
@@ -364,9 +561,10 @@
   }
 
   function screenHeader(title, subtitle, actionHtml) {
-    const action = actionHtml || proofStatusHtml();
-    const proofWithAction = actionHtml && isProof() ? proofStatusHtml() : "";
-    return `<div class="screen-header"><div class="screen-header-copy"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(subtitle || "Ambiente simulado")}</span></div><div class="screen-header-action">${proofWithAction}${action}</div></div>`;
+    const modeStatus = isProof() ? proofStatusHtml() : isGame() ? gameHudHtml() : '<span class="screen-header-mark">CCA · TREINO</span>';
+    const action = actionHtml || modeStatus;
+    const statusWithAction = actionHtml && (isProof() || isGame()) ? modeStatus : "";
+    return `<div class="screen-header"><div class="screen-header-copy"><strong>${escapeHtml(title)}</strong><span>${escapeHtml(subtitle || "Ambiente simulado")}</span></div><div class="screen-header-action">${statusWithAction}${action}</div></div>${gamePhaseHtml()}`;
   }
 
   function requiredDocs() {
@@ -402,6 +600,10 @@
               <input ${state.mode === "prova" ? "checked" : ""} id="mode-proof" name="mode" type="radio" value="prova"/>
               <span><strong>Modo prova</strong><span>Primeiro erro: uma pista. Segundo erro: a correção. Você recebe nota e diagnóstico ao final.</span></span>
             </label>
+            <label class="choice" for="mode-game">
+              <input ${state.mode === "jogo" ? "checked" : ""} id="mode-game" name="mode" type="radio" value="jogo"/>
+              <span><strong>Modo jogo — Missão SEI</strong><span>Escolha um avatar, enfrente vilões, mantenha sua energia e farme até 1.000 de Aura.</span></span>
+            </label>
           </div>
         </fieldset>
         <fieldset class="field" id="proof-time-field" ${state.mode === "prova" ? "" : "hidden"}>
@@ -414,6 +616,20 @@
             <label class="choice" for="proof-time-20"><input ${state.proofMinutes === 20 ? "checked" : ""} id="proof-time-20" name="proof-time" type="radio" value="20"/><span><strong>20 minutos — tranquilo</strong><span>Mais tempo para conferir cada etapa.</span></span></label>
           </div>
           <p class="field-help">O cronômetro começa somente depois da preparação dos documentos.</p>
+        </fieldset>
+        <fieldset class="field game-setup" id="game-setup-field" ${state.mode === "jogo" ? "" : "hidden"}>
+          <legend>Escolha seu avatar</legend>
+          <div class="game-avatar-grid">
+            ${GAME_AVATARS.map(function (avatar) {
+              return `<label class="game-avatar-choice" for="avatar-${avatar.id}"><input ${state.gameAvatar === avatar.id ? "checked" : ""} id="avatar-${avatar.id}" name="game-avatar" type="radio" value="${avatar.id}"/><span>${avatarSvg(avatar, false)}<strong>${escapeHtml(avatar.name)}</strong></span></label>`;
+            }).join("")}
+          </div>
+          <p class="game-sublegend">Som do jogo</p>
+          <div class="choice-list">
+            <label class="choice" for="game-sound-on"><input ${state.gameSound ? "checked" : ""} id="game-sound-on" name="game-sound" type="radio" value="on"/><span><strong>🔊 Jogar com som</strong><span>Inclui acertos, conquistas e gritinhos cartunescos nos erros.</span></span></label>
+            <label class="choice" for="game-sound-off"><input ${state.gameSound ? "" : "checked"} id="game-sound-off" name="game-sound" type="radio" value="off"/><span><strong>🔇 Jogar sem som</strong><span>A Aura, os corações e todas as mensagens visuais continuam funcionando.</span></span></label>
+          </div>
+          <p class="field-help">O som só começa depois que você iniciar a missão e pode ser desligado a qualquer momento.</p>
         </fieldset>
         <fieldset class="field">
           <legend>Como os programas, PUDs ou ementas serão organizados?</legend>
@@ -436,6 +652,7 @@
     document.querySelectorAll('input[name="mode"]').forEach(function (radio) {
       radio.addEventListener("change", function () {
         document.getElementById("proof-time-field").hidden = radio.value !== "prova";
+        document.getElementById("game-setup-field").hidden = radio.value !== "jogo";
       });
     });
 
@@ -449,6 +666,10 @@
       state.mode = document.querySelector('input[name="mode"]:checked').value;
       state.packaging = document.querySelector('input[name="packaging"]:checked').value;
       state.proofMinutes = state.mode === "prova" ? Number(document.querySelector('input[name="proof-time"]:checked').value) : 0;
+      if (state.mode === "jogo") {
+        state.gameAvatar = document.querySelector('input[name="game-avatar"]:checked').value;
+        state.gameSound = document.querySelector('input[name="game-sound"]:checked').value === "on";
+      }
       restartButton.hidden = false;
       navigate(renderPreflight);
     });
@@ -504,7 +725,7 @@
           <span><strong>Entendi e preparei os documentos obrigatórios</strong><span>Nenhum arquivo real será selecionado neste site.</span></span>
         </label>
         <div class="button-row">
-          <button class="sim-button sim-button-primary" id="preflight-start" type="button">${isProof() ? "Iniciar prova" : "Iniciar treinamento"}</button>
+          <button class="sim-button sim-button-primary" id="preflight-start" type="button">${isProof() ? "Iniciar prova" : isGame() ? "Iniciar Missão SEI" : "Iniciar treinamento"}</button>
         </div>
       </div>`;
 
@@ -745,11 +966,12 @@
   function renderRequestTab() {
     setStep(5);
     const selectedRequest = state.requestKind;
-    const browserLeading = isProof()
+    const browserLeading = isProof() || isGame()
       ? '<button aria-label="Voltar do navegador" class="browser-back-button" id="browser-back-button" type="button">‹</button>'
       : '<span class="browser-home" aria-hidden="true">⌂</span>';
     screen.innerHTML = `
       ${isProof() ? '<div class="proof-exam-strip"><strong>MODO PROVA</strong><span data-proof-timer>' + proofTimerText() + '</span></div>' : ""}
+      ${isGame() ? '<div class="game-standalone-strip">' + gameHudHtml() + '</div>' + gamePhaseHtml() : ""}
       <div class="mobile-browser-bar" aria-label="Barra simulada do navegador do celular">
         ${browserLeading}
         <div class="browser-address"><span aria-hidden="true">⌘</span><span>sei.ifce.edu.br/sei/controlador…</span></div>
@@ -896,7 +1118,7 @@
       <section aria-labelledby="critical-back-title" aria-modal="true" class="critical-back-modal" role="dialog">
         <h3 id="critical-back-title">Usar o Voltar do navegador?</h3>
         <p>No SEI real, esta ação pode fazer você perder o preenchimento do requerimento.</p>
-        <p><strong>Cancelar</strong> preserva a prova. Confirmar <strong>Usar Voltar</strong> encerra esta tentativa como erro crítico.</p>
+        <p>${isGame() ? '<strong>Cancelar</strong> preserva a missão. Confirmar faz o Fantasma do Botão Voltar atacar, quebra o combo e retira um coração.' : '<strong>Cancelar</strong> preserva a prova. Confirmar <strong>Usar Voltar</strong> encerra esta tentativa como erro crítico.'}</p>
         <div class="critical-back-actions">
           <button id="cancel-browser-back" type="button">Cancelar</button>
           <button id="confirm-browser-back" type="button">Usar Voltar</button>
@@ -908,6 +1130,11 @@
       document.getElementById("browser-back-button").focus();
     });
     document.getElementById("confirm-browser-back").addEventListener("click", function () {
+      if (isGame()) {
+        confirmation.remove();
+        gameMistake("browser-back", "No editor do requerimento, use <strong>Salvar</strong> e depois o <strong>botão de guias</strong>. Não use o Voltar do navegador.");
+        return;
+      }
       endProof("critico", "Foi usado o botão Voltar do navegador na tela do Requerimento Geral Discente.");
     });
     document.getElementById("cancel-browser-back").focus();
@@ -916,7 +1143,7 @@
   function renderBrowserTabs() {
     setStep(5);
     const requestStatus = state.requestSaved ? "Documento salvo" : "Alterações ainda não salvas";
-    screen.innerHTML = `
+    screen.innerHTML = `${isGame() ? '<div class="game-standalone-strip">' + gameHudHtml() + '</div>' + gamePhaseHtml() : ""}
       <div class="browser-tabs-overview" aria-label="Seletor simulado de guias do navegador">
         <div class="tabs-overview-toolbar">
           <span class="overview-new-tab" aria-hidden="true">＋</span>
@@ -1269,7 +1496,7 @@
       return;
     }
 
-    screen.innerHTML = `
+    screen.innerHTML = `${isGame() ? '<div class="game-standalone-strip">' + gameHudHtml() + '</div>' + gamePhaseHtml() : ""}
       <div class="signature-backdrop" aria-hidden="true"></div>
       <section aria-labelledby="signature-title" aria-modal="true" class="signature-modal" role="dialog">
         <div class="signature-titlebar"><strong id="signature-title">Concluir Peticionamento - Assinatura Eletrônica</strong><span aria-hidden="true">□ ×</span></div>
@@ -1316,6 +1543,7 @@
       markProofComplete("signature");
       stopProofClock();
       if (isProof()) state.proofEndReason = "concluida";
+      if (isGame()) finishGame();
       navigate(renderReceipt);
     });
   }
@@ -1331,6 +1559,31 @@
     const sequence = String(values[0] % 1000000).padStart(6, "0");
     const suffix = String(values[1] % 100).padStart(2, "0");
     return "23484." + sequence + "/" + new Date().getFullYear() + "-" + suffix;
+  }
+
+  function finishGame() {
+    if (state.gameFinished) return;
+    state.gameFinished = true;
+    state.gameAura = Math.min(1000, state.gameAura + 100);
+    state.gameBossesDefeated.add(GAME_VILLAINS.final.name);
+    state.gameLastEvent = "+100 de Aura · Protocolo concluído!";
+    gameAudio("win");
+  }
+
+  function gameSummaryHtml() {
+    const avatar = avatarById(state.gameAvatar);
+    const stars = state.gameAura >= 1000 ? 3 : state.gameAura >= 700 ? 2 : 1;
+    return `<section class="game-result" aria-labelledby="game-result-title">
+      <div class="game-result-hero">${avatarSvg(avatar, false)}<div><span>Missão concluída!</span><h3 id="game-result-title">Você farmou ${state.gameAura} de Aura</h3><strong>${escapeHtml(gameRank(state.gameAura))}</strong></div></div>
+      <div aria-label="${stars} de 3 estrelas" class="game-stars">${"★".repeat(stars)}${"☆".repeat(3 - stars)}</div>
+      <div class="game-result-grid">
+        <div><span>Melhor combo</span><strong>×${state.gameBestCombo}</strong></div>
+        <div><span>Energia restante</span><strong>${"♥".repeat(state.gameEnergy)}${"♡".repeat(Math.max(0, 3 - state.gameEnergy))}</strong></div>
+        <div><span>Recuperações</span><strong>${state.gameRecoveries}</strong></div>
+        <div><span>Vilões vencidos</span><strong>${state.gameBossesDefeated.size}</strong></div>
+      </div>
+      <p>Todo jogador que conclui a Missão SEI farma Aura. As pistas e recuperações reduzem apenas a quantidade conquistada.</p>
+    </section>`;
   }
 
   function calculateProofResult() {
@@ -1427,9 +1680,11 @@
     }).join("");
     const result = isProof()
       ? proofSummaryHtml(calculateProofResult())
-      : '<div class="panel panel-success"><strong>Treinamento guiado concluído.</strong><p>Você percorreu o fluxo completo com orientações imediatas.</p></div>';
+      : isGame()
+        ? gameSummaryHtml()
+        : '<div class="panel panel-success"><strong>Treinamento guiado concluído.</strong><p>Você percorreu o fluxo completo com orientações imediatas.</p></div>';
 
-    screen.innerHTML = screenHeader("Treinamento concluído", "Recibo fictício") + `
+    screen.innerHTML = screenHeader(isGame() ? "Missão concluída" : "Treinamento concluído", "Recibo fictício") + `
       <div class="screen-body">
         <div class="receipt">
           <div class="receipt-title">Recibo Eletrônico de Protocolo — SIMULAÇÃO</div>
@@ -1456,7 +1711,7 @@
           <strong>E se um documento for esquecido?</strong>
           <p>Depois que o processo real já existir, o Peticionamento Intercorrente pode ser usado para anexar documentos que faltaram ou acrescentar novos documentos. Esse fluxo receberá treinamento próprio futuramente.</p>
         </div>
-        ${isProof() ? proofResultActionsHtml() : '<div class="button-row"><button class="sim-button sim-button-primary" id="receipt-proof-mode" type="button">Fazer o modo prova</button></div>'}
+        ${isProof() ? proofResultActionsHtml() : isGame() ? '<div class="button-row"><button class="sim-button sim-button-primary" id="game-restart" type="button">Jogar novamente</button><button class="sim-button sim-button-secondary" id="game-guided" type="button">Voltar ao modo guiado</button></div>' : '<div class="button-row"><button class="sim-button sim-button-primary" id="receipt-game-mode" type="button">Jogar a Missão SEI</button><button class="sim-button sim-button-secondary" id="receipt-proof-mode" type="button">Fazer o modo prova</button></div>'}
         <div class="button-row">
           <button class="sim-button sim-button-secondary" id="receipt-restart" type="button">Treinar novamente</button>
           <a class="sim-button sim-button-muted" href="sei-abrir-solicitacao-celular.html">Rever o guia do celular</a>
@@ -1467,8 +1722,45 @@
       </div>`;
     document.getElementById("receipt-restart").addEventListener("click", reset);
     if (isProof()) bindProofResultActions();
+    const gameRestart = document.getElementById("game-restart");
+    if (gameRestart) gameRestart.addEventListener("click", restartGame);
+    const gameGuided = document.getElementById("game-guided");
+    if (gameGuided) gameGuided.addEventListener("click", switchToGuidedMode);
     const proofModeButton = document.getElementById("receipt-proof-mode");
     if (proofModeButton) proofModeButton.addEventListener("click", startProofMode);
+    const gameModeButton = document.getElementById("receipt-game-mode");
+    if (gameModeButton) gameModeButton.addEventListener("click", startGameMode);
+  }
+
+  function startGameMode() {
+    const completedProcedure = procedure;
+    state = newState();
+    state.mode = "jogo";
+    procedure = completedProcedure;
+    navigationHistory = [];
+    navigationForward = [];
+    currentView = renderSetup;
+    renderSetup();
+    updateNavigationButtons();
+    document.querySelector(".simulator").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function restartGame() {
+    const completedProcedure = procedure;
+    const packaging = state.packaging;
+    const avatar = state.gameAvatar;
+    const sound = state.gameSound;
+    state = newState();
+    state.mode = "jogo";
+    state.packaging = packaging;
+    state.gameAvatar = avatar;
+    state.gameSound = sound;
+    procedure = completedProcedure;
+    navigationHistory = [];
+    navigationForward = [];
+    currentView = renderPreflight;
+    renderPreflight();
+    updateNavigationButtons();
   }
 
   function startProofMode() {
@@ -1531,6 +1823,14 @@
   nextButton.addEventListener("click", goForward);
   screen.addEventListener("input", invalidateForwardNavigation);
   screen.addEventListener("change", invalidateForwardNavigation);
+  screen.addEventListener("click", function (event) {
+    const soundToggle = event.target.closest("[data-game-sound-toggle]");
+    if (!soundToggle || !isGame()) return;
+    state.gameSound = !state.gameSound;
+    soundToggle.textContent = state.gameSound ? "🔊" : "🔇";
+    soundToggle.setAttribute("aria-label", (state.gameSound ? "Desligar" : "Ligar") + " sons do jogo");
+    if (state.gameSound) gameAudio("success");
+  });
 
   fetch(configPath)
     .then(function (response) {
