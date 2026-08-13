@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="color-scheme" content="only light"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Simulador mobile de treinamento para abertura de processos no SEI para Usuários Externos, sem envio de dados reais." name="description"/>
+<title>Simulador SEI — treinamento pelo celular | Guias da CCA</title>
+<link as="font" crossorigin="" href="assets/fonts/InterVariable.woff2" rel="preload" type="font/woff2"/>
+<link href="assets/brand/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="assets/brand/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/>
+<link href="assets/brand/apple-touch-icon.png" rel="apple-touch-icon"/>
+<link href="assets/css/sei-simulador.css" rel="stylesheet"/>
+<meta content="website" property="og:type"/>
+<meta content="pt_BR" property="og:locale"/>
+<meta content="Guias da CCA | IFCE Campus Baturité" property="og:site_name"/>
+<meta content="Simulador SEI — treinamento pelo celular | Guias da CCA" property="og:title"/>
+<meta content="Pratique pelo celular a abertura de um processo no SEI para Usuários Externos sem enviar dados reais." property="og:description"/>
+<meta content="https://cca-baturite.github.io/guias/sei-simulador.html" property="og:url"/>
+<meta content="https://cca-baturite.github.io/guias/assets/brand/og-image.png" property="og:image"/>
+</head>
+<body class="sei-simulator-page">
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<div class="training-strip" role="note">
+  <strong>AMBIENTE DE TREINAMENTO</strong>
+  <span>Nenhum dado é enviado. Nenhum processo ou protocolo real será criado.</span>
+</div>
+<header class="site-header">
+  <div class="header-inner">
+    <a aria-label="Página inicial dos Guias da CCA" class="brand" href="index.html">
+      <img alt="" class="brand-mark" height="44" src="assets/brand/favicon-192.png" width="44"/>
+      <span><strong>Guias da CCA</strong><span>IFCE Campus Baturité</span></span>
+    </a>
+    <nav aria-label="Navegação principal" class="site-nav">
+      <a href="index.html">Início</a>
+      <a href="q-academico.html">Q-Acadêmico</a>
+      <a aria-current="location" href="sei.html">SEI</a>
+      <a href="suapedu.html">SuapEdu</a>
+      <a href="o-que-vem-por-ai.html">Em breve</a>
+    </nav>
+  </div>
+</header>
+<main class="page-shell" id="conteudo">
+  <nav aria-label="Caminho da página" class="breadcrumb">
+    <ol><li><a href="index.html">Guias</a></li><li><a href="sei.html">SEI</a></li><li aria-current="page">Simulador</li></ol>
+  </nav>
+  <section class="hero">
+    <p class="eyebrow">SEI para Usuários Externos · versão mobile</p>
+    <h1>Treine antes de abrir o processo</h1>
+    <p>O primeiro caso ensina a solicitar <strong>Aproveitamento de disciplinas</strong>, inclusive a preparar, classificar e anexar os documentos obrigatórios.</p>
+    <div class="hero-notes" aria-label="Características do treinamento">
+      <span>Dados totalmente fictícios</span>
+      <span>Celular primeiro</span>
+      <span>Modo guiado ou livre</span>
+    </div>
+  </section>
+
+  <section class="simulator" aria-labelledby="simulator-title">
+    <div class="simulator-head">
+      <div>
+        <p class="sim-kicker">Simulação em andamento</p>
+        <h2 id="simulator-title">Abertura de processo novo</h2>
+      </div>
+      <button class="text-button" id="restart-button" type="button" hidden>Reiniciar</button>
+    </div>
+    <div class="progress-wrap" id="progress-wrap" hidden>
+      <div class="progress-copy"><span id="progress-label">Etapa 1 de 10</span><span id="progress-name"></span></div>
+      <div aria-hidden="true" class="progress-track"><span id="progress-value"></span></div>
+    </div>
+    <div aria-atomic="true" aria-live="polite" class="sr-only" id="screen-announcer"></div>
+    <div class="phone-frame">
+      <div class="phone-status" aria-hidden="true"><span>9:41</span><span>● ● ●</span></div>
+      <div class="sim-screen" data-config="assets/sei-simulador/cenarios.json" id="sim-screen">
+        <p class="loading">Carregando o treinamento…</p>
+      </div>
+    </div>
+    <div aria-atomic="true" aria-live="polite" class="feedback" id="global-feedback" hidden></div>
+  </section>
+
+  <section class="privacy-note">
+    <h2>Não use documentos ou credenciais reais</h2>
+    <p>O simulador trabalha apenas com Fulano de Tal e PDFs fictícios. No sistema oficial, informe sua senha somente quando o endereço do navegador for <strong>sei.ifce.edu.br</strong>.</p>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div><strong>Coordenadoria de Controle Acadêmico — CCA</strong><br/>IFCE Campus Baturité · <a href="mailto:cca.baturite@ifce.edu.br">cca.baturite@ifce.edu.br</a></div>
+    <div>Desenvolvido e mantido pela CCA.<br/><span class="small">Simulador educacional sem efeito administrativo ou jurídico.</span></div>
+  </div>
+</footer>
+<noscript><p class="noscript">Ative o JavaScript para utilizar o simulador.</p></noscript>
+<script defer="" src="assets/js/sei-simulador.js"></script>
+</body>
+</html>

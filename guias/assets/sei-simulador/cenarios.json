@@ -1,0 +1,72 @@
+{
+  "version": "0.1.0",
+  "verifiedAt": "2026-08-13",
+  "procedures": [
+    {
+      "id": "aproveitamento-disciplinas",
+      "label": "Aproveitamento de disciplinas",
+      "processType": "Aluno: Requerimento Geral",
+      "recommendedSpecification": "Aproveitamento de disciplinas",
+      "acceptedSpecifications": [
+        "Aproveitamento",
+        "Aproveitamento de componente",
+        "Aproveitamento de componente curricular",
+        "Aproveitamento de disciplina",
+        "Aproveitamento de disciplinas"
+      ],
+      "city": "Baturité",
+      "requiredDocuments": [
+        {
+          "id": "formulario",
+          "label": "Formulário de Solicitação de Aproveitamento de Componente Curricular preenchido e assinado",
+          "fileName": "formulario-aproveitamento-assinado.pdf",
+          "size": "1,4 MB",
+          "complement": "Formulário de aproveitamento",
+          "originStory": "Foi preenchido no computador, impresso, assinado à mão e depois escaneado para PDF.",
+          "correctFormat": "digitalizado",
+          "packaging": "sempre"
+        },
+        {
+          "id": "historico",
+          "label": "Histórico escolar com carga horária dos componentes curriculares, autenticado pela instituição de origem",
+          "fileName": "historico-escolar-autenticado-qr-code.pdf",
+          "size": "2,6 MB",
+          "complement": "Histórico escolar",
+          "originStory": "Foi emitido diretamente em PDF pela instituição de origem e possui QR code de autenticação. Não passou por scanner.",
+          "correctFormat": "nato-digital",
+          "packaging": "sempre"
+        },
+        {
+          "id": "programas-unico",
+          "label": "Programas, PUDs ou ementas dos componentes curriculares, autenticados pela instituição de origem",
+          "fileName": "programas-puds-ementas-autenticados.pdf",
+          "size": "7,8 MB",
+          "complement": "Programas, PUDs e ementas",
+          "originStory": "Os documentos autenticados existiam em papel, foram escaneados e reunidos em um único PDF.",
+          "correctFormat": "digitalizado",
+          "packaging": "unico"
+        },
+        {
+          "id": "programa-1",
+          "label": "Programa autenticado do primeiro componente curricular",
+          "fileName": "programa-leitura-producao-textual.pdf",
+          "size": "3,1 MB",
+          "complement": "Programa - Leitura e Produção Textual",
+          "originStory": "Foi emitido diretamente em PDF pela instituição de origem, com assinatura eletrônica.",
+          "correctFormat": "nato-digital",
+          "packaging": "separados"
+        },
+        {
+          "id": "programa-2",
+          "label": "Programa autenticado do segundo componente curricular",
+          "fileName": "programa-teoria-literatura.pdf",
+          "size": "4,2 MB",
+          "complement": "Programa - Teoria da Literatura",
+          "originStory": "O documento autenticado existia em papel e foi escaneado para PDF.",
+          "correctFormat": "digitalizado",
+          "packaging": "separados"
+        }
+      ]
+    }
+  ]
+}
