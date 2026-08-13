@@ -408,6 +408,7 @@
           <legend>Tempo da prova</legend>
           <div class="choice-list">
             <label class="choice" for="proof-time-none"><input ${state.proofMinutes === 0 ? "checked" : ""} id="proof-time-none" name="proof-time" type="radio" value="0"/><span><strong>Sem cronômetro</strong><span>O tempo será registrado, mas não alterará a nota.</span></span></label>
+            <label class="choice" for="proof-time-5"><input ${state.proofMinutes === 5 ? "checked" : ""} id="proof-time-5" name="proof-time" type="radio" value="5"/><span><strong>5 minutos — desafio extremo</strong><span>Para quem já domina o fluxo e deseja testar sua rapidez.</span></span></label>
             <label class="choice" for="proof-time-10"><input ${state.proofMinutes === 10 ? "checked" : ""} id="proof-time-10" name="proof-time" type="radio" value="10"/><span><strong>10 minutos — desafio</strong><span>O bônus depende da rapidez da conclusão.</span></span></label>
             <label class="choice" for="proof-time-15"><input ${state.proofMinutes === 15 ? "checked" : ""} id="proof-time-15" name="proof-time" type="radio" value="15"/><span><strong>15 minutos — recomendado</strong><span>Equilíbrio entre atenção e agilidade.</span></span></label>
             <label class="choice" for="proof-time-20"><input ${state.proofMinutes === 20 ? "checked" : ""} id="proof-time-20" name="proof-time" type="radio" value="20"/><span><strong>20 minutos — tranquilo</strong><span>Mais tempo para conferir cada etapa.</span></span></label>
