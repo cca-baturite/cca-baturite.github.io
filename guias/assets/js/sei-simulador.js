@@ -460,57 +460,73 @@
 
   function renderRequestTab() {
     setStep(5);
+    const selectedRequest = state.requestKind;
     screen.innerHTML = `
-      <div class="tabs" aria-label="Guias simuladas do navegador">
-        <span class="tab">1 · Peticionamento</span>
-        <span class="tab is-active">2 · Requerimento</span>
+      <div class="mobile-browser-bar" aria-label="Barra simulada do navegador do celular">
+        <span class="browser-home" aria-hidden="true">⌂</span>
+        <div class="browser-address"><span aria-hidden="true">⌘</span><span>sei.ifce.edu.br/sei/controlador…</span></div>
+        <span class="browser-plus" aria-hidden="true">＋</span>
+        <button aria-label="Abrir as duas guias do navegador" class="browser-tabs-button${state.requestSaved ? " is-next" : ""}" id="browser-tabs-button" type="button"><span>2</span></button>
+        <span class="browser-more" aria-hidden="true">⋮</span>
       </div>
-      ${screenHeader("Requerimento Geral Discente", "Guia 2 de 2")}
-      <div class="screen-body">
-        <div class="editor-toolbar" aria-label="Faixa ilustrativa de opções de edição; os botões não funcionam neste treinamento">
-          <span class="editor-command editor-save" aria-hidden="true">▣ Salvar</span>
-          <span class="editor-command" aria-hidden="true">↶</span>
-          <span class="editor-command" aria-hidden="true">↷</span>
-          <strong class="editor-command" aria-hidden="true">N</strong>
-          <em class="editor-command" aria-hidden="true">I</em>
-          <span class="editor-command editor-underline" aria-hidden="true">S</span>
-          <span class="editor-command" aria-hidden="true">≡</span>
-          <span class="editor-command" aria-hidden="true">☷</span>
+      <div class="sei-editor-page">
+        <div class="sei-editor-toolbar" aria-label="Faixa simulada de edição do SEI">
+          <div class="editor-save-row">
+            <button class="sei-save-button${state.requestSaved ? " is-saved" : ""}" id="request-save" type="button"><span aria-hidden="true">▣</span>${state.requestSaved ? "Salvo" : "Salvar"}</button>
+          </div>
+          <div class="editor-tools-row" aria-hidden="true">
+            <span>🔎</span><span>▱</span><span>▰</span><strong>N</strong><em>I</em><u>S</u><span>abc</span><span>x₂</span><span>x²</span><span>🎨</span><span>A▾</span>
+          </div>
+          <div class="editor-tools-row" aria-hidden="true">
+            <span>✂</span><span>▣</span><span>↶</span><span>↷</span><span>¶</span><span>Ω</span><span>☷</span><span>☰</span><span>▤</span><span>▧</span>
+          </div>
+          <div class="editor-tools-row editor-style-row" aria-hidden="true">
+            <span>▦</span><span>🌐</span><span>§</span><span class="editor-style-select">Texto_Alinhado_Esquerda ▾</span>
+          </div>
         </div>
-        <p class="field-help toolbar-help">Faixa de edição fictícia, apenas ilustrativa.</p>
-        <p class="screen-subtitle">Os dados abaixo são fictícios e não podem ser editados.</p>
-        <div class="data-grid">
-          <div class="data-row"><span>Nome</span><strong>Fulano de Tal</strong></div>
-          <div class="data-row"><span>CPF</span><strong>XXX.XXX.XXX-XX</strong></div>
-          <div class="data-row"><span>Data de nascimento</span><strong>DD/MM/AAAA</strong></div>
-          <div class="data-row"><span>Matrícula</span><strong>20251154000000</strong></div>
-          <div class="data-row"><span>Curso</span><strong>Letras</strong></div>
-          <div class="data-row"><span>E-mail</span><strong>fulanodetal@gmail.com</strong></div>
-          <div class="data-row"><span>Telefone</span><strong>(85) 9XXXX-XXXX</strong></div>
+        <div aria-live="polite" class="editor-save-notice" id="editor-save-notice" ${state.requestSaved ? "" : "hidden"}>Documento salvo. Toque no contador <strong>2</strong>, no canto superior direito, e escolha a guia do peticionamento.</div>
+        <div class="sei-document-scroll">
+          <div class="sei-document-sheet">
+            <section class="sei-document-section" aria-labelledby="basic-data-title">
+              <h3 id="basic-data-title">DADOS BÁSICOS DO INTERESSADO</h3>
+              <div class="sei-data-line"><strong>Nome do Discente:</strong> Fulano de Tal</div>
+              <div class="sei-data-line"><strong>Nome Social (opcional, identidade de gênero):</strong></div>
+              <div class="sei-data-split"><div><strong>Matrícula:</strong> 20251154000000</div><div><strong>E-mail:</strong> fulanodetal@gmail.com</div></div>
+              <div class="sei-data-line"><strong>Curso:</strong> Letras</div>
+            </section>
+            <fieldset class="sei-request-section">
+              <legend>SOLICITO</legend>
+              <div class="sei-request-options">
+                ${REQUEST_OPTIONS.map(function (item) {
+                  return `<label><input ${selectedRequest === item[1] ? "checked" : ""} name="request-kind" type="radio" value="${escapeHtml(item[1])}"/><span>${escapeHtml(item[0])}</span></label>`;
+                }).join("")}
+              </div>
+            </fieldset>
+            <div class="sei-detail-section">
+              <label for="request-detail"><strong>Especificação detalhada da solicitação:</strong> <span class="optional-label">(opcional)</span></label>
+              <textarea id="request-detail">${escapeHtml(state.requestDetail)}</textarea>
+            </div>
+            <div class="sei-observations">
+              <strong>OBSERVAÇÕES:</strong>
+              <ul>
+                <li>Preencha completamente os dados básicos do interessado.</li>
+                <li>Use a especificação detalhada se precisar explicar melhor seu objetivo.</li>
+                <li>Os documentos complementares serão incluídos em PDF na guia do peticionamento.</li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="field">
-          <label for="request-kind">Solicito</label>
-          <select id="request-kind">
-            <option value="">Selecione…</option>
-            ${REQUEST_OPTIONS.map(function (item) { return `<option value="${escapeHtml(item[1])}">${escapeHtml(item[0])}</option>`; }).join("")}
-          </select>
-        </div>
-        <div class="field">
-          <label for="request-detail">Especificação detalhada da solicitação <span class="optional-label">(opcional)</span></label>
-          <textarea id="request-detail">${escapeHtml(state.requestDetail)}</textarea>
-          <span class="field-help">Se desejar, informe os componentes cursados e os componentes do IFCE cujo aproveitamento solicita. Este campo pode ficar em branco.</span>
-        </div>
-        ${hint("Salve e troque de guia", "Depois de salvar, não use Voltar. Abra a caixa de guias do navegador e retorne à guia do peticionamento.", "sei-abrir-solicitacao-celular.html#salvar-voltar")}
-        <div class="button-row">
-          <button class="sim-button sim-button-primary" id="request-save" type="button">Salvar</button>
-          <button class="sim-button sim-button-danger" id="request-back" type="button">Voltar do navegador</button>
-        </div>
-        <div id="tab-picker-wrap"></div>
       </div>`;
 
-    document.getElementById("request-kind").value = state.requestKind;
+    document.getElementById("browser-tabs-button").addEventListener("click", function () {
+      const selected = screen.querySelector('input[name="request-kind"]:checked');
+      state.requestKind = selected ? selected.value : "";
+      state.requestDetail = document.getElementById("request-detail").value.trim();
+      navigate(renderBrowserTabs);
+    });
     document.getElementById("request-save").addEventListener("click", function () {
-      const kind = document.getElementById("request-kind").value;
+      const selected = screen.querySelector('input[name="request-kind"]:checked');
+      const kind = selected ? selected.value : "";
       const detail = document.getElementById("request-detail").value.trim();
       if (kind !== "aproveitamento") {
         recordIssue("Não selecionou Aproveitamento de disciplina(s) em Solicito");
@@ -520,27 +536,44 @@
       state.requestKind = kind;
       state.requestDetail = detail;
       state.requestSaved = true;
-      document.getElementById("tab-picker-wrap").innerHTML = `
-        <div class="panel panel-success"><strong>Documento salvo.</strong><p>Agora use a caixa de guias, não o botão Voltar.</p></div>
-        <button class="sim-button sim-button-secondary" id="open-tabs" type="button">▢ Abrir caixa de guias</button>
-        <div class="tab-picker" id="tab-picker" hidden>
-          <button id="choose-petition-tab" type="button"><strong>Guia 1 · Peticionamento</strong><span>Processo Novo — dados preservados</span></button>
-          <button type="button"><strong>Guia 2 · Requerimento</strong><span>Documento já salvo</span></button>
-        </div>`;
-      document.getElementById("open-tabs").addEventListener("click", function () {
-        document.getElementById("tab-picker").hidden = false;
-      });
-      document.getElementById("choose-petition-tab").addEventListener("click", function () { navigate(renderRequestDocument); });
-      showFeedback("Requerimento salvo. Retorne pela caixa de guias.", "success");
+      const saveButton = document.getElementById("request-save");
+      saveButton.classList.add("is-saved");
+      saveButton.innerHTML = '<span aria-hidden="true">✓</span>Salvo';
+      document.getElementById("editor-save-notice").hidden = false;
+      document.getElementById("browser-tabs-button").classList.add("is-next");
+      document.getElementById("browser-tabs-button").setAttribute("aria-label", "Documento salvo. Abrir as duas guias do navegador");
+      showFeedback("Requerimento salvo. Agora toque no contador <strong>2</strong>, no canto superior direito do navegador simulado.", "success");
     });
-    document.getElementById("request-back").addEventListener("click", function () {
-      recordIssue("Usou Voltar no lugar da caixa de guias");
-      state.requestKind = "";
-      state.requestDetail = "";
-      state.requestSaved = false;
-      renderRequestTab();
-      showFeedback("<strong>Os campos foram apagados nesta simulação.</strong> No SEI real, usar Voltar pode reiniciar o procedimento. Preencha novamente, salve e retorne pela caixa de guias.", "error");
-    });
+  }
+
+  function renderBrowserTabs() {
+    setStep(5);
+    const requestStatus = state.requestSaved ? "Documento salvo" : "Alterações ainda não salvas";
+    screen.innerHTML = `
+      <div class="browser-tabs-overview" aria-label="Seletor simulado de guias do navegador">
+        <div class="tabs-overview-toolbar">
+          <span class="overview-new-tab" aria-hidden="true">＋</span>
+          <div class="overview-mode" aria-hidden="true"><span class="is-active">▣ 2</span><span>▦</span></div>
+          <span class="browser-more" aria-hidden="true">⋮</span>
+        </div>
+        <div class="tabs-search">Pesquise nas guias</div>
+        <div class="browser-tab-grid">
+          <button class="browser-tab-card" id="choose-petition-tab" type="button">
+            <span class="tab-card-title"><span class="sei-mini-logo">sei.</span> SEI — Peticionamento <span aria-hidden="true">×</span></span>
+            <span class="tab-card-preview petition-preview"><strong>sei.</strong><small>Menu</small><i>Documento Principal</i><b>Requerimento Geral Discente</b><i>Nível de Acesso</i><span></span><i>Documentos Complementares</i></span>
+            <span class="tab-card-action">Retornar a esta guia</span>
+          </button>
+          <button class="browser-tab-card is-current" id="choose-request-tab" type="button">
+            <span class="tab-card-title"><span class="sei-mini-logo">sei.</span> SEI — Requerimento <span aria-hidden="true">×</span></span>
+            <span class="tab-card-preview request-preview"><b>▣ Salvar</b><i>N &nbsp; I &nbsp; <u>S</u> &nbsp; ≡ &nbsp; ☷</i><strong>DADOS BÁSICOS DO INTERESSADO</strong><span>Nome do Discente: Fulano de Tal</span><strong>SOLICITO</strong><span>(●) Aproveitamento de disciplina(s)</span></span>
+            <span class="tab-card-action">${escapeHtml(requestStatus)}</span>
+          </button>
+        </div>
+        <div class="tabs-overview-note">Selecione a guia do peticionamento para continuar o processo.</div>
+      </div>`;
+
+    document.getElementById("choose-petition-tab").addEventListener("click", function () { navigate(renderRequestDocument); });
+    document.getElementById("choose-request-tab").addEventListener("click", function () { navigate(renderRequestTab); });
   }
 
   function renderMainAccess() {
